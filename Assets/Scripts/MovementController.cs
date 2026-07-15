@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class MovementController : MonoBehaviour
 {
     private Rigidbody rigid_body;
     private Vector3 move_direction;
@@ -17,20 +17,18 @@ public class PlayerMovement : MonoBehaviour
     // 수평 이동 처리
     void Update()
     {
-        if (move_direction != Vector3.zero) // 움직일 방향이 설정됐다면
+        if (!move_direction.Equals(Vector3.zero)) // 움직일 방향이 설정됐다면
         {
+            Debug.Log("움직임 시도! " + move_direction);
             Move();
         }
     }
 
     public void Move()
     {
-        rigid_body.linearVelocity = move_speed * move_direction.normalized;
-    }
-
-    public void Stop()
-    {
-        move_direction = Vector3.zero;
+        Vector3 original_velocity = rigid_body.linearVelocity;
+        Vector3 new_velocity = move_speed * move_direction;
+        rigid_body.linearVelocity = new Vector3(new_velocity.x, original_velocity.y, new_velocity.z);
     }
 
 
@@ -63,24 +61,20 @@ public class PlayerMovement : MonoBehaviour
 
 
     // 수평 이동 방향 설정
-    public void SetForward()
+    public void SetMoveDirection(Vector3 direction)
     {
-        // 방향 벡터 바라보는 기준으로 바꿔야 됨
-        move_direction.z = 1;
+        // 보는 방향을 기준으로 이동
+        ApplyLookDirection(direction);
     }
 
-    public void SetBackward()
+    private void ApplyLookDirection(Vector3 direction)
     {
-        move_direction.z = -1;
-    }
-
-    public void SetLeft()
-    {
-        move_direction.x = -1;
-    }
-
-    public void SetRight()
-    {
-        move_direction.x = 1;
+        // 위아래로 보고 있을 때 이동 방향이 잘못되지 않도록 방지
+        Vector3 look_direction = transform.forward;
+        look_direction.y = 0;
+        look_direction.Normalize(); // 크기를 다시 1로 맞춤
+        // 수평 회전량만 남김
+        Quaternion horizontalRotation = Quaternion.LookRotation(look_direction);
+        move_direction = horizontalRotation * direction.normalized;
     }
 }
