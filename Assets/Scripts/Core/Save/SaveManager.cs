@@ -1,86 +1,101 @@
-using System;
-using System.IO;
 using UnityEngine;
 
-public class SaveManager
+public class SaveManager : MonoBehaviour
 {
-    public const string DefaultFileName = "game-save.json";
+    public const string GameSaveKey = "game-save";
 
-    private readonly string savePath;
+    [SerializeField] private GameProgressManager gameProgressManager;
 
-    public SaveManager()
-        : this(Path.Combine(Application.persistentDataPath, DefaultFileName))
+    private void OnEnable()
     {
-    }
-
-    public SaveManager(string savePath)
-    {
-        if (string.IsNullOrWhiteSpace(savePath))
+        if (gameProgressManager != null)
         {
-            throw new ArgumentException("A save path is required.", nameof(savePath));
+            gameProgressManager.ProgressChanged += HandleProgressChanged;
         }
-
-        this.savePath = savePath;
     }
 
-    public void Save(GameSaveData saveData)
+    private void Start()
+    {
+        LoadCurrentProgress();
+    }
+
+    private void OnDisable()
+    {
+        if (gameProgressManager != null)
+        {
+            gameProgressManager.ProgressChanged -= HandleProgressChanged;
+        }
+    }
+
+    public void SaveGame(GameSaveData saveData)
     {
         if (saveData == null)
         {
-            throw new ArgumentNullException(nameof(saveData));
+            throw new System.ArgumentNullException(nameof(saveData));
         }
 
-        string directoryPath = Path.GetDirectoryName(savePath);
-
-        if (!string.IsNullOrEmpty(directoryPath))
-        {
-            Directory.CreateDirectory(directoryPath);
-        }
-
-        string json = JsonUtility.ToJson(saveData, true);
-        File.WriteAllText(savePath, json);
+        saveData.EnsureCollections();
+        PlayerPrefs.SetString(GameSaveKey, JsonUtility.ToJson(saveData));
+        PlayerPrefs.Save();
     }
 
-    public bool TryLoad(out GameSaveData saveData)
+    public bool TryLoadGame(out GameSaveData saveData)
     {
         saveData = null;
 
-        if (!File.Exists(savePath))
+        if (!HasGameSave())
         {
             return false;
         }
 
         try
         {
-            string json = File.ReadAllText(savePath);
-
-            if (string.IsNullOrWhiteSpace(json))
-            {
-                return false;
-            }
-
-            saveData = JsonUtility.FromJson<GameSaveData>(json);
+            saveData = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString(GameSaveKey));
+            saveData?.EnsureCollections();
             return saveData != null;
         }
-        catch (IOException)
-        {
-            return false;
-        }
-        catch (UnauthorizedAccessException)
-        {
-            return false;
-        }
-        catch (ArgumentException)
+        catch (System.ArgumentException)
         {
             return false;
         }
     }
 
-    public void DeleteSave()
+    public bool HasGameSave()
     {
-        if (File.Exists(savePath))
+        return PlayerPrefs.HasKey(GameSaveKey) && !string.IsNullOrWhiteSpace(PlayerPrefs.GetString(GameSaveKey));
+    }
+
+    public void ClearGameSave()
+    {
+        PlayerPrefs.DeleteKey(GameSaveKey);
+        PlayerPrefs.Save();
+    }
+
+    public void SaveCurrentProgress()
+    {
+        if (gameProgressManager == null)
         {
-            File.Delete(savePath);
+            return;
         }
+
+        SaveGame(new GameSaveData
+        {
+            ProgressState = gameProgressManager.CurrentState
+        });
+    }
+
+    public bool LoadCurrentProgress()
+    {
+        if (gameProgressManager == null || !TryLoadGame(out GameSaveData saveData))
+        {
+            return false;
+        }
+
+        return gameProgressManager.RestoreState(saveData.ProgressState);
+    }
+
+    private void HandleProgressChanged(GameProgressState _)
+    {
+        SaveCurrentProgress();
     }
 }

@@ -1,6 +1,9 @@
 public enum GameState
 {
     MainMenu,
-    StartCutScene,
-    MainGame
+    Cutscene,
+    Playing,
+    Paused,
+    GameOver,
+    Ending
 }

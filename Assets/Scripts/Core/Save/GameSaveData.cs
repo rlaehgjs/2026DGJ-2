@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class GameSaveData
@@ -6,6 +7,22 @@ public class GameSaveData
     public const int CurrentVersion = 1;
 
     public int Version = CurrentVersion;
-    public GameProgressState ProgressState = GameProgressState.NotStarted;
-    public int CheckpointIndex;
+    public GameProgressState ProgressState = GameProgressState.FindKitchenKey;
+    public List<ItemSaveEntry> Inventory = new List<ItemSaveEntry>();
+    public List<string> CollectedItemIds = new List<string>();
+    public List<string> UnlockedObjectIds = new List<string>();
+
+    public void EnsureCollections()
+    {
+        Inventory ??= new List<ItemSaveEntry>();
+        CollectedItemIds ??= new List<string>();
+        UnlockedObjectIds ??= new List<string>();
+    }
+}
+
+[Serializable]
+public class ItemSaveEntry
+{
+    public string ItemId;
+    public int Amount;
 }

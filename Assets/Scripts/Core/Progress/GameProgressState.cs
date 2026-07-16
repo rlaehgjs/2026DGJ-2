@@ -1,6 +1,14 @@
 public enum GameProgressState
 {
-    NotStarted,
-    InProgress,
-    Completed
+    FindKitchenKey,
+    InspectRefrigerator,
+    FindGenerator,
+    FindGeneratorWire,
+    RepairGenerator,
+    FindPlywood,
+    FindHammer,
+    RepairRefrigeratorWall,
+    FindCoolantCapsule,
+    RepairFreezer,
+    EnterFreezer
 }
