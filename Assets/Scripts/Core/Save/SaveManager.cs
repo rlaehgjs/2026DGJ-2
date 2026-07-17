@@ -5,15 +5,21 @@ public class SaveManager : MonoBehaviour
     public const string GameSaveKey = "game-save";
 
     [SerializeField] private GameProgressManager gameProgressManager;
+    [SerializeField] private PlayerInventory playerInventory;
 
     private GameSaveData currentSaveData;
-    private bool isRestoringProgress;
+    private bool isRestoringSaveData;
 
     private void OnEnable()
     {
         if (gameProgressManager != null)
         {
             gameProgressManager.ProgressChanged += HandleProgressChanged;
+        }
+
+        if (playerInventory != null)
+        {
+            playerInventory.InventoryChanged += HandleInventoryChanged;
         }
     }
 
@@ -27,6 +33,11 @@ public class SaveManager : MonoBehaviour
         if (gameProgressManager != null)
         {
             gameProgressManager.ProgressChanged -= HandleProgressChanged;
+        }
+
+        if (playerInventory != null)
+        {
+            playerInventory.InventoryChanged -= HandleInventoryChanged;
         }
     }
 
@@ -79,38 +90,69 @@ public class SaveManager : MonoBehaviour
 
     public void SaveCurrentProgress()
     {
-        if (gameProgressManager == null)
+        if (gameProgressManager == null && playerInventory == null)
         {
             return;
         }
 
         GameSaveData saveData = GetOrCreateSaveData();
-        saveData.ProgressState = gameProgressManager.CurrentState;
+
+        if (gameProgressManager != null)
+        {
+            saveData.ProgressState = gameProgressManager.CurrentState;
+        }
+
+        if (playerInventory != null)
+        {
+            saveData.Inventory = playerInventory.CreateSaveEntries();
+        }
+
         SaveGame(saveData);
     }
 
     public bool LoadCurrentProgress()
     {
-        if (gameProgressManager == null || !TryLoadGame(out GameSaveData saveData))
+        if (!TryLoadGame(out GameSaveData saveData))
         {
             return false;
         }
 
-        isRestoringProgress = true;
+        isRestoringSaveData = true;
 
         try
         {
-            return gameProgressManager.RestoreState(saveData.ProgressState);
+            bool restoredAnyData = false;
+
+            if (gameProgressManager != null)
+            {
+                restoredAnyData = gameProgressManager.RestoreState(saveData.ProgressState);
+            }
+
+            if (playerInventory != null)
+            {
+                playerInventory.RestoreFromSaveEntries(saveData.Inventory);
+                restoredAnyData = true;
+            }
+
+            return restoredAnyData;
         }
         finally
         {
-            isRestoringProgress = false;
+            isRestoringSaveData = false;
         }
     }
 
     private void HandleProgressChanged(GameProgressState _)
     {
-        if (!isRestoringProgress)
+        if (!isRestoringSaveData)
+        {
+            SaveCurrentProgress();
+        }
+    }
+
+    private void HandleInventoryChanged()
+    {
+        if (!isRestoringSaveData)
         {
             SaveCurrentProgress();
         }
