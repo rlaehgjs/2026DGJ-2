@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 1642079239252552710}
   - component: {fileID: 1438217737536792709}
   - component: {fileID: 6028249024296154083}
+  - component: {fileID: 1728015724854325991}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -293,6 +294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 287ec3d2baf42244e88b76f0942d064e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  hp: {fileID: 11400000, guid: fbb5792c3201d6742a67cf3b4f084412, type: 2}
 --- !u!114 &1438217737536792709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -318,3 +320,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   mouseSensitivity: 500
+--- !u!114 &1728015724854325991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061541459937985641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1d42f925fd8fe34191f257192b84599, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthContorller
+  hp: {fileID: 11400000, guid: fbb5792c3201d6742a67cf3b4f084412, type: 2}
