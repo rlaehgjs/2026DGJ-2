@@ -5,10 +5,13 @@ using System.Collections.Generic;
 
 public class PlayerMeltSystem : MonoBehaviour
 {
-    [SerializeField] private List<float> freezeStateRatioThresholds = new List<float>()
+    [SerializeField]
+    private List<float> freezeStateRatioThresholds = new List<float>()
     {0.3f, 0.6f, 1.0f};
-    [SerializeField] private float maxHp = 100f;
-    [SerializeField] private float currentHp;
+    [SerializeField]
+    private float maxHp = 100f;
+    [SerializeField]
+    private float currentHp;
     private float baseMeltValue = 1.0f;
     private float scaledMeltValue; // 배율이 적용된 해동 속도
     private int previous_state;
@@ -25,13 +28,15 @@ public class PlayerMeltSystem : MonoBehaviour
 
     void Update()
     {
-        CheckHP();
+        float damage = scaledMeltValue * Time.deltaTime;
+        Damage(damage);
         Debug.Log("현재 hp/최대 hp: " + currentHp + "/" + maxHp);
     }
 
-    private void CheckHP()
+    // 일시적 피해, 회복 메서드
+    public void Damage(float damage)
     {
-        currentHp = Mathf.Clamp(currentHp - scaledMeltValue * Time.deltaTime, 0, maxHp);
+        currentHp = Mathf.Clamp(currentHp - damage, 0, maxHp);
         OnHpChanged?.Invoke(currentHp, maxHp);
         if (currentHp <= 0f)
         {
@@ -41,6 +46,14 @@ public class PlayerMeltSystem : MonoBehaviour
         CheckFreezeState();
     }
 
+    public void Heal(float amount)
+    {
+        currentHp = Mathf.Clamp(currentHp + amount, 0, maxHp);
+        OnHpChanged?.Invoke(currentHp, maxHp);
+        CheckFreezeState();
+    }
+
+    // 냉동 상태 변화 관리
     private void CheckFreezeState()
     {
         for (int i = 0; i < freezeStateRatioThresholds.Count; ++i)

@@ -1,13 +1,15 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [SerializeField]
     private List<float> moveSpeedMultipliers = new List<float>()
     {0.8f, 1.0f, 1.1f};
+    [SerializeField]
     private List<float> linearDampings = new List<float>()
     {1.0f, 0.5f, 0f};
+    [SerializeField]
     private List<float> gravityMultipliers = new List<float>()
     {1.0f, 1.5f, 2.0f};
     private Rigidbody rigidBody;
@@ -22,11 +24,13 @@ public class PlayerMovement : MonoBehaviour
     private bool isGrounded = false;
 
     private PlayerMeltSystem playerMeltSystem;
+    private GameInputReader gameInputReader;
 
     // 추가된 부분: OnEnable보다 먼저 실행됨
     void Awake()
     {
         playerMeltSystem = GetComponent<PlayerMeltSystem>();
+        gameInputReader = GetComponent<GameInputReader>();
     }
 
     void Start()
@@ -42,9 +46,15 @@ public class PlayerMovement : MonoBehaviour
     // WASD 이동
     void Update()
     {
-        if (!moveDirection.Equals(Vector3.zero))
+        Vector2 moveInput = gameInputReader.MoveInput;
+
+        SetMoveDirection(new Vector3(
+            moveInput.x,
+            0f,
+            moveInput.y));
+
+        if (moveDirection != Vector3.zero)
         {
-            Debug.Log("움직임 시도! " + moveDirection);
             Move();
         }
     }
@@ -105,12 +115,14 @@ public class PlayerMovement : MonoBehaviour
     {
         // 이벤트 구독 (+= 연산자 사용)
         playerMeltSystem.OnFreezeStateChanged += ApplyFreezeState;
+        gameInputReader.JumpPressed += Jump;
     }
 
     void OnDisable()
     {
         // 이벤트 구독 해제 (-= 연산자 필수)
         playerMeltSystem.OnFreezeStateChanged -= ApplyFreezeState;
+        gameInputReader.JumpPressed -= Jump;
     }
 
     private void ApplyFreezeState(FreezeState state)

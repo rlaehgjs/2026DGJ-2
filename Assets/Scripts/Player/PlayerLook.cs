@@ -1,14 +1,29 @@
+using TMPro;
 using UnityEngine;
 
 public class PlayerLook : MonoBehaviour
 {
-    public float mouseSensitivity = 500f; // 마우스 감도
+    [SerializeField] private Transform cameraTransform;
+
+    private GameInputReader gameInputReader;
+    private float mouseSensitivity = 500f; // 마우스 감도
     private float xRotation = 0f; // 위아래 회전값을 저장할 변수
+
+    private void Awake()
+    {
+        gameInputReader = GetComponent<GameInputReader>();
+    }
 
     void Start()
     {
         // 마우스 커서를 화면 중앙에 고정하고 숨김
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    private void Update()
+    {
+        Vector2 lookInput = gameInputReader.LookInput;
+        LookAtMouse(lookInput.x, lookInput.y);
     }
 
     public void LookAtMouse(float mouseX, float mouseY)
@@ -27,12 +42,19 @@ public class PlayerLook : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // 카메라의 위아래(X축) 회전 적용
-        Camera.main.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
     }
 
     private void RotateHorizontal(float degreeX)
     {
         // 마우스 X축 움직임으로 캐릭터 몸통을 좌우(Y축 기준)로 회전
         transform.Rotate(Vector3.up * degreeX);
+    }
+
+    
+    // Setter
+    public void SetMouseSensitivity(float value)
+    {
+        mouseSensitivity = value;
     }
 }

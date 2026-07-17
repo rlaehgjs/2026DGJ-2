@@ -232,7 +232,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1382569287
+--- !u!1001 &288067278
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -242,15 +242,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 7234007811824042206, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.35197
+      value: 0.33721
       objectReference: {fileID: 0}
     - target: {fileID: 7234007811824042206, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.92
+      value: 1.29
       objectReference: {fileID: 0}
     - target: {fileID: 7234007811824042206, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.73053
+      value: 0.38179
       objectReference: {fileID: 0}
     - target: {fileID: 7234007811824042206, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
       propertyPath: m_LocalRotation.w
@@ -282,7 +282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8061541459937985641, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
       propertyPath: m_Name
-      value: Player
+      value: Player(Test)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -392,4 +392,4 @@ SceneRoots:
   m_Roots:
   - {fileID: 1582173947}
   - {fileID: 35023918}
-  - {fileID: 1382569287}
+  - {fileID: 288067278}
