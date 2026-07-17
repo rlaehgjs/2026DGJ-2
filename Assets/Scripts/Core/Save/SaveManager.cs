@@ -6,6 +6,9 @@ public class SaveManager : MonoBehaviour
 
     [SerializeField] private GameProgressManager gameProgressManager;
 
+    private GameSaveData currentSaveData;
+    private bool isRestoringProgress;
+
     private void OnEnable()
     {
         if (gameProgressManager != null)
@@ -35,6 +38,7 @@ public class SaveManager : MonoBehaviour
         }
 
         saveData.EnsureCollections();
+        currentSaveData = saveData;
         PlayerPrefs.SetString(GameSaveKey, JsonUtility.ToJson(saveData));
         PlayerPrefs.Save();
     }
@@ -50,9 +54,10 @@ public class SaveManager : MonoBehaviour
 
         try
         {
-            saveData = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString(GameSaveKey));
-            saveData?.EnsureCollections();
-            return saveData != null;
+            currentSaveData = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString(GameSaveKey));
+            currentSaveData?.EnsureCollections();
+            saveData = currentSaveData;
+            return currentSaveData != null;
         }
         catch (System.ArgumentException)
         {
@@ -67,6 +72,7 @@ public class SaveManager : MonoBehaviour
 
     public void ClearGameSave()
     {
+        currentSaveData = null;
         PlayerPrefs.DeleteKey(GameSaveKey);
         PlayerPrefs.Save();
     }
@@ -78,10 +84,9 @@ public class SaveManager : MonoBehaviour
             return;
         }
 
-        SaveGame(new GameSaveData
-        {
-            ProgressState = gameProgressManager.CurrentState
-        });
+        GameSaveData saveData = GetOrCreateSaveData();
+        saveData.ProgressState = gameProgressManager.CurrentState;
+        SaveGame(saveData);
     }
 
     public bool LoadCurrentProgress()
@@ -91,11 +96,39 @@ public class SaveManager : MonoBehaviour
             return false;
         }
 
-        return gameProgressManager.RestoreState(saveData.ProgressState);
+        isRestoringProgress = true;
+
+        try
+        {
+            return gameProgressManager.RestoreState(saveData.ProgressState);
+        }
+        finally
+        {
+            isRestoringProgress = false;
+        }
     }
 
     private void HandleProgressChanged(GameProgressState _)
     {
-        SaveCurrentProgress();
+        if (!isRestoringProgress)
+        {
+            SaveCurrentProgress();
+        }
+    }
+
+    private GameSaveData GetOrCreateSaveData()
+    {
+        if (currentSaveData != null)
+        {
+            return currentSaveData;
+        }
+
+        if (TryLoadGame(out GameSaveData saveData))
+        {
+            return saveData;
+        }
+
+        currentSaveData = new GameSaveData();
+        return currentSaveData;
     }
 }

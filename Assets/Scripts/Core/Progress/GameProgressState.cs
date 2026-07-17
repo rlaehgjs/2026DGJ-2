@@ -10,5 +10,6 @@ public enum GameProgressState
     RepairRefrigeratorWall,
     FindCoolantCapsule,
     RepairFreezer,
-    EnterFreezer
+    EnterFreezer,
+    Completed
 }

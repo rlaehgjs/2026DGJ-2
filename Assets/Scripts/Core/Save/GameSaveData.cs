@@ -10,13 +10,13 @@ public class GameSaveData
     public GameProgressState ProgressState = GameProgressState.FindKitchenKey;
     public List<ItemSaveEntry> Inventory = new List<ItemSaveEntry>();
     public List<string> CollectedItemIds = new List<string>();
-    public List<string> UnlockedObjectIds = new List<string>();
+    public List<string> ChangedWorldObjectIds = new List<string>();
 
     public void EnsureCollections()
     {
         Inventory ??= new List<ItemSaveEntry>();
         CollectedItemIds ??= new List<string>();
-        UnlockedObjectIds ??= new List<string>();
+        ChangedWorldObjectIds ??= new List<string>();
     }
 }
 

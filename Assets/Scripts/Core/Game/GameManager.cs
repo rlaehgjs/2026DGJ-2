@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameState CurrentState { get; private set; }
 
-    public event Action<GameState> StateChanged;
+    public event Action<GameState> GameStateChanged;
 
     private void Awake()
     {
@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
 
         if (notify)
         {
-            StateChanged?.Invoke(CurrentState);
+            GameStateChanged?.Invoke(CurrentState);
         }
     }
 

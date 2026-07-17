@@ -11,19 +11,21 @@ public class GameProgressManager : MonoBehaviour
     public bool IsRefrigeratorWallRepaired => CurrentState >= GameProgressState.FindCoolantCapsule;
     public bool IsFreezerRepaired => CurrentState >= GameProgressState.EnterFreezer;
     public bool CanEnterFreezer => CurrentState == GameProgressState.EnterFreezer;
+    public bool IsMissionCompleted => CurrentState == GameProgressState.Completed;
 
     public event Action<GameProgressState> ProgressChanged;
     public event Action PowerRestored;
     public event Action RefrigeratorWallRepaired;
     public event Action FreezerRepaired;
     public event Action ProgressCompleted;
+    public event Action<GameProgressState> ProgressRestored;
 
     private void Awake()
     {
         SetState(initialState, false);
     }
 
-    public bool TryCompleteCurrentObjective()
+    private bool TryCompleteCurrentObjective()
     {
         switch (CurrentState)
         {
@@ -58,8 +60,11 @@ public class GameProgressManager : MonoBehaviour
                 SetState(GameProgressState.EnterFreezer, true);
                 return true;
             case GameProgressState.EnterFreezer:
+                SetState(GameProgressState.Completed, true);
                 ProgressCompleted?.Invoke();
                 return true;
+            case GameProgressState.Completed:
+                return false;
             default:
                 return false;
         }
@@ -129,7 +134,7 @@ public class GameProgressManager : MonoBehaviour
 
         CurrentState = savedState;
         ProgressChanged?.Invoke(CurrentState);
-        NotifyRestoredWorldState();
+        ProgressRestored?.Invoke(CurrentState);
         return true;
     }
 
@@ -165,21 +170,4 @@ public class GameProgressManager : MonoBehaviour
         }
     }
 
-    private void NotifyRestoredWorldState()
-    {
-        if (IsPowerRestored)
-        {
-            PowerRestored?.Invoke();
-        }
-
-        if (IsRefrigeratorWallRepaired)
-        {
-            RefrigeratorWallRepaired?.Invoke();
-        }
-
-        if (IsFreezerRepaired)
-        {
-            FreezerRepaired?.Invoke();
-        }
-    }
 }
