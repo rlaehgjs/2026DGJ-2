@@ -45,4 +45,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Project.Core::GameManager
   initialState: 0
-  saveManager: {fileID: 0}
+  saveManager: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
