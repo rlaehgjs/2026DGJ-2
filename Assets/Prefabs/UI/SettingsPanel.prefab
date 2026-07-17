@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 7496525239995136263}
   - component: {fileID: 410248445625774120}
   - component: {fileID: 542899055557370599}
+  - component: {fileID: 826961698325341167}
   m_Layer: 5
   m_Name: 'SFXVolume_Setting '
   m_TagString: Untagged
@@ -164,7 +165,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -181,6 +182,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BgmVolumeSlider
   titleBgm: {fileID: 0}
+  percentText: {fileID: 361596169791543568}
+--- !u!114 &826961698325341167
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 583455787308045092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
   percentText: {fileID: 361596169791543568}
 --- !u!1 &810807383265980099
 GameObject:
@@ -215,7 +229,7 @@ RectTransform:
   m_Father: {fileID: 6609285227444926111}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -741,6 +755,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2959526436823073488}
   - component: {fileID: 8120526215679020126}
+  - component: {fileID: 1180566913639879908}
   m_Layer: 5
   m_Name: BrightnessSetting
   m_TagString: Untagged
@@ -819,10 +834,23 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1180566913639879908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151135486047786284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
+  percentText: {fileID: 5671256950133615029}
 --- !u!1 &1153610826829177971
 GameObject:
   m_ObjectHideFlags: 0
@@ -856,7 +884,7 @@ RectTransform:
   m_Father: {fileID: 303371047763875250}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -909,6 +937,7 @@ GameObject:
   - component: {fileID: 6115174206042439516}
   - component: {fileID: 1334215429982809408}
   - component: {fileID: 7651097157306391253}
+  - component: {fileID: 351527098038562024}
   m_Layer: 5
   m_Name: 'BGMVolume_Setting '
   m_TagString: Untagged
@@ -987,7 +1016,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1004,6 +1033,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BgmVolumeSlider
   titleBgm: {fileID: 0}
+  percentText: {fileID: 4960889930718418501}
+--- !u!114 &351527098038562024
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332601574684569884}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
   percentText: {fileID: 4960889930718418501}
 --- !u!1 &1581371895606956591
 GameObject:
@@ -1113,7 +1155,7 @@ RectTransform:
   m_Father: {fileID: 422786361042608587}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1644,7 +1686,7 @@ RectTransform:
   m_Father: {fileID: 5219967095284143303}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1719,7 +1761,7 @@ RectTransform:
   m_Father: {fileID: 563807537237160926}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1794,7 +1836,7 @@ RectTransform:
   m_Father: {fileID: 357618927428593866}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1869,7 +1911,7 @@ RectTransform:
   m_Father: {fileID: 6280775724531526601}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1944,7 +1986,7 @@ RectTransform:
   m_Father: {fileID: 2114365041064188968}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2184,6 +2226,7 @@ GameObject:
   - component: {fileID: 3022072514612856864}
   - component: {fileID: 1505963269659546108}
   - component: {fileID: 5295481749537451039}
+  - component: {fileID: 3996223223877519607}
   m_Layer: 5
   m_Name: TitleVolume_Setting
   m_TagString: Untagged
@@ -2262,7 +2305,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2279,6 +2322,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BgmVolumeSlider
   titleBgm: {fileID: 0}
+  percentText: {fileID: 1277230310425821868}
+--- !u!114 &3996223223877519607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3413916018997507006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
   percentText: {fileID: 1277230310425821868}
 --- !u!1 &3455292871184680595
 GameObject:
@@ -2770,7 +2826,7 @@ RectTransform:
   m_Father: {fileID: 146193545429387647}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3018,7 +3074,7 @@ RectTransform:
   m_Father: {fileID: 1988944039003393574}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3266,7 +3322,7 @@ RectTransform:
   m_Father: {fileID: 2185726297277779238}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -3473,7 +3529,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1594318460911187763
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4121,7 +4177,7 @@ RectTransform:
   m_Father: {fileID: 320448832044835342}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -4719,6 +4775,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1834472214063585094}
   - component: {fileID: 1080313760687430986}
+  - component: {fileID: 4091328497579121192}
   m_Layer: 5
   m_Name: SensitivitySetting
   m_TagString: Untagged
@@ -4797,10 +4854,23 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4091328497579121192
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604143252112688596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
+  percentText: {fileID: 3749295217640138249}
 --- !u!1 &8529324264941697301
 GameObject:
   m_ObjectHideFlags: 0

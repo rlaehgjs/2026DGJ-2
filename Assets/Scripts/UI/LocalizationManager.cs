@@ -6,6 +6,8 @@ public class LocalizationManager : MonoBehaviour
 {
     private const string LanguageKey = "Language";
 
+    [SerializeField] private TextAsset localizationCsv;
+
     public static LocalizationManager Instance { get; private set; }
     public int CurrentLanguage => language;
     public event Action LanguageChanged;
@@ -52,8 +54,13 @@ public class LocalizationManager : MonoBehaviour
 
     private void LoadCsv()
     {
-        TextAsset csv = Resources.Load<TextAsset>("Localization");
-        foreach (string line in csv.text.Replace("\r", "").Split('\n'))
+        if (localizationCsv == null)
+        {
+            Debug.LogError("LocalizationManager에 Localization.csv를 연결해야 합니다.", this);
+            return;
+        }
+
+        foreach (string line in localizationCsv.text.Replace("\r", "").Split('\n'))
         {
             string[] cells = line.Split(',');
             if (cells.Length == 3 && cells[0] != "key")
