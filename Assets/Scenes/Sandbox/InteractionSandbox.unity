@@ -464,7 +464,7 @@ GameObject:
   - component: {fileID: 519874299}
   - component: {fileID: 519874298}
   m_Layer: 0
-  m_Name: Heal2
+  m_Name: Heal_Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -500,7 +500,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
