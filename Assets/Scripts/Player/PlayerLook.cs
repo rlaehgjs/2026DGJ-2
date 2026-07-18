@@ -6,6 +6,7 @@ public class PlayerLook : MonoBehaviour
     [SerializeField] private Transform cameraTransform;
 
     private GameInputReader gameInputReader;
+    [SerializeField]
     private float mouseSensitivity = 500f; // 마우스 감도
     private float xRotation = 0f; // 위아래 회전값을 저장할 변수
 
