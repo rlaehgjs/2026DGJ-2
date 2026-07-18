@@ -369,7 +369,7 @@ MonoBehaviour:
   itemData: {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
   amount: 1
   saveId: KitchenKey_Bathroom_01
-  saveManager: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
+  saveManager: {fileID: 910785636}
 --- !u!65 &381335720
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -385,7 +385,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -524,6 +524,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c609012740432846a67e55058fd6d43, type: 3}
+--- !u!114 &910785636 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
+  m_PrefabInstance: {fileID: 679890016}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac079a8c5e09fe34b93d6e10a32c17a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Core::SaveManager
 --- !u!1 &1582173945
 GameObject:
   m_ObjectHideFlags: 0
