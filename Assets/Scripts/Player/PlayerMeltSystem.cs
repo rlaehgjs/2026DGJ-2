@@ -57,6 +57,17 @@ public class PlayerMeltSystem : MonoBehaviour
         CheckFreezeState();
     }
 
+    public bool TryHeal(float amount)
+    {
+        if (amount <= 0f || currentHp >= maxHp)
+        {
+            return false;
+        }
+
+        Heal(amount);
+        return true;
+    }
+
     // 냉동 상태 변화 관리
     private void CheckFreezeState()
     {
