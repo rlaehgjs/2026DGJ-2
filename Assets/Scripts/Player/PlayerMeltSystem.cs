@@ -50,7 +50,7 @@ public class PlayerMeltSystem : MonoBehaviour
         CheckFreezeState();
     }
 
-    public void Heal(float amount)
+    private void Heal(float amount)
     {
         currentHp = Mathf.Clamp(currentHp + amount, 0, maxHp);
         OnHpChanged?.Invoke(currentHp, maxHp);
