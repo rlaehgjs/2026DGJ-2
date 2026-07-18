@@ -154,6 +154,8 @@ GameObject:
   - component: {fileID: 1438217737536792709}
   - component: {fileID: 6028249024296154083}
   - component: {fileID: 1728015724854325991}
+  - component: {fileID: 6922363548158861937}
+  - component: {fileID: 3149798202572831439}
   m_Layer: 0
   m_Name: Player(Test)
   m_TagString: Untagged
@@ -353,3 +355,32 @@ MonoBehaviour:
   - 1
   maxHp: 100
   currentHp: 0
+--- !u!114 &6922363548158861937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061541459937985641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8158c3b42dd3204f9a1ccbd8c2a27e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
+  interactionCamera: {fileID: 2392648523754382913}
+  interactionDistance: 3
+--- !u!114 &3149798202572831439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061541459937985641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78825121bf2341d4c899c2fc88a90dd2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
+  itemCatalog:
+  - {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
+  items: []
