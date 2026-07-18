@@ -28,5 +28,6 @@ master_volume,전체 볼륨,Master Volume
 brightness,밝기,Brightness
 mouse_sensitivity,마우스 감도,Mouse Sensitivity
 language,언어,Language
+inventory,보유 아이템,Inventory
 repair_prompt,[E] 수리하기,[E] Repair
 open_door_prompt,[E] 문 열기,[E] Open Door

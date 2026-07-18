@@ -756,6 +756,7 @@ GameObject:
   - component: {fileID: 2959526436823073488}
   - component: {fileID: 8120526215679020126}
   - component: {fileID: 1180566913639879908}
+  - component: {fileID: 1771131691820054613}
   m_Layer: 5
   m_Name: BrightnessSetting
   m_TagString: Untagged
@@ -851,6 +852,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
   percentText: {fileID: 5671256950133615029}
+--- !u!114 &1771131691820054613
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1151135486047786284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3f3455f8dfd38514ba68fd142140ddc9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BrightnessSlider
+  percentText: {fileID: 5671256950133615029}
+  minimumAmbientIntensity: 0.05
+  maximumAmbientIntensity: 0.8
 --- !u!1 &1153610826829177971
 GameObject:
   m_ObjectHideFlags: 0
@@ -4776,6 +4792,7 @@ GameObject:
   - component: {fileID: 1834472214063585094}
   - component: {fileID: 1080313760687430986}
   - component: {fileID: 4091328497579121192}
+  - component: {fileID: 4324241091873549968}
   m_Layer: 5
   m_Name: SensitivitySetting
   m_TagString: Untagged
@@ -4871,6 +4888,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
   percentText: {fileID: 3749295217640138249}
+--- !u!114 &4324241091873549968
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604143252112688596}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27b65562dbcbd42469de1a5238125518, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MouseSensitivitySlider
+  playerLook: {fileID: 0}
+  minimumSensitivity: 10
+  maximumSensitivity: 1000
 --- !u!1 &8529324264941697301
 GameObject:
   m_ObjectHideFlags: 0
