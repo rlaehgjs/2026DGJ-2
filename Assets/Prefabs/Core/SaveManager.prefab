@@ -44,4 +44,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac079a8c5e09fe34b93d6e10a32c17a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::SaveManager
-  gameProgressManager: {fileID: 0}
+  gameProgressManager: {fileID: 5358995951892438270, guid: 1e7e705946c1ec64ba58d3dfe691e02d, type: 3}
+  playerInventory: {fileID: 0}
