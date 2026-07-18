@@ -88,6 +88,40 @@ public class SaveManager : MonoBehaviour
         PlayerPrefs.Save();
     }
 
+    public bool RegisterCollectedItem(string saveId)
+    {
+        if (string.IsNullOrWhiteSpace(saveId))
+        {
+            return false;
+        }
+
+        GameSaveData saveData = GetOrCreateSaveData();
+
+        if (saveData.CollectedItemIds.Contains(saveId))
+        {
+            return false;
+        }
+
+        saveData.CollectedItemIds.Add(saveId);
+        SaveGame(saveData);
+        return true;
+    }
+
+    public bool IsItemCollected(string saveId) //playerPrefs에 저장된 데이터 확인
+    {
+        if (string.IsNullOrWhiteSpace(saveId))
+        {
+            return false;
+        }
+
+        if (currentSaveData == null && !TryLoadGame(out _))
+        {
+            return false;
+        }
+
+        return currentSaveData.CollectedItemIds.Contains(saveId); //있으면 가져오기
+    }
+
     public void SaveCurrentProgress()
     {
         if (gameProgressManager == null && playerInventory == null)
