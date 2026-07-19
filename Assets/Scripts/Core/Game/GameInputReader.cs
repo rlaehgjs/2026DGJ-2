@@ -20,20 +20,26 @@ public class GameInputReader : MonoBehaviour
 
     void Update()
     {
-        MoveInput = new Vector2(
-            Input.GetAxis("Horizontal"),
-            Input.GetAxis("Vertical"));
+        if (isMoveEnabled)
+        {
+            MoveInput = new Vector2(
+                Input.GetAxis("Horizontal"),
+                Input.GetAxis("Vertical"));
+        }
 
-        LookInput = new Vector2(
-            Input.GetAxis("Mouse X"),
-            Input.GetAxis("Mouse Y"));
+        if (isLookEnabled)
+        {
+            LookInput = new Vector2(
+                Input.GetAxis("Mouse X"),
+                Input.GetAxis("Mouse Y"));
+        }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (isJumpEnabled && Input.GetKeyDown(KeyCode.Space))
         {
             JumpPressed?.Invoke();
         }
 
-        if (Input.GetKeyDown(KeyCode.F))
+        if (isInteractionEnabled && Input.GetKeyDown(KeyCode.F))
         {
             InteractPressed?.Invoke();
         }
