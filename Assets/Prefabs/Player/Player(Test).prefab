@@ -156,6 +156,7 @@ GameObject:
   - component: {fileID: 1728015724854325991}
   - component: {fileID: 6922363548158861937}
   - component: {fileID: 3149798202572831439}
+  - component: {fileID: 5618895636582536097}
   m_Layer: 0
   m_Name: Player(Test)
   m_TagString: Untagged
@@ -300,14 +301,16 @@ MonoBehaviour:
   - 0.8
   - 1
   - 1.1
-  linearDampings:
-  - 1
-  - 0.5
+  extraGravityMultipliers:
   - 0
-  gravityMultipliers:
-  - 1
-  - 1.5
   - 2
+  - 3
+  frictionsPerStage:
+  - 20
+  - 10
+  - 0
+  baseMoveSpeed: 5
+  baseJumpForce: 10
 --- !u!114 &1438217737536792709
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -337,6 +340,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
   cameraTransform: {fileID: 1374888746788500717}
+  mouseSensitivity: 500
 --- !u!114 &1728015724854325991
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +359,8 @@ MonoBehaviour:
   - 1
   maxHp: 100
   currentHp: 0
+  baseMeltValue: 1
+  current_state: 2
 --- !u!114 &6922363548158861937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,3 +390,17 @@ MonoBehaviour:
   itemCatalog:
   - {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
   items: []
+--- !u!114 &5618895636582536097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8061541459937985641}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4a99dd3c19f7a469bf07f612a606b7, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEffectAdapter
+  playerMovement: {fileID: 1642079239252552710}
+  playerMeltSystem: {fileID: 1728015724854325991}
