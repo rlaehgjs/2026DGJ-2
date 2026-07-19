@@ -1,0 +1,33 @@
+key,ko,en
+current_objective,<현재 목표>,<Current Objective>
+melt,해동도,Melt
+objective_find_kitchen_key,냉장고를 찾자. 먼저 화장실에서 주방 열쇠를 찾자.,Find the refrigerator. First find the kitchen key in the bathroom.
+objective_inspect_refrigerator,주방으로 가서 냉장고를 조사하자.,Go to the kitchen and inspect the refrigerator.
+objective_find_generator,발전기를 찾자.,Find the generator.
+objective_find_generator_wire,지하 창고에서 전선을 찾자.,Find the generator wire in the basement storage room.
+objective_repair_generator,전선을 발전기에 연결하자.,Connect the wire to the generator.
+objective_find_plywood,지름길을 통해 방 1에서 합판을 찾자.,Use the shortcut to find plywood in Room 1.
+objective_find_hammer,복도 서랍에서 망치를 찾자.,Find the hammer in the hallway drawer.
+objective_repair_refrigerator_wall,합판과 망치로 냉장고 뒷벽을 수리하자.,Repair the refrigerator back wall with plywood and a hammer.
+objective_find_coolant_capsule,2층 숨겨진 방에서 냉매 캡슐을 찾자.,Find the coolant capsule in the hidden room on the second floor.
+objective_repair_freezer,냉매 캡슐로 냉동실을 수리하자.,Repair the freezer with the coolant capsule.
+objective_enter_freezer,마지막까지 녹지 말고 냉동실로 들어가자.,Do not melt until the end. Enter the freezer.
+start,새 게임,New Game
+continue,이어하기,Continue
+resume,계속하기,Resume
+game_over,게임 오버,Game Over
+restart,다시 시작하기,Restart
+return_to_title,타이틀로 돌아가기,Return to Title
+settings,설정,Settings
+close,닫기,Close
+exit,그만하기,Exit
+title_volume,타이틀 볼륨,Title Volume
+bgm_volume,배경음 볼륨,BGM Volume
+sfx_volume,효과음 볼륨,SFX Volume
+master_volume,전체 볼륨,Master Volume
+brightness,밝기,Brightness
+mouse_sensitivity,마우스 감도,Mouse Sensitivity
+language,언어,Language
+inventory,보유 아이템,Inventory
+repair_prompt,[E] 수리하기,[E] Repair
+open_door_prompt,[E] 문 열기,[E] Open Door
