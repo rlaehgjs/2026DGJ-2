@@ -12,9 +12,13 @@ public class PlayerMeltSystem : MonoBehaviour
     private float maxHp = 100f;
     [SerializeField]
     private float currentHp;
+    [SerializeField]
     private float baseMeltValue = 1.0f;
     private float scaledMeltValue; // 배율이 적용된 해동 속도
-    private int previous_state;
+
+    [SerializeField]
+    private FreezeState current_state = FreezeState.Frozen;
+    private FreezeState previous_state;
 
     public event Action<float, float> OnHpChanged;
     public event Action OnHpDepleted;
@@ -46,7 +50,7 @@ public class PlayerMeltSystem : MonoBehaviour
         CheckFreezeState();
     }
 
-    public void Heal(float amount)
+    private void Heal(float amount)
     {
         currentHp = Mathf.Clamp(currentHp + amount, 0, maxHp);
         OnHpChanged?.Invoke(currentHp, maxHp);
@@ -71,12 +75,14 @@ public class PlayerMeltSystem : MonoBehaviour
         {
             if (currentHp <= maxHp * freezeStateRatioThresholds[i])
             {
-                if (previous_state != i)
+                FreezeState state = (FreezeState)i;
+                if (previous_state != state)
                 {
-                    OnFreezeStateChanged?.Invoke((FreezeState)i);
-                    previous_state = i;
+                    current_state = state;
+                    OnFreezeStateChanged?.Invoke(current_state);
+                    previous_state = current_state;
                 }
-                Debug.Log("현재 상태: " + (FreezeState)i);
+                Debug.Log("현재 상태: " + current_state);
                 break;
             }
         }

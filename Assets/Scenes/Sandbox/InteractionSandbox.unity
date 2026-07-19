@@ -240,6 +240,38 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: frictionGapPerState
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: 'linearDampings.Array.data[0]'
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: 'linearDampings.Array.data[1]'
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: 'frictionsPerStage.Array.data[0]'
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: 'frictionsPerStage.Array.data[1]'
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: 'frictionsPerStage.Array.data[2]'
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: 'extraGravityMultipliers.Array.data[1]'
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1642079239252552710, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
+      propertyPath: 'extraGravityMultipliers.Array.data[2]'
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 7234007811824042206, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -287,53 +319,8 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8061541459937985641, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 288067282}
-    - targetCorrespondingSourceObject: {fileID: 8061541459937985641, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 288067281}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
---- !u!1 &288067279 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8061541459937985641, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
-  m_PrefabInstance: {fileID: 288067278}
-  m_PrefabAsset: {fileID: 0}
---- !u!20 &288067280 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 2392648523754382913, guid: d5d5cc96204bd4e49ab4468a00818f96, type: 3}
-  m_PrefabInstance: {fileID: 288067278}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &288067281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288067279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78825121bf2341d4c899c2fc88a90dd2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
-  itemCatalog:
-  - {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
-  items: []
---- !u!114 &288067282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 288067279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8158c3b42dd3204f9a1ccbd8c2a27e6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  interactionCamera: {fileID: 288067280}
-  interactionDistance: 3
 --- !u!1 &381335718
 GameObject:
   m_ObjectHideFlags: 0
@@ -646,7 +633,7 @@ PrefabInstance:
     - target: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
       propertyPath: playerInventory
       value: 
-      objectReference: {fileID: 288067281}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
