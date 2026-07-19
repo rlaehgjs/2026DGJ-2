@@ -12,7 +12,11 @@ public class PlayerMeltSystem : MonoBehaviour
     private float maxHp = 100f;
     [SerializeField]
     private float currentHp;
+    const float PercentToDecimal = 0.01f;
     [SerializeField]
+    private float minLimitPercentHpMelted = 0.1f;
+    [SerializeField]
+    private float minLimitHpMelted;
     private float baseMeltValue = 1.0f;
     private float scaledMeltValue; // 배율이 적용된 해동 속도
 
@@ -28,13 +32,25 @@ public class PlayerMeltSystem : MonoBehaviour
     {
         currentHp = maxHp;
         scaledMeltValue = baseMeltValue;
+        minLimitHpMelted = maxHp * minLimitPercentHpMelted * PercentToDecimal;
     }
 
     void Update()
     {
-        float damage = scaledMeltValue * Time.deltaTime;
-        Damage(damage);
-        Debug.Log("현재 hp/최대 hp: " + currentHp + "/" + maxHp);
+        if (currentHp > minLimitHpMelted)
+        {
+            Melt();
+        }
+    }
+
+    private void Melt()
+    {
+        float hpMelted = scaledMeltValue * Time.deltaTime;
+        currentHp = Mathf.Clamp(currentHp - hpMelted, minLimitHpMelted, maxHp);
+        OnHpChanged?.Invoke(currentHp, maxHp);
+        Debug.Log("녹음! 현재 hp/최대 hp: " + currentHp + "/" + maxHp);
+
+        CheckFreezeState();
     }
 
     // 일시적 피해, 회복 메서드
@@ -54,6 +70,7 @@ public class PlayerMeltSystem : MonoBehaviour
     {
         currentHp = Mathf.Clamp(currentHp + amount, 0, maxHp);
         OnHpChanged?.Invoke(currentHp, maxHp);
+        
         CheckFreezeState();
     }
 
