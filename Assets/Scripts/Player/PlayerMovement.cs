@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -7,21 +8,28 @@ public class PlayerMovement : MonoBehaviour
     private List<float> moveSpeedMultipliers = new List<float>()
     {0.8f, 1.0f, 1.1f};
     [SerializeField]
-    private List<float> linearDampings = new List<float>()
-    {1.0f, 0.5f, 0f};
+    private List<float> extraGravityMultipliers = new List<float>()
+    {0f, 2.0f, 3.0f};
     [SerializeField]
-    private List<float> gravityMultipliers = new List<float>()
-    {1.0f, 1.5f, 2.0f};
+    private List<float> frictionsPerStage = new List<float>()
+    {20.0f, 10.0f, 0f};
+
     private Rigidbody rigidBody;
     private Vector3 moveDirection;
+    private bool isGrounded = false;
+
+    [SerializeField]
     private float baseMoveSpeed = 5f;
-    private float baseGravity;
+    [SerializeField]
     private float baseJumpForce = 10f;
+
     private float freezeStateMoveSpeedMultiplier = 1.0f;
     private float environmentMoveSpeedMultiplier = 1.0f;
     private float scaledMoveSpeed;
     private float scaledJumpForce;
-    private bool isGrounded = false;
+    private float friction;
+    private float extraGravity;
+    private FreezeState currentState = FreezeState.Frozen;
 
     private PlayerMeltSystem playerMeltSystem;
     private GameInputReader gameInputReader;
@@ -36,7 +44,6 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         rigidBody = GetComponent<Rigidbody>();
-        baseGravity = Physics.gravity.y;
         scaledMoveSpeed = baseMoveSpeed;
         scaledJumpForce = baseJumpForce;
         ApplyFreezeState(FreezeState.Frozen);
@@ -57,6 +64,9 @@ public class PlayerMovement : MonoBehaviour
         {
             Move();
         }
+
+        AdjustJump();
+        AdjustMove();
     }
 
     public void Move()
@@ -68,8 +78,34 @@ public class PlayerMovement : MonoBehaviour
         Debug.Log("현재 속도: " + rigidBody.linearVelocity);
     }
 
+    // 마찰 적용
+    private void AdjustMove()
+    {
+        int numState = Enum.GetNames(typeof(FreezeState)).Length;
+        for (int i = 0; i < numState; ++i)
+        {
+            FreezeState state = (FreezeState)i;
+            float frictionToApply = friction * Time.deltaTime;
+            if (currentState == state)
+            {
+                ApplyFriction(frictionToApply);
+            }
+        }
+    }
+
+    private void ApplyFriction(float value)
+    {
+        // Lerp에서 y값이 영향을 주지 않도록 x, z만 가져옴
+        Vector3 currentPlanarVelocity = new Vector3(rigidBody.linearVelocity.x, 0f, rigidBody.linearVelocity.z);
+        Vector3 zeroPlanarVelocity = Vector3.zero;
+        Vector3 smoothedVelocity = Vector3.Lerp(currentPlanarVelocity, zeroPlanarVelocity, value);
+        
+        // 최종 속도 적용 (중력 Y값은 그대로 유지)
+        rigidBody.linearVelocity = new Vector3(smoothedVelocity.x, rigidBody.linearVelocity.y, smoothedVelocity.z);
+    }
+
     // 수평 이동 방향 설정
-    public void SetMoveDirection(Vector3 direction)
+    private void SetMoveDirection(Vector3 direction)
     {
         ApplyLookDirection(direction);
     }
@@ -88,13 +124,22 @@ public class PlayerMovement : MonoBehaviour
 
 
     // 점프
-    public void Jump()
+    private void Jump()
     {
         if (isGrounded)
         {
             Debug.Log("점프 성공!");
             isGrounded = false;
             rigidBody.AddForce(Vector3.up * scaledJumpForce, ForceMode.Impulse);
+        }
+    }
+
+    // 저중력 적용
+    private void AdjustJump()
+    {
+        if (!isGrounded)
+        {
+            rigidBody.AddForce(extraGravity * Time.deltaTime * Vector3.down, ForceMode.Impulse);
         }
     }
 
@@ -127,11 +172,12 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyFreezeState(FreezeState state)
     {
-        int state_index = (int)state;
+        currentState = state;
+        int state_index = (int)currentState;
         freezeStateMoveSpeedMultiplier = moveSpeedMultipliers[state_index];
         scaledMoveSpeed = baseMoveSpeed * environmentMoveSpeedMultiplier * freezeStateMoveSpeedMultiplier;
-        rigidBody.linearDamping = linearDampings[state_index];
-        Physics.gravity = new Vector3(0f, baseGravity * gravityMultipliers[state_index], 0f);
+        friction = frictionsPerStage[state_index];
+        extraGravity = extraGravityMultipliers[state_index];
     }
 
 
