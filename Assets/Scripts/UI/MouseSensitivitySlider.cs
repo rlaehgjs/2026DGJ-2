@@ -10,6 +10,11 @@ public class MouseSensitivitySlider : MonoBehaviour
 
     private Slider slider;
 
+    public void Configure(PlayerLook look)
+    {
+        playerLook = look;
+    }
+
     private void Awake()
     {
         slider = GetComponent<Slider>();

@@ -9,6 +9,11 @@ public class InventoryUI : MonoBehaviour
     [SerializeField] private List<Image> slotIcons;
     [SerializeField] private List<TMP_Text> amountTexts;
 
+    public void Configure(PlayerInventory inventory)
+    {
+        playerInventory = inventory;
+    }
+
     private void OnEnable()
     {
         if (playerInventory != null)

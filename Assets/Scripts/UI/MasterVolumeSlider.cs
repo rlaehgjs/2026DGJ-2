@@ -24,7 +24,15 @@ public class MasterVolumeSlider : MonoBehaviour
 
     private void SetVolume(float volume)
     {
-        AudioListener.volume = volume;
+        if (SoundManager.Instance != null)
+        {
+            SoundManager.Instance.SetMasterVolume(volume);
+        }
+        else
+        {
+            AudioListener.volume = volume;
+        }
+
         percentText.text = $"{Mathf.RoundToInt(volume * 100)}%";
 
         PlayerPrefs.SetFloat(MasterVolumeKey, volume);

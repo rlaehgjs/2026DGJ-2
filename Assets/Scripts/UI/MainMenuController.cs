@@ -10,11 +10,22 @@ public class MainMenuController : MonoBehaviour
 
     private void Awake()
     {
+        if (gameManager == null)
+            gameManager = FindAnyObjectByType<GameManager>();
+
+        if (saveManager == null)
+            saveManager = FindAnyObjectByType<SaveManager>();
+
         if (settings_panel != null)
             settings_panel.SetActive(false);
 
         if (continueButton != null)
             continueButton.interactable = saveManager != null && saveManager.HasGameSave();
+    }
+
+    public void StartNewGame()
+    {
+        gameManager?.StartNewGame();
     }
 
     public void OpenSettings()

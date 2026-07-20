@@ -9,6 +9,11 @@ public class ObjectiveUI : MonoBehaviour
 
     private LocalizationManager localizationManager;
 
+    public void Configure(GameProgressManager manager)
+    {
+        gameProgressManager = manager;
+    }
+
     private void Start()
     {
         if (gameProgressManager == null || objectiveText == null || objectiveRoot == null)

@@ -12,6 +12,12 @@ public class MeltGaugeUI : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private GameManager gameManager;
 
+    public void Configure(PlayerMeltSystem meltSystem, GameManager manager)
+    {
+        playerMeltSystem = meltSystem;
+        gameManager = manager;
+    }
+
     private void OnEnable()
     {
         if (playerMeltSystem == null)

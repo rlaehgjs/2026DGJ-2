@@ -33,6 +33,7 @@ public class BgmVolumeSlider : MonoBehaviour
     private void SetVolume(float volume)
     {
         titleBgm.volume = volume;
+        SoundManager.Instance?.SetBgmVolume(volume);
         percentText.text = $"{Mathf.RoundToInt(volume * 100)}%";
 
         PlayerPrefs.SetFloat(BgmVolumeKey, volume);

@@ -5,6 +5,11 @@ public class ItemPickupToastListener : MonoBehaviour
     [SerializeField] private PlayerInventory playerInventory;
     [SerializeField] private ItemPickupToastUI toastUI;
 
+    public void Configure(PlayerInventory inventory)
+    {
+        playerInventory = inventory;
+    }
+
     private void OnEnable()
     {
         if (playerInventory != null)
