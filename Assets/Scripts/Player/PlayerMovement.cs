@@ -75,7 +75,8 @@ public class PlayerMovement : MonoBehaviour
         Vector3 newVelocity = scaledMoveSpeed * moveDirection;
         // y축 속도는 점프 중일 수도 있으니까 그대로 둠
         rigidBody.linearVelocity = new Vector3(newVelocity.x, originalVelocity.y, newVelocity.z);
-        Debug.Log("현재 속도: " + rigidBody.linearVelocity);
+        // Debug.Log("현재 속도: " + rigidBody.linearVelocity);
+        // Debug.Log("isGrounded" + isGrounded);
     }
 
     // 마찰 적용
@@ -128,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            Debug.Log("점프 성공!");
+            // Debug.Log("점프 성공!");
             isGrounded = false;
             rigidBody.AddForce(Vector3.up * scaledJumpForce, ForceMode.Impulse);
         }
@@ -150,7 +151,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
-            Debug.Log("착지 완료!");
+            // Debug.Log("착지 완료!");
         }
     }
 
