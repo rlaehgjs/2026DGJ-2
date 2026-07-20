@@ -5,6 +5,18 @@ using UnityEngine;
 
 public class DoorInteractableTests
 {
+    [Test]
+    public void CalculateOpenLocalPosition_ChangesOnlyLocalX()
+    {
+        Vector3 closedLocalPosition = new Vector3(-0.377f, 0.973f, 0.372f);
+
+        Vector3 openLocalPosition = DrawerInteractable.CalculateOpenLocalPosition(
+            closedLocalPosition,
+            0.12f);
+
+        Assert.That(openLocalPosition, Is.EqualTo(new Vector3(0.12f, 0.973f, 0.372f)));
+    }
+
     [TestCase("X", 1f, 0f, 0f)]
     [TestCase("Y", 0f, 1f, 0f)]
     [TestCase("Z", 0f, 0f, 1f)]
