@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 63ac145c4e1a759408ab9ce6b5c502a9, type: 3}
-  m_Name: KitchenKey
+  m_Name: FrontDoorKey
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
   itemId: FrontDoor_key
   displayNameKey: item.Frontdoor_key.name
