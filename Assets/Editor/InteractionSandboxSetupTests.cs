@@ -23,6 +23,7 @@ public class InteractionSandboxSetupTests
             KitchenArrivalTrigger kitchenTrigger = FindComponent<KitchenArrivalTrigger>(sandboxScene);
             RefrigeratorInspectInteractable refrigerator = FindComponent<RefrigeratorInspectInteractable>(sandboxScene);
             RefrigeratorWallRepairInteractable refrigeratorWall = FindComponent<RefrigeratorWallRepairInteractable>(sandboxScene);
+            FreezerRepairInteractable freezer = FindComponent<FreezerRepairInteractable>(sandboxScene);
             GeneratorInteractable generator = FindComponent<GeneratorInteractable>(sandboxScene);
             GameObject generatorWireObject = FindGameObject(sandboxScene, "GeneratorWire");
             PickupInteractable generatorWire = generatorWireObject == null
@@ -45,6 +46,13 @@ public class InteractionSandboxSetupTests
             HammerPickupProgress hammerProgress = hammerObject == null
                 ? null
                 : hammerObject.GetComponent<HammerPickupProgress>();
+            GameObject coolantCapsuleObject = FindGameObject(sandboxScene, "CoolantCapsule");
+            PickupInteractable coolantCapsulePickup = coolantCapsuleObject == null
+                ? null
+                : coolantCapsuleObject.GetComponent<PickupInteractable>();
+            CoolantCapsulePickupProgress coolantCapsuleProgress = coolantCapsuleObject == null
+                ? null
+                : coolantCapsuleObject.GetComponent<CoolantCapsulePickupProgress>();
             GameObject frontDoorKeyObject = FindGameObject(sandboxScene, "FrontDoorKey");
             PickupInteractable frontDoorKey = frontDoorKeyObject == null
                 ? null
@@ -53,6 +61,7 @@ public class InteractionSandboxSetupTests
             ItemData generatorWireData = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/GeneratorWire.asset");
             ItemData nailsData = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Nails.asset");
             ItemData hammerData = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Hammer.asset");
+            ItemData coolantCapsuleData = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/CoolantCapsule.asset");
 
             Assert.That(playerInteraction, Is.Not.Null);
             Assert.That(playerInventory, Is.Not.Null);
@@ -62,6 +71,7 @@ public class InteractionSandboxSetupTests
             Assert.That(kitchenTrigger, Is.Not.Null);
             Assert.That(refrigerator, Is.Not.Null);
             Assert.That(refrigeratorWall, Is.Not.Null);
+            Assert.That(freezer, Is.Not.Null);
             Assert.That(generator, Is.Not.Null);
             Assert.That(generatorWire, Is.Not.Null);
             Assert.That(generatorWireProgress, Is.Not.Null);
@@ -69,19 +79,24 @@ public class InteractionSandboxSetupTests
             Assert.That(nailsProgress, Is.Not.Null);
             Assert.That(hammerPickup, Is.Not.Null);
             Assert.That(hammerProgress, Is.Not.Null);
+            Assert.That(coolantCapsulePickup, Is.Not.Null);
+            Assert.That(coolantCapsuleProgress, Is.Not.Null);
             Assert.That(frontDoorKey, Is.Not.Null);
             Assert.That(frontDoorLock, Is.Not.Null);
             Assert.That(generatorWireData, Is.Not.Null);
             Assert.That(nailsData, Is.Not.Null);
             Assert.That(hammerData, Is.Not.Null);
+            Assert.That(coolantCapsuleData, Is.Not.Null);
 
             BoxCollider triggerCollider = kitchenTrigger.GetComponent<BoxCollider>();
             BoxCollider refrigeratorCollider = refrigerator.GetComponent<BoxCollider>();
             BoxCollider refrigeratorWallCollider = refrigeratorWall.GetComponent<BoxCollider>();
+            BoxCollider freezerCollider = freezer.GetComponent<BoxCollider>();
             BoxCollider generatorCollider = generator.GetComponent<BoxCollider>();
             BoxCollider generatorWireCollider = generatorWire.GetComponent<BoxCollider>();
             BoxCollider nailsCollider = nailsPickup.GetComponent<BoxCollider>();
             BoxCollider hammerCollider = hammerPickup.GetComponent<BoxCollider>();
+            BoxCollider coolantCapsuleCollider = coolantCapsulePickup.GetComponent<BoxCollider>();
             BoxCollider frontDoorKeyCollider = frontDoorKey.GetComponent<BoxCollider>();
             Assert.That(triggerCollider, Is.Not.Null);
             Assert.That(triggerCollider.isTrigger, Is.True);
@@ -89,6 +104,8 @@ public class InteractionSandboxSetupTests
             Assert.That(refrigeratorCollider.isTrigger, Is.False);
             Assert.That(refrigeratorWallCollider, Is.Not.Null);
             Assert.That(refrigeratorWallCollider.isTrigger, Is.False);
+            Assert.That(freezerCollider, Is.Not.Null);
+            Assert.That(freezerCollider.isTrigger, Is.False);
             Assert.That(generatorCollider, Is.Not.Null);
             Assert.That(generatorCollider.isTrigger, Is.False);
             Assert.That(generatorWireCollider, Is.Not.Null);
@@ -97,6 +114,8 @@ public class InteractionSandboxSetupTests
             Assert.That(nailsCollider.isTrigger, Is.True);
             Assert.That(hammerCollider, Is.Not.Null);
             Assert.That(hammerCollider.isTrigger, Is.True);
+            Assert.That(coolantCapsuleCollider, Is.Not.Null);
+            Assert.That(coolantCapsuleCollider.isTrigger, Is.True);
             Assert.That(frontDoorKeyCollider, Is.Not.Null);
             Assert.That(frontDoorKeyCollider.isTrigger, Is.True);
 
@@ -106,6 +125,9 @@ public class InteractionSandboxSetupTests
             Assert.That(GetObjectReference(refrigeratorWall, "requiredHammer"), Is.Not.Null);
             Assert.That(GetObjectReference(refrigeratorWall, "interactionCollider"), Is.EqualTo(refrigeratorWallCollider));
             Assert.That(GetObjectReference(refrigeratorWall, "gameProgressManager"), Is.EqualTo(progressManager));
+            Assert.That(GetObjectReference(freezer, "requiredCoolantCapsule"), Is.EqualTo(coolantCapsuleData));
+            Assert.That(GetObjectReference(freezer, "interactionCollider"), Is.EqualTo(freezerCollider));
+            Assert.That(GetObjectReference(freezer, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(generator, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(generator, "requiredWire"), Is.Not.Null);
             Assert.That(GetObjectReference(generatorWire, "saveManager"), Is.EqualTo(saveManager));
@@ -126,6 +148,12 @@ public class InteractionSandboxSetupTests
             Assert.That(GetObjectReference(hammerPickup, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(hammerProgress, "pickupInteractable"), Is.EqualTo(hammerPickup));
             Assert.That(GetObjectReference(hammerProgress, "gameProgressManager"), Is.EqualTo(progressManager));
+            Assert.That(GetObjectReference(coolantCapsulePickup, "saveManager"), Is.EqualTo(saveManager));
+            Assert.That(GetBoolValue(coolantCapsulePickup, "requiresProgressState"), Is.True);
+            Assert.That(GetEnumValue(coolantCapsulePickup, "requiredProgressState"), Is.EqualTo((int)GameProgressState.FindCoolantCapsule));
+            Assert.That(GetObjectReference(coolantCapsulePickup, "gameProgressManager"), Is.EqualTo(progressManager));
+            Assert.That(GetObjectReference(coolantCapsuleProgress, "pickupInteractable"), Is.EqualTo(coolantCapsulePickup));
+            Assert.That(GetObjectReference(coolantCapsuleProgress, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(saveManager, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(saveManager, "playerInventory"), Is.EqualTo(playerInventory));
             Assert.That(GetObjectReference(frontDoorKey, "saveManager"), Is.EqualTo(saveManager));
@@ -137,6 +165,7 @@ public class InteractionSandboxSetupTests
             Assert.That(InventoryCatalogContains(playerInventory, generatorWireData), Is.True);
             Assert.That(InventoryCatalogContains(playerInventory, nailsData), Is.True);
             Assert.That(InventoryCatalogContains(playerInventory, hammerData), Is.True);
+            Assert.That(InventoryCatalogContains(playerInventory, coolantCapsuleData), Is.True);
         }
         finally
         {
@@ -352,6 +381,96 @@ public class InteractionSandboxSetupTests
             Assert.That(playerInventory.HasItem("hammer", 1), Is.True);
             Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.RepairRefrigeratorWall));
             Assert.That(hammerObject.activeSelf, Is.False);
+        }
+        finally
+        {
+            EditorSceneManager.CloseScene(sandboxScene, true);
+        }
+    }
+
+    [Test]
+    public void InteractionSandbox_CoolantCapsulePickup_AdvancesMission()
+    {
+        Scene sandboxScene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
+
+        try
+        {
+            PlayerInventory playerInventory = FindComponent<PlayerInventory>(sandboxScene);
+            GameProgressManager progressManager = FindComponent<GameProgressManager>(sandboxScene);
+            GameObject coolantCapsuleObject = FindGameObject(sandboxScene, "CoolantCapsule");
+            PickupInteractable coolantCapsulePickup = coolantCapsuleObject == null
+                ? null
+                : coolantCapsuleObject.GetComponent<PickupInteractable>();
+            CoolantCapsulePickupProgress coolantCapsuleProgress = coolantCapsuleObject == null
+                ? null
+                : coolantCapsuleObject.GetComponent<CoolantCapsulePickupProgress>();
+            BoxCollider playerCollider = playerInventory.GetComponentInChildren<BoxCollider>();
+
+            Assert.That(playerInventory, Is.Not.Null);
+            Assert.That(progressManager, Is.Not.Null);
+            Assert.That(coolantCapsulePickup, Is.Not.Null);
+            Assert.That(coolantCapsuleProgress, Is.Not.Null);
+            Assert.That(playerCollider, Is.Not.Null);
+
+            coolantCapsuleProgress.enabled = false;
+            coolantCapsuleProgress.enabled = true;
+            Assert.That(coolantCapsulePickup.enabled, Is.False);
+
+            progressManager.RestoreState(GameProgressState.FindCoolantCapsule);
+
+            Assert.That(coolantCapsulePickup.enabled, Is.True);
+            InvokeTriggerEnter(coolantCapsulePickup, playerCollider);
+
+            Assert.That(playerInventory.HasItem("coolant_capsule", 1), Is.True);
+            Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.RepairFreezer));
+            Assert.That(coolantCapsuleObject.activeSelf, Is.False);
+        }
+        finally
+        {
+            EditorSceneManager.CloseScene(sandboxScene, true);
+        }
+    }
+
+    [Test]
+    public void InteractionSandbox_FreezerRepairRaycast_ConsumesCoolantAndAdvancesMission()
+    {
+        Scene sandboxScene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
+
+        try
+        {
+            PlayerInteraction playerInteraction = FindComponent<PlayerInteraction>(sandboxScene);
+            PlayerInventory playerInventory = FindComponent<PlayerInventory>(sandboxScene);
+            GameProgressManager progressManager = FindComponent<GameProgressManager>(sandboxScene);
+            FreezerRepairInteractable freezer = FindComponent<FreezerRepairInteractable>(sandboxScene);
+            Camera interactionCamera = playerInteraction.GetComponentInChildren<Camera>();
+            ItemData coolantCapsule = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/CoolantCapsule.asset");
+
+            Assert.That(playerInteraction, Is.Not.Null);
+            Assert.That(playerInventory, Is.Not.Null);
+            Assert.That(progressManager, Is.Not.Null);
+            Assert.That(freezer, Is.Not.Null);
+            Assert.That(interactionCamera, Is.Not.Null);
+            Assert.That(coolantCapsule, Is.Not.Null);
+            Assert.That(playerInventory.TryAddItem(coolantCapsule, 1), Is.True);
+
+            Vector3 cameraOffset = interactionCamera.transform.position - playerInteraction.transform.position;
+            playerInteraction.transform.position = freezer.transform.position
+                - cameraOffset
+                - freezer.transform.forward * 2f;
+            SetPlayerInteractionReferences(playerInteraction, interactionCamera, playerInventory);
+            progressManager.RestoreState(GameProgressState.RepairFreezer);
+            Physics.SyncTransforms();
+
+            MethodInfo tryInteractMethod = typeof(PlayerInteraction).GetMethod(
+                "TryInteract",
+                BindingFlags.Instance | BindingFlags.NonPublic);
+
+            Assert.That(tryInteractMethod, Is.Not.Null);
+            tryInteractMethod.Invoke(playerInteraction, null);
+
+            Assert.That(playerInventory.HasItem("coolant_capsule", 1), Is.False);
+            Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.EnterFreezer));
+            Assert.That(freezer.GetComponent<BoxCollider>().enabled, Is.False);
         }
         finally
         {

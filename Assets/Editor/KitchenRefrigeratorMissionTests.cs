@@ -283,6 +283,71 @@ public class KitchenRefrigeratorMissionTests
     }
 
     [Test]
+    public void CoolantCapsulePickupProgress_CollectsOnlyAtCoolantCapsuleObjective_AndAdvancesMission()
+    {
+        GameProgressManager progressManager = CreateProgressManager();
+        PlayerInventory inventory = CreatePlayerInventory(out BoxCollider playerCollider);
+        SaveManager saveManager = CreateSaveManager();
+        SetSaveManagerReferences(saveManager, progressManager, inventory);
+        saveManager.enabled = false;
+        saveManager.enabled = true;
+
+        GameObject coolantCapsuleObject = new GameObject("CoolantCapsule");
+        createdObjects.Add(coolantCapsuleObject);
+        PickupInteractable coolantCapsulePickup = coolantCapsuleObject.AddComponent<PickupInteractable>();
+        SetCoolantCapsulePickupReferences(coolantCapsulePickup, saveManager);
+        CoolantCapsulePickupProgress coolantCapsuleProgress = coolantCapsuleObject.AddComponent<CoolantCapsulePickupProgress>();
+        SetCoolantCapsulePickupProgressReferences(coolantCapsuleProgress, coolantCapsulePickup, progressManager);
+        coolantCapsuleProgress.enabled = false;
+        coolantCapsuleProgress.enabled = true;
+
+        Assert.That(coolantCapsulePickup.enabled, Is.False);
+
+        progressManager.RestoreState(GameProgressState.FindCoolantCapsule);
+
+        Assert.That(coolantCapsulePickup.enabled, Is.True);
+        InvokeTriggerEnter(coolantCapsulePickup, playerCollider);
+
+        Assert.That(inventory.HasItem("coolant_capsule", 1), Is.True);
+        Assert.That(saveManager.IsItemCollected("CoolantCapsule_01"), Is.True);
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.RepairFreezer));
+        Assert.That(coolantCapsuleObject.activeSelf, Is.False);
+    }
+
+    [Test]
+    public void FreezerRepairInteractable_ConsumesCoolantOnlyAtRepairObjective()
+    {
+        GameProgressManager progressManager = CreateProgressManager();
+        PlayerInventory inventory = CreatePlayerInventory(out _);
+        GameObject freezerObject = new GameObject("Freezer");
+        createdObjects.Add(freezerObject);
+        BoxCollider freezerCollider = freezerObject.AddComponent<BoxCollider>();
+        FreezerRepairInteractable freezerRepair = freezerObject.AddComponent<FreezerRepairInteractable>();
+        SetFreezerRepairReferences(freezerRepair, freezerCollider, progressManager);
+        freezerRepair.enabled = false;
+        freezerRepair.enabled = true;
+
+        Assert.That(freezerCollider.enabled, Is.False);
+        Assert.That(freezerRepair.CanInteract(inventory), Is.False);
+
+        progressManager.RestoreState(GameProgressState.RepairFreezer);
+
+        Assert.That(freezerCollider.enabled, Is.True);
+        Assert.That(freezerRepair.CanInteract(inventory), Is.False);
+
+        ItemData coolantCapsule = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/CoolantCapsule.asset");
+        Assert.That(coolantCapsule, Is.Not.Null);
+        Assert.That(inventory.TryAddItem(coolantCapsule, 1), Is.True);
+        Assert.That(freezerRepair.CanInteract(inventory), Is.True);
+
+        freezerRepair.Interact(inventory);
+
+        Assert.That(inventory.HasItem("coolant_capsule", 1), Is.False);
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.EnterFreezer));
+        Assert.That(freezerCollider.enabled, Is.False);
+    }
+
+    [Test]
     public void RefrigeratorWallRepairInteractable_ConsumesMaterialsOnlyAtRepairObjective()
     {
         GameProgressManager progressManager = CreateProgressManager();
@@ -505,6 +570,46 @@ public class KitchenRefrigeratorMissionTests
         serializedProgress.FindProperty("pickupInteractable").objectReferenceValue = hammerPickup;
         serializedProgress.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
         serializedProgress.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetCoolantCapsulePickupReferences(PickupInteractable coolantCapsulePickup, SaveManager saveManager)
+    {
+        ItemData coolantCapsule = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/CoolantCapsule.asset");
+        Assert.That(coolantCapsule, Is.Not.Null);
+
+        SerializedObject serializedPickup = new SerializedObject(coolantCapsulePickup);
+        serializedPickup.FindProperty("itemData").objectReferenceValue = coolantCapsule;
+        serializedPickup.FindProperty("amount").intValue = 1;
+        serializedPickup.FindProperty("saveId").stringValue = "CoolantCapsule_01";
+        serializedPickup.FindProperty("saveManager").objectReferenceValue = saveManager;
+        serializedPickup.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetCoolantCapsulePickupProgressReferences(
+        CoolantCapsulePickupProgress coolantCapsuleProgress,
+        PickupInteractable coolantCapsulePickup,
+        GameProgressManager progressManager)
+    {
+        SerializedObject serializedProgress = new SerializedObject(coolantCapsuleProgress);
+        serializedProgress.FindProperty("pickupInteractable").objectReferenceValue = coolantCapsulePickup;
+        serializedProgress.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
+        serializedProgress.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetFreezerRepairReferences(
+        FreezerRepairInteractable freezerRepair,
+        Collider freezerCollider,
+        GameProgressManager progressManager)
+    {
+        ItemData coolantCapsule = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/CoolantCapsule.asset");
+        Assert.That(coolantCapsule, Is.Not.Null);
+
+        SerializedObject serializedRepair = new SerializedObject(freezerRepair);
+        serializedRepair.FindProperty("requiredCoolantCapsule").objectReferenceValue = coolantCapsule;
+        serializedRepair.FindProperty("requiredCoolantCapsuleAmount").intValue = 1;
+        serializedRepair.FindProperty("interactionCollider").objectReferenceValue = freezerCollider;
+        serializedRepair.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
+        serializedRepair.ApplyModifiedPropertiesWithoutUndo();
     }
 
     private static void SetRefrigeratorWallRepairReferences(
