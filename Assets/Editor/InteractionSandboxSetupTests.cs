@@ -109,17 +109,29 @@ public class InteractionSandboxSetupTests
             Assert.That(GetObjectReference(generator, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(generator, "requiredWire"), Is.Not.Null);
             Assert.That(GetObjectReference(generatorWire, "saveManager"), Is.EqualTo(saveManager));
+            Assert.That(GetBoolValue(generatorWire, "requiresProgressState"), Is.True);
+            Assert.That(GetEnumValue(generatorWire, "requiredProgressState"), Is.EqualTo((int)GameProgressState.FindGeneratorWire));
+            Assert.That(GetObjectReference(generatorWire, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(generatorWireProgress, "pickupInteractable"), Is.EqualTo(generatorWire));
             Assert.That(GetObjectReference(generatorWireProgress, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(nailsPickup, "saveManager"), Is.EqualTo(saveManager));
+            Assert.That(GetBoolValue(nailsPickup, "requiresProgressState"), Is.True);
+            Assert.That(GetEnumValue(nailsPickup, "requiredProgressState"), Is.EqualTo((int)GameProgressState.FindNails));
+            Assert.That(GetObjectReference(nailsPickup, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(nailsProgress, "pickupInteractable"), Is.EqualTo(nailsPickup));
             Assert.That(GetObjectReference(nailsProgress, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(hammerPickup, "saveManager"), Is.EqualTo(saveManager));
+            Assert.That(GetBoolValue(hammerPickup, "requiresProgressState"), Is.True);
+            Assert.That(GetEnumValue(hammerPickup, "requiredProgressState"), Is.EqualTo((int)GameProgressState.FindHammer));
+            Assert.That(GetObjectReference(hammerPickup, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(hammerProgress, "pickupInteractable"), Is.EqualTo(hammerPickup));
             Assert.That(GetObjectReference(hammerProgress, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(saveManager, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(saveManager, "playerInventory"), Is.EqualTo(playerInventory));
             Assert.That(GetObjectReference(frontDoorKey, "saveManager"), Is.EqualTo(saveManager));
+            Assert.That(GetBoolValue(frontDoorKey, "requiresProgressState"), Is.True);
+            Assert.That(GetEnumValue(frontDoorKey, "requiredProgressState"), Is.EqualTo((int)GameProgressState.FindFrontDoorKey));
+            Assert.That(GetObjectReference(frontDoorKey, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(frontDoorLock, "requiredKey"), Is.Not.Null);
             Assert.That(GetObjectReference(frontDoorLock, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(InventoryCatalogContains(playerInventory, generatorWireData), Is.True);
@@ -470,6 +482,11 @@ public class InteractionSandboxSetupTests
             Assert.That(interactionCamera, Is.Not.Null);
             Assert.That(playerCollider, Is.Not.Null);
 
+            InvokeTriggerEnter(frontDoorKey, playerCollider);
+
+            Assert.That(playerInventory.HasItem("FrontDoor_key", 1), Is.False);
+            Assert.That(frontDoorKey.gameObject.activeSelf, Is.True);
+
             progressManager.RestoreState(GameProgressState.FindFrontDoorKey);
             InvokeTriggerEnter(frontDoorKey, playerCollider);
 
@@ -534,6 +551,16 @@ public class InteractionSandboxSetupTests
     private static Object GetObjectReference(Object component, string propertyName)
     {
         return new SerializedObject(component).FindProperty(propertyName).objectReferenceValue;
+    }
+
+    private static bool GetBoolValue(Object component, string propertyName)
+    {
+        return new SerializedObject(component).FindProperty(propertyName).boolValue;
+    }
+
+    private static int GetEnumValue(Object component, string propertyName)
+    {
+        return new SerializedObject(component).FindProperty(propertyName).enumValueIndex;
     }
 
     private static bool InventoryCatalogContains(PlayerInventory inventory, ItemData itemData)

@@ -876,6 +876,9 @@ MonoBehaviour:
   amount: 1
   saveId: FrontDoorKey_01
   saveManager: {fileID: 1010640699}
+  requiresProgressState: 1
+  requiredProgressState: 2
+  gameProgressManager: {fileID: 46201633}
 --- !u!1 &900000040
 GameObject:
   m_ObjectHideFlags: 0
@@ -1262,6 +1265,9 @@ MonoBehaviour:
   amount: 1
   saveId: GeneratorWire_01
   saveManager: {fileID: 1010640699}
+  requiresProgressState: 1
+  requiredProgressState: 4
+  gameProgressManager: {fileID: 46201633}
 --- !u!114 &900000066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1406,6 +1412,9 @@ MonoBehaviour:
   amount: 1
   saveId: Nails_01
   saveManager: {fileID: 1010640699}
+  requiresProgressState: 1
+  requiredProgressState: 6
+  gameProgressManager: {fileID: 46201633}
 --- !u!114 &900000076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1550,6 +1559,9 @@ MonoBehaviour:
   amount: 1
   saveId: Hammer_01
   saveManager: {fileID: 1010640699}
+  requiresProgressState: 1
+  requiredProgressState: 7
+  gameProgressManager: {fileID: 46201633}
 --- !u!114 &900000086
 MonoBehaviour:
   m_ObjectHideFlags: 0
