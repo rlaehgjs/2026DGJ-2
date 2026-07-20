@@ -8,10 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 6193232656085889941, guid: fbe95e513748c8645aea9229033dd6d0, type: 3}
+      propertyPath: m_Size.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6193232656085889941, guid: fbe95e513748c8645aea9229033dd6d0, type: 3}
+      propertyPath: m_Size.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8164872784708631103, guid: fbe95e513748c8645aea9229033dd6d0, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3d25a1b57ca206541b7421a59a36d7b0, type: 2}
+      objectReference: {fileID: 2100000, guid: e42f9e02193081c4e980f6b1d9907792, type: 2}
     - target: {fileID: 8164872784710400221, guid: fbe95e513748c8645aea9229033dd6d0, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -91,6 +99,14 @@ PrefabInstance:
     - target: {fileID: 8164872784710558975, guid: fbe95e513748c8645aea9229033dd6d0, type: 3}
       propertyPath: m_Name
       value: Wall
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164872784710558975, guid: fbe95e513748c8645aea9229033dd6d0, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    - target: {fileID: 8164872784710558975, guid: fbe95e513748c8645aea9229033dd6d0, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
