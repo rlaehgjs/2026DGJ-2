@@ -34,7 +34,7 @@ public class PlayerMeltSystem : MonoBehaviour
     {
         float damage = scaledMeltValue * Time.deltaTime;
         Damage(damage);
-        Debug.Log("현재 hp/최대 hp: " + currentHp + "/" + maxHp);
+        // Debug.Log("현재 hp/최대 hp: " + currentHp + "/" + maxHp);
     }
 
     // 일시적 피해, 회복 메서드
@@ -82,7 +82,7 @@ public class PlayerMeltSystem : MonoBehaviour
                     OnFreezeStateChanged?.Invoke(current_state);
                     previous_state = current_state;
                 }
-                Debug.Log("현재 상태: " + current_state);
+                // Debug.Log("현재 상태: " + current_state);
                 break;
             }
         }
