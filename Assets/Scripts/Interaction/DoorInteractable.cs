@@ -3,8 +3,17 @@ using UnityEngine;
 
 public class DoorInteractable : MonoBehaviour, IInteractable
 {
+    private enum RotationAxis
+    {
+        Y,
+        X,
+        Z
+    }
+
     [SerializeField, Range(1f, 180f)] private float openAngle = 90f;
     [SerializeField, Min(0.01f)] private float openDuration = 0.3f;
+    [SerializeField] private RotationAxis rotationAxis = RotationAxis.Y;
+    [SerializeField] private bool openTowardPlayer;
     [SerializeField] private FrontDoorLock frontDoorLock;
     [SerializeField] private Collider doorCollider;
 
@@ -30,6 +39,11 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             if (doorCollider == null)
             {
                 doorCollider = GetComponentInChildren<Collider>();
+            }
+
+            if (doorCollider == null)
+            {
+                doorCollider = CreateBoxColliderFromMesh();
             }
         }
     }
@@ -67,13 +81,17 @@ public class DoorInteractable : MonoBehaviour, IInteractable
             frontDoorLock.Interact(inventory);
         }
 
-        float signedAngle = CalculateOpenAngle(
+        Vector3 localRotationAxis = GetLocalRotationAxis(rotationAxis);
+        Vector3 worldRotationAxis = transform.TransformDirection(localRotationAxis);
+        float signedAngle = GetSignedOpenAngle(
             transform.position,
-            transform.up,
+            worldRotationAxis,
             GetDoorCenter(),
             inventory.transform.position,
-            openAngle);
-        Quaternion targetRotation = closedLocalRotation * Quaternion.Euler(0f, signedAngle, 0f);
+            openAngle,
+            openTowardPlayer);
+        Quaternion targetRotation = closedLocalRotation
+            * Quaternion.AngleAxis(signedAngle, localRotationAxis);
 
         StartRotation(targetRotation, true);
     }
@@ -103,9 +121,58 @@ public class DoorInteractable : MonoBehaviour, IInteractable
         return positiveDistance >= negativeDistance ? angle : -angle;
     }
 
+    private static float GetSignedOpenAngle(
+        Vector3 hingePosition,
+        Vector3 rotationAxis,
+        Vector3 doorCenter,
+        Vector3 playerPosition,
+        float angle,
+        bool openTowardPlayer)
+    {
+        float awayFromPlayerAngle = CalculateOpenAngle(
+            hingePosition,
+            rotationAxis,
+            doorCenter,
+            playerPosition,
+            angle);
+
+        return openTowardPlayer ? -awayFromPlayerAngle : awayFromPlayerAngle;
+    }
+
     private Vector3 GetDoorCenter()
     {
         return doorCollider != null ? doorCollider.bounds.center : transform.position + transform.forward;
+    }
+
+    private static Vector3 GetLocalRotationAxis(RotationAxis axis)
+    {
+        switch (axis)
+        {
+            case RotationAxis.X:
+                return Vector3.right;
+
+            case RotationAxis.Z:
+                return Vector3.forward;
+
+            default:
+                return Vector3.up;
+        }
+    }
+
+    private BoxCollider CreateBoxColliderFromMesh()
+    {
+        MeshFilter meshFilter = GetComponent<MeshFilter>();
+
+        if (meshFilter == null || meshFilter.sharedMesh == null)
+        {
+            return null;
+        }
+
+        Bounds meshBounds = meshFilter.sharedMesh.bounds;
+        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
+        boxCollider.center = meshBounds.center;
+        boxCollider.size = meshBounds.size;
+        return boxCollider;
     }
 
     private void StartRotation(Quaternion targetRotation, bool opening)

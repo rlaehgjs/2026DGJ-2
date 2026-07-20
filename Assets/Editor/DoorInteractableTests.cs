@@ -5,6 +5,36 @@ using UnityEngine;
 
 public class DoorInteractableTests
 {
+    [TestCase("X", 1f, 0f, 0f)]
+    [TestCase("Y", 0f, 1f, 0f)]
+    [TestCase("Z", 0f, 0f, 1f)]
+    public void GetLocalRotationAxis_ReturnsConfiguredAxis(
+        string axisName,
+        float expectedX,
+        float expectedY,
+        float expectedZ)
+    {
+        Type doorInteractableType = typeof(PlayerInteraction).Assembly.GetType("DoorInteractable");
+        Assert.That(doorInteractableType, Is.Not.Null);
+
+        Type rotationAxisType = doorInteractableType.GetNestedType(
+            "RotationAxis",
+            BindingFlags.NonPublic);
+        Assert.That(rotationAxisType, Is.Not.Null);
+
+        MethodInfo getLocalRotationAxisMethod = doorInteractableType.GetMethod(
+            "GetLocalRotationAxis",
+            BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.That(getLocalRotationAxisMethod, Is.Not.Null);
+
+        object rotationAxis = Enum.Parse(rotationAxisType, axisName);
+        Vector3 actual = (Vector3)getLocalRotationAxisMethod.Invoke(
+            null,
+            new[] { rotationAxis });
+
+        Assert.That(actual, Is.EqualTo(new Vector3(expectedX, expectedY, expectedZ)));
+    }
+
     [Test]
     public void CalculateOpenAngle_MovesDoorCenterAwayFromPlayer()
     {
@@ -28,5 +58,30 @@ public class DoorInteractableTests
             });
 
         Assert.That(signedAngle, Is.EqualTo(90f));
+    }
+
+    [Test]
+    public void GetSignedOpenAngle_TowardPlayer_InvertsAwayFromPlayerAngle()
+    {
+        Type doorInteractableType = typeof(PlayerInteraction).Assembly.GetType("DoorInteractable");
+        Assert.That(doorInteractableType, Is.Not.Null);
+
+        MethodInfo getSignedOpenAngleMethod = doorInteractableType.GetMethod(
+            "GetSignedOpenAngle",
+            BindingFlags.Static | BindingFlags.NonPublic);
+        Assert.That(getSignedOpenAngleMethod, Is.Not.Null);
+
+        object[] arguments =
+        {
+            Vector3.zero,
+            Vector3.up,
+            Vector3.right,
+            new Vector3(0f, 0f, 3f),
+            90f,
+            true
+        };
+
+        float towardPlayerAngle = (float)getSignedOpenAngleMethod.Invoke(null, arguments);
+        Assert.That(towardPlayerAngle, Is.EqualTo(-90f));
     }
 }

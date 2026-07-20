@@ -92,6 +92,96 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &910100000000000016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393739294813750621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53584af2aa5af6942806badcd2e14863, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  openAngle: 90
+  openDuration: 0.3
+  rotationAxis: 0
+  openTowardPlayer: 1
+  frontDoorLock: {fileID: 0}
+  doorCollider: {fileID: 0}
+--- !u!114 &910100000000000017
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2577613241803542312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53584af2aa5af6942806badcd2e14863, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  openAngle: 90
+  openDuration: 0.3
+  rotationAxis: 0
+  openTowardPlayer: 1
+  frontDoorLock: {fileID: 0}
+  doorCollider: {fileID: 0}
+--- !u!114 &910100000000000018
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5075952834629248934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53584af2aa5af6942806badcd2e14863, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  openAngle: 90
+  openDuration: 0.3
+  rotationAxis: 1
+  openTowardPlayer: 1
+  frontDoorLock: {fileID: 0}
+  doorCollider: {fileID: 0}
+--- !u!114 &910100000000000019
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7700423578300771209}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53584af2aa5af6942806badcd2e14863, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  openAngle: 90
+  openDuration: 0.3
+  rotationAxis: 0
+  openTowardPlayer: 1
+  frontDoorLock: {fileID: 0}
+  doorCollider: {fileID: 0}
+--- !u!114 &910100000000000020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8126944575057587936}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53584af2aa5af6942806badcd2e14863, type: 3}
+  m_Name:
+  m_EditorClassIdentifier:
+  openAngle: 90
+  openDuration: 0.3
+  rotationAxis: 0
+  openTowardPlayer: 1
+  frontDoorLock: {fileID: 0}
+  doorCollider: {fileID: 0}
 --- !u!1 &910100000000000006
 GameObject:
   m_ObjectHideFlags: 0
@@ -2577,12 +2667,13 @@ GameObject:
   - component: {fileID: 4442740658808791249}
   - component: {fileID: 213640029667440407}
   - component: {fileID: 2147437148222029045}
+  - component: {fileID: 910100000000000016}
   m_Layer: 0
   m_Name: Door4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &4442740658808791249
 Transform:
@@ -4789,12 +4880,13 @@ GameObject:
   - component: {fileID: 5877220736298396315}
   - component: {fileID: 7081606453102037667}
   - component: {fileID: 4984083804218137372}
+  - component: {fileID: 910100000000000017}
   m_Layer: 0
   m_Name: Cube.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5877220736298396315
 Transform:
@@ -8607,12 +8699,13 @@ GameObject:
   - component: {fileID: 5749676334923861031}
   - component: {fileID: 1253873443900537180}
   - component: {fileID: 1769755044492862356}
+  - component: {fileID: 910100000000000018}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &5749676334923861031
 Transform:
@@ -15802,12 +15895,13 @@ GameObject:
   - component: {fileID: 430133582194598544}
   - component: {fileID: 5567543710483524867}
   - component: {fileID: 7694951350221284048}
+  - component: {fileID: 910100000000000019}
   m_Layer: 0
   m_Name: Door3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &430133582194598544
 Transform:
@@ -16199,12 +16293,13 @@ GameObject:
   - component: {fileID: 1785542857213712914}
   - component: {fileID: 153149879824517323}
   - component: {fileID: 4366459329401220907}
+  - component: {fileID: 910100000000000020}
   m_Layer: 0
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 2147483647
+  m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &1785542857213712914
 Transform:
