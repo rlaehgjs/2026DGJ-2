@@ -56,6 +56,13 @@ public class PickupInteractableTriggerTests
         pickupObject = new GameObject("Pickup");
         PickupInteractable pickup = pickupObject.AddComponent<PickupInteractable>();
         SetPickupData(pickup, itemData, TestSaveId, saveManager);
+        ItemData collectedItem = null;
+        int collectedAmount = 0;
+        pickup.ItemCollected += (item, amount) =>
+        {
+            collectedItem = item;
+            collectedAmount = amount;
+        };
 
         MethodInfo triggerEnterMethod = typeof(PickupInteractable).GetMethod(
             "OnTriggerEnter",
@@ -65,6 +72,61 @@ public class PickupInteractableTriggerTests
 
         Assert.That(inventory.GetItemAmount(itemData.ItemId), Is.EqualTo(1));
         Assert.That(saveManager.IsItemCollected(TestSaveId), Is.True);
+        Assert.That(collectedItem, Is.EqualTo(itemData));
+        Assert.That(collectedAmount, Is.EqualTo(1));
+        Assert.That(pickupObject.activeSelf, Is.False);
+
+        Object.DestroyImmediate(itemData);
+    }
+
+    [Test]
+    public void Awake_HidesSavedPickupBeforeItCanBeEnabledForCollection()
+    {
+        ItemData itemData = ScriptableObject.CreateInstance<ItemData>();
+        SetItemDataId(itemData, "test_item");
+
+        saveManagerObject = new GameObject("SaveManager");
+        SaveManager saveManager = saveManagerObject.AddComponent<SaveManager>();
+        Assert.That(saveManager.RegisterCollectedItem(TestSaveId), Is.True);
+
+        pickupObject = new GameObject("Pickup");
+        pickupObject.SetActive(false);
+        PickupInteractable pickup = pickupObject.AddComponent<PickupInteractable>();
+        SetPickupData(pickup, itemData, TestSaveId, saveManager);
+
+        pickupObject.SetActive(true);
+
+        Assert.That(pickupObject.activeSelf, Is.False);
+
+        Object.DestroyImmediate(itemData);
+    }
+
+    [Test]
+    public void TriggerEnter_WhenSaveManagerIsInactive_AddsItemWithoutSaving()
+    {
+        ItemData itemData = ScriptableObject.CreateInstance<ItemData>();
+        SetItemDataId(itemData, "test_item");
+
+        playerObject = new GameObject("Player");
+        PlayerInventory inventory = playerObject.AddComponent<PlayerInventory>();
+        BoxCollider playerCollider = playerObject.AddComponent<BoxCollider>();
+
+        saveManagerObject = new GameObject("SaveManager");
+        SaveManager saveManager = saveManagerObject.AddComponent<SaveManager>();
+        saveManagerObject.SetActive(false);
+
+        pickupObject = new GameObject("Pickup");
+        PickupInteractable pickup = pickupObject.AddComponent<PickupInteractable>();
+        SetPickupData(pickup, itemData, TestSaveId, saveManager);
+
+        MethodInfo triggerEnterMethod = typeof(PickupInteractable).GetMethod(
+            "OnTriggerEnter",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        triggerEnterMethod.Invoke(pickup, new object[] { playerCollider });
+
+        Assert.That(inventory.GetItemAmount(itemData.ItemId), Is.EqualTo(1));
+        Assert.That(saveManager.HasGameSave(), Is.False);
         Assert.That(pickupObject.activeSelf, Is.False);
 
         Object.DestroyImmediate(itemData);

@@ -6,7 +6,7 @@ public enum GameProgressState
     FindGenerator,
     FindGeneratorWire,
     RepairGenerator,
-    FindPlywood,
+    FindNails,
     FindHammer,
     RepairRefrigeratorWall,
     FindCoolantCapsule,

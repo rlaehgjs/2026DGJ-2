@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class InspectInteractable : MonoBehaviour, IInteractable
+public class RefrigeratorInspectInteractable : MonoBehaviour, IInteractable
 {
     [SerializeField] private GameProgressManager gameProgressManager;
 
@@ -12,7 +12,7 @@ public class InspectInteractable : MonoBehaviour, IInteractable
 
     public void Interact(PlayerInventory inventory)
     {
-        if (gameProgressManager == null)
+        if (!CanInteract(inventory))
         {
             return;
         }

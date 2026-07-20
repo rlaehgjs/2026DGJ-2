@@ -7,7 +7,7 @@ public class GameProgressManager : MonoBehaviour
 
     public GameProgressState CurrentState { get; private set; }
 
-    public bool IsPowerRestored => CurrentState >= GameProgressState.FindPlywood;
+    public bool IsPowerRestored => CurrentState >= GameProgressState.FindNails;
     public bool IsRefrigeratorWallRepaired => CurrentState >= GameProgressState.FindCoolantCapsule;
     public bool IsFreezerRepaired => CurrentState >= GameProgressState.EnterFreezer;
     public bool CanEnterFreezer => CurrentState == GameProgressState.EnterFreezer;
@@ -45,9 +45,9 @@ public class GameProgressManager : MonoBehaviour
                 SetState(GameProgressState.RepairGenerator, true);
                 return true;
             case GameProgressState.RepairGenerator:
-                SetState(GameProgressState.FindPlywood, true);
+                SetState(GameProgressState.FindNails, true);
                 return true;
-            case GameProgressState.FindPlywood:
+            case GameProgressState.FindNails:
                 SetState(GameProgressState.FindHammer, true);
                 return true;
             case GameProgressState.FindHammer:
@@ -83,6 +83,11 @@ public class GameProgressManager : MonoBehaviour
         return TryCompleteExpectedObjective(GameProgressState.InspectRefrigerator);
     }
 
+    public bool TryCompleteFrontDoorKeyCollection()
+    {
+        return TryCompleteExpectedObjective(GameProgressState.FindFrontDoorKey);
+    }
+
     public bool TryCompleteGeneratorInspection()
     {
         return TryCompleteExpectedObjective(GameProgressState.FindGenerator);
@@ -98,9 +103,9 @@ public class GameProgressManager : MonoBehaviour
         return TryCompleteExpectedObjective(GameProgressState.RepairGenerator);
     }
 
-    public bool TryCompletePlywood()
+    public bool TryCompleteNails()
     {
-        return TryCompleteExpectedObjective(GameProgressState.FindPlywood);
+        return TryCompleteExpectedObjective(GameProgressState.FindNails);
     }
 
     public bool TryCompleteHammer()
@@ -157,7 +162,7 @@ public class GameProgressManager : MonoBehaviour
 
         ProgressChanged?.Invoke(CurrentState);
 
-        if (nextState == GameProgressState.FindPlywood)
+        if (nextState == GameProgressState.FindNails)
         {
             PowerRestored?.Invoke();
         }
