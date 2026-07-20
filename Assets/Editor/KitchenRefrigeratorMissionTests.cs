@@ -111,6 +111,44 @@ public class KitchenRefrigeratorMissionTests
     }
 
     [Test]
+    public void FreezerEntranceTrigger_RequiresContinuousTwoSecondStay()
+    {
+        GameProgressManager progressManager = CreateProgressManager();
+        PlayerInventory inventory = CreatePlayerInventory(out BoxCollider playerCollider);
+        GameObject triggerObject = new GameObject("FreezerEntranceTrigger");
+        createdObjects.Add(triggerObject);
+        BoxCollider triggerCollider = triggerObject.AddComponent<BoxCollider>();
+        triggerCollider.isTrigger = true;
+        FreezerEntranceTrigger freezerEntranceTrigger = triggerObject.AddComponent<FreezerEntranceTrigger>();
+        SetFreezerEntranceTriggerReferences(freezerEntranceTrigger, triggerCollider, progressManager);
+        freezerEntranceTrigger.enabled = false;
+        freezerEntranceTrigger.enabled = true;
+
+        Assert.That(triggerCollider.enabled, Is.False);
+        InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
+        AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 2f);
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.FindKitchen));
+
+        progressManager.RestoreState(GameProgressState.EnterFreezer);
+
+        Assert.That(triggerCollider.enabled, Is.True);
+        InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
+        AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 1f);
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.EnterFreezer));
+
+        InvokeTriggerExit(freezerEntranceTrigger, playerCollider);
+        AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 1.1f);
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.EnterFreezer));
+
+        InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
+        AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 2f);
+
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.Completed));
+        Assert.That(triggerCollider.enabled, Is.False);
+        Assert.That(inventory, Is.Not.Null);
+    }
+
+    [Test]
     public void RefrigeratorInspectInteractable_OnlyCompletesRefrigeratorInspection()
     {
         GameProgressManager progressManager = CreateProgressManager();
@@ -612,6 +650,18 @@ public class KitchenRefrigeratorMissionTests
         serializedRepair.ApplyModifiedPropertiesWithoutUndo();
     }
 
+    private static void SetFreezerEntranceTriggerReferences(
+        FreezerEntranceTrigger freezerEntranceTrigger,
+        Collider triggerCollider,
+        GameProgressManager progressManager)
+    {
+        SerializedObject serializedTrigger = new SerializedObject(freezerEntranceTrigger);
+        serializedTrigger.FindProperty("triggerCollider").objectReferenceValue = triggerCollider;
+        serializedTrigger.FindProperty("requiredStaySeconds").floatValue = 2f;
+        serializedTrigger.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
+        serializedTrigger.ApplyModifiedPropertiesWithoutUndo();
+    }
+
     private static void SetRefrigeratorWallRepairReferences(
         RefrigeratorWallRepairInteractable wallRepair,
         Collider wallCollider,
@@ -652,6 +702,26 @@ public class KitchenRefrigeratorMissionTests
 
         Assert.That(triggerEnterMethod, Is.Not.Null);
         triggerEnterMethod.Invoke(component, new object[] { playerCollider });
+    }
+
+    private static void InvokeTriggerExit(Component component, Collider playerCollider)
+    {
+        MethodInfo triggerExitMethod = component.GetType().GetMethod(
+            "OnTriggerExit",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.That(triggerExitMethod, Is.Not.Null);
+        triggerExitMethod.Invoke(component, new object[] { playerCollider });
+    }
+
+    private static void AdvanceFreezerEntranceTimer(FreezerEntranceTrigger freezerEntranceTrigger, float deltaTime)
+    {
+        MethodInfo advanceTimerMethod = typeof(FreezerEntranceTrigger).GetMethod(
+            "AdvanceStayTimer",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.That(advanceTimerMethod, Is.Not.Null);
+        advanceTimerMethod.Invoke(freezerEntranceTrigger, new object[] { deltaTime });
     }
 
     private GameProgressManager CreateProgressManager()

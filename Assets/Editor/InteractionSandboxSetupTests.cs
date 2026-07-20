@@ -21,6 +21,7 @@ public class InteractionSandboxSetupTests
             GameProgressManager progressManager = FindComponent<GameProgressManager>(sandboxScene);
             SaveManager saveManager = FindComponent<SaveManager>(sandboxScene);
             KitchenArrivalTrigger kitchenTrigger = FindComponent<KitchenArrivalTrigger>(sandboxScene);
+            FreezerEntranceTrigger freezerEntranceTrigger = FindComponent<FreezerEntranceTrigger>(sandboxScene);
             RefrigeratorInspectInteractable refrigerator = FindComponent<RefrigeratorInspectInteractable>(sandboxScene);
             RefrigeratorWallRepairInteractable refrigeratorWall = FindComponent<RefrigeratorWallRepairInteractable>(sandboxScene);
             FreezerRepairInteractable freezer = FindComponent<FreezerRepairInteractable>(sandboxScene);
@@ -69,6 +70,7 @@ public class InteractionSandboxSetupTests
             Assert.That(progressManager, Is.Not.Null);
             Assert.That(saveManager, Is.Not.Null);
             Assert.That(kitchenTrigger, Is.Not.Null);
+            Assert.That(freezerEntranceTrigger, Is.Not.Null);
             Assert.That(refrigerator, Is.Not.Null);
             Assert.That(refrigeratorWall, Is.Not.Null);
             Assert.That(freezer, Is.Not.Null);
@@ -89,6 +91,7 @@ public class InteractionSandboxSetupTests
             Assert.That(coolantCapsuleData, Is.Not.Null);
 
             BoxCollider triggerCollider = kitchenTrigger.GetComponent<BoxCollider>();
+            BoxCollider freezerEntranceCollider = freezerEntranceTrigger.GetComponent<BoxCollider>();
             BoxCollider refrigeratorCollider = refrigerator.GetComponent<BoxCollider>();
             BoxCollider refrigeratorWallCollider = refrigeratorWall.GetComponent<BoxCollider>();
             BoxCollider freezerCollider = freezer.GetComponent<BoxCollider>();
@@ -100,6 +103,8 @@ public class InteractionSandboxSetupTests
             BoxCollider frontDoorKeyCollider = frontDoorKey.GetComponent<BoxCollider>();
             Assert.That(triggerCollider, Is.Not.Null);
             Assert.That(triggerCollider.isTrigger, Is.True);
+            Assert.That(freezerEntranceCollider, Is.Not.Null);
+            Assert.That(freezerEntranceCollider.isTrigger, Is.True);
             Assert.That(refrigeratorCollider, Is.Not.Null);
             Assert.That(refrigeratorCollider.isTrigger, Is.False);
             Assert.That(refrigeratorWallCollider, Is.Not.Null);
@@ -120,6 +125,10 @@ public class InteractionSandboxSetupTests
             Assert.That(frontDoorKeyCollider.isTrigger, Is.True);
 
             Assert.That(GetObjectReference(kitchenTrigger, "gameProgressManager"), Is.EqualTo(progressManager));
+            Assert.That(GetObjectReference(freezerEntranceTrigger, "triggerCollider"), Is.EqualTo(freezerEntranceCollider));
+            Assert.That(GetFloatValue(freezerEntranceTrigger, "requiredStaySeconds"), Is.EqualTo(2f));
+            Assert.That(GetObjectReference(freezerEntranceTrigger, "gameProgressManager"), Is.EqualTo(progressManager));
+            Assert.That(freezerEntranceTrigger.transform.position, Is.EqualTo(freezer.transform.position));
             Assert.That(GetObjectReference(refrigerator, "gameProgressManager"), Is.EqualTo(progressManager));
             Assert.That(GetObjectReference(refrigeratorWall, "requiredNails"), Is.Not.Null);
             Assert.That(GetObjectReference(refrigeratorWall, "requiredHammer"), Is.Not.Null);
@@ -210,6 +219,56 @@ public class InteractionSandboxSetupTests
             tryInteractMethod.Invoke(playerInteraction, null);
 
             Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.FindFrontDoorKey));
+        }
+        finally
+        {
+            EditorSceneManager.CloseScene(sandboxScene, true);
+        }
+    }
+
+    [Test]
+    public void InteractionSandbox_FreezerEntranceTrigger_CompletesMissionOnlyAfterRepair()
+    {
+        Scene sandboxScene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
+
+        try
+        {
+            PlayerInventory playerInventory = FindComponent<PlayerInventory>(sandboxScene);
+            GameProgressManager progressManager = FindComponent<GameProgressManager>(sandboxScene);
+            FreezerEntranceTrigger freezerEntranceTrigger = FindComponent<FreezerEntranceTrigger>(sandboxScene);
+            BoxCollider playerCollider = playerInventory.GetComponentInChildren<BoxCollider>();
+            BoxCollider entranceCollider = freezerEntranceTrigger.GetComponent<BoxCollider>();
+
+            Assert.That(playerInventory, Is.Not.Null);
+            Assert.That(progressManager, Is.Not.Null);
+            Assert.That(freezerEntranceTrigger, Is.Not.Null);
+            Assert.That(playerCollider, Is.Not.Null);
+            Assert.That(entranceCollider, Is.Not.Null);
+
+            freezerEntranceTrigger.enabled = false;
+            freezerEntranceTrigger.enabled = true;
+            Assert.That(entranceCollider.enabled, Is.False);
+
+            InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
+            AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 2f);
+            Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.FindKitchen));
+
+            progressManager.RestoreState(GameProgressState.EnterFreezer);
+            Assert.That(entranceCollider.enabled, Is.True);
+
+            InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
+            AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 1f);
+            Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.EnterFreezer));
+
+            InvokeTriggerExit(freezerEntranceTrigger, playerCollider);
+            AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 1.1f);
+            Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.EnterFreezer));
+
+            InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
+            AdvanceFreezerEntranceTimer(freezerEntranceTrigger, 2f);
+
+            Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.Completed));
+            Assert.That(entranceCollider.enabled, Is.False);
         }
         finally
         {
@@ -682,6 +741,11 @@ public class InteractionSandboxSetupTests
         return new SerializedObject(component).FindProperty(propertyName).enumValueIndex;
     }
 
+    private static float GetFloatValue(Object component, string propertyName)
+    {
+        return new SerializedObject(component).FindProperty(propertyName).floatValue;
+    }
+
     private static bool InventoryCatalogContains(PlayerInventory inventory, ItemData itemData)
     {
         SerializedProperty itemCatalog = new SerializedObject(inventory).FindProperty("itemCatalog");
@@ -722,5 +786,25 @@ public class InteractionSandboxSetupTests
 
         Assert.That(triggerEnterMethod, Is.Not.Null);
         triggerEnterMethod.Invoke(component, new object[] { playerCollider });
+    }
+
+    private static void InvokeTriggerExit(Component component, Collider playerCollider)
+    {
+        MethodInfo triggerExitMethod = component.GetType().GetMethod(
+            "OnTriggerExit",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.That(triggerExitMethod, Is.Not.Null);
+        triggerExitMethod.Invoke(component, new object[] { playerCollider });
+    }
+
+    private static void AdvanceFreezerEntranceTimer(FreezerEntranceTrigger freezerEntranceTrigger, float deltaTime)
+    {
+        MethodInfo advanceTimerMethod = typeof(FreezerEntranceTrigger).GetMethod(
+            "AdvanceStayTimer",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.That(advanceTimerMethod, Is.Not.Null);
+        advanceTimerMethod.Invoke(freezerEntranceTrigger, new object[] { deltaTime });
     }
 }
