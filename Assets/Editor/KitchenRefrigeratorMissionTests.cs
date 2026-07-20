@@ -251,6 +251,75 @@ public class KitchenRefrigeratorMissionTests
     }
 
     [Test]
+    public void HammerPickupProgress_CollectsOnlyAtHammerObjective_AndAdvancesMission()
+    {
+        GameProgressManager progressManager = CreateProgressManager();
+        PlayerInventory inventory = CreatePlayerInventory(out BoxCollider playerCollider);
+        SaveManager saveManager = CreateSaveManager();
+        SetSaveManagerReferences(saveManager, progressManager, inventory);
+        saveManager.enabled = false;
+        saveManager.enabled = true;
+
+        GameObject hammerObject = new GameObject("Hammer");
+        createdObjects.Add(hammerObject);
+        PickupInteractable hammerPickup = hammerObject.AddComponent<PickupInteractable>();
+        SetHammerPickupReferences(hammerPickup, saveManager);
+        HammerPickupProgress hammerProgress = hammerObject.AddComponent<HammerPickupProgress>();
+        SetHammerPickupProgressReferences(hammerProgress, hammerPickup, progressManager);
+        hammerProgress.enabled = false;
+        hammerProgress.enabled = true;
+
+        Assert.That(hammerPickup.enabled, Is.False);
+
+        progressManager.RestoreState(GameProgressState.FindHammer);
+
+        Assert.That(hammerPickup.enabled, Is.True);
+        InvokeTriggerEnter(hammerPickup, playerCollider);
+
+        Assert.That(inventory.HasItem("hammer", 1), Is.True);
+        Assert.That(saveManager.IsItemCollected("Hammer_01"), Is.True);
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.RepairRefrigeratorWall));
+        Assert.That(hammerObject.activeSelf, Is.False);
+    }
+
+    [Test]
+    public void RefrigeratorWallRepairInteractable_ConsumesMaterialsOnlyAtRepairObjective()
+    {
+        GameProgressManager progressManager = CreateProgressManager();
+        PlayerInventory inventory = CreatePlayerInventory(out _);
+        GameObject wallObject = new GameObject("RefrigeratorWall");
+        createdObjects.Add(wallObject);
+        BoxCollider wallCollider = wallObject.AddComponent<BoxCollider>();
+        RefrigeratorWallRepairInteractable wallRepair = wallObject.AddComponent<RefrigeratorWallRepairInteractable>();
+        SetRefrigeratorWallRepairReferences(wallRepair, wallCollider, progressManager);
+        wallRepair.enabled = false;
+        wallRepair.enabled = true;
+
+        Assert.That(wallCollider.enabled, Is.False);
+        Assert.That(wallRepair.CanInteract(inventory), Is.False);
+
+        progressManager.RestoreState(GameProgressState.RepairRefrigeratorWall);
+
+        Assert.That(wallCollider.enabled, Is.True);
+        Assert.That(wallRepair.CanInteract(inventory), Is.False);
+
+        ItemData nails = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Nails.asset");
+        ItemData hammer = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Hammer.asset");
+        Assert.That(nails, Is.Not.Null);
+        Assert.That(hammer, Is.Not.Null);
+        Assert.That(inventory.TryAddItem(nails, 1), Is.True);
+        Assert.That(inventory.TryAddItem(hammer, 1), Is.True);
+        Assert.That(wallRepair.CanInteract(inventory), Is.True);
+
+        wallRepair.Interact(inventory);
+
+        Assert.That(inventory.HasItem("nails", 1), Is.False);
+        Assert.That(inventory.HasItem("hammer", 1), Is.False);
+        Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.FindCoolantCapsule));
+        Assert.That(wallCollider.enabled, Is.False);
+    }
+
+    [Test]
     public void GeneratorInteractable_ConsumesWireAndRepairsGenerator()
     {
         GameProgressManager progressManager = CreateProgressManager();
@@ -302,7 +371,7 @@ public class KitchenRefrigeratorMissionTests
 
         InvokeTriggerEnter(keyPickup, playerCollider);
 
-        Assert.That(inventory.HasItem("kitchen_key", 1), Is.True);
+        Assert.That(inventory.HasItem("FrontDoor_key", 1), Is.True);
         Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.FindFrontDoorKey));
         Assert.That(saveManager.IsItemCollected("FrontDoorKey_01"), Is.True);
         Assert.That(keyObject.activeSelf, Is.False);
@@ -412,6 +481,50 @@ public class KitchenRefrigeratorMissionTests
         serializedProgress.FindProperty("pickupInteractable").objectReferenceValue = nailsPickup;
         serializedProgress.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
         serializedProgress.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetHammerPickupReferences(PickupInteractable hammerPickup, SaveManager saveManager)
+    {
+        ItemData hammer = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Hammer.asset");
+        Assert.That(hammer, Is.Not.Null);
+
+        SerializedObject serializedPickup = new SerializedObject(hammerPickup);
+        serializedPickup.FindProperty("itemData").objectReferenceValue = hammer;
+        serializedPickup.FindProperty("amount").intValue = 1;
+        serializedPickup.FindProperty("saveId").stringValue = "Hammer_01";
+        serializedPickup.FindProperty("saveManager").objectReferenceValue = saveManager;
+        serializedPickup.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetHammerPickupProgressReferences(
+        HammerPickupProgress hammerProgress,
+        PickupInteractable hammerPickup,
+        GameProgressManager progressManager)
+    {
+        SerializedObject serializedProgress = new SerializedObject(hammerProgress);
+        serializedProgress.FindProperty("pickupInteractable").objectReferenceValue = hammerPickup;
+        serializedProgress.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
+        serializedProgress.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void SetRefrigeratorWallRepairReferences(
+        RefrigeratorWallRepairInteractable wallRepair,
+        Collider wallCollider,
+        GameProgressManager progressManager)
+    {
+        ItemData nails = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Nails.asset");
+        ItemData hammer = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/Hammer.asset");
+        Assert.That(nails, Is.Not.Null);
+        Assert.That(hammer, Is.Not.Null);
+
+        SerializedObject serializedRepair = new SerializedObject(wallRepair);
+        serializedRepair.FindProperty("requiredNails").objectReferenceValue = nails;
+        serializedRepair.FindProperty("requiredNailsAmount").intValue = 1;
+        serializedRepair.FindProperty("requiredHammer").objectReferenceValue = hammer;
+        serializedRepair.FindProperty("requiredHammerAmount").intValue = 1;
+        serializedRepair.FindProperty("interactionCollider").objectReferenceValue = wallCollider;
+        serializedRepair.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
+        serializedRepair.ApplyModifiedPropertiesWithoutUndo();
     }
 
     private static void SetGeneratorReferences(GeneratorInteractable generatorInteractable, GameProgressManager progressManager)
