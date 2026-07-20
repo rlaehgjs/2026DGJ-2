@@ -16,7 +16,8 @@ public class BathroomJumpscare : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // 부딪힌 물체의 태그가 "Player"이고, 아직 귀신이 안 나왔었다면 실행!
-        if (other.CompareTag("Player") && !isPickedUp)
+        Rigidbody playerBody = other.attachedRigidbody;
+        if (playerBody != null && playerBody.CompareTag("Player") && !isPickedUp)
         {
             isPickedUp = true; // "이제 실행했어!"라고 표시
 
@@ -25,6 +26,7 @@ public class BathroomJumpscare : MonoBehaviour
             if (GetComponent<Collider>() != null) GetComponent<Collider>().enabled = false;
 
             // ★ 1초 대기 타이머(코루틴) 작동 시작!
+            Debug.Log("[BathroomJumpscare] 플레이어 진입을 감지했습니다.");
             StartCoroutine(JumpscareRoutine());
         }
     }

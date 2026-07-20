@@ -14,7 +14,8 @@ public class AntManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!hasTriggered && other.CompareTag("Player"))
+        Rigidbody playerBody = other.attachedRigidbody;
+        if (!hasTriggered && playerBody != null && playerBody.CompareTag("Player"))
         {
             hasTriggered = true;
             if (antGroup != null)
