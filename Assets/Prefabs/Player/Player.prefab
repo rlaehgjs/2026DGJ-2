@@ -9,10 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5766344783408521087}
+  - component: {fileID: 3687410209840065360}
   - component: {fileID: 4087547725252875087}
   - component: {fileID: 4657935908992714778}
   - component: {fileID: 8104409302486474839}
-  - component: {fileID: 3687410209840065360}
   - component: {fileID: 7415071797926930389}
   - component: {fileID: 124571269094297604}
   - component: {fileID: 922100000000000001}
@@ -34,13 +34,29 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 21, y: 21, z: 21}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4931046930910180524}
   - {fileID: 5571855427934342208}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3687410209840065360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819104716325639856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4967d0352abe6324ea0a82bde3c5382a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameInputReader
+  isJumpEnabled: 1
+  isMoveEnabled: 1
+  isLookEnabled: 1
+  isInteractionEnabled: 1
 --- !u!114 &4087547725252875087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -55,6 +71,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerLook
   cameraTransform: {fileID: 5571855427934342208}
   mouseSensitivity: 500
+  verticalMaxDegree: -90
+  verticalMinDegree: 30
 --- !u!114 &4657935908992714778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,15 +90,15 @@ MonoBehaviour:
   - 1
   - 1.1
   extraGravityMultipliers:
-  - 5
-  - 4
-  - 3
+  - 220
+  - 160
+  - 70
   frictionsPerStage:
   - 20
   - 10
   - 0
-  baseMoveSpeed: 2.5
-  baseJumpForce: 5
+  baseMoveSpeed: 30
+  baseJumpForce: 50
 --- !u!114 &8104409302486474839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -99,24 +117,9 @@ MonoBehaviour:
   - 1
   maxHp: 100
   currentHp: 0
-  baseMeltValue: 1
+  minLimitPercentHpMelted: 0.1
+  minLimitHpMelted: 0
   current_state: 2
---- !u!114 &3687410209840065360
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2819104716325639856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4967d0352abe6324ea0a82bde3c5382a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameInputReader
-  isJumpEnabled: 1
-  isMoveEnabled: 1
-  isLookEnabled: 1
-  isInteractionEnabled: 1
 --- !u!114 &7415071797926930389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +205,7 @@ GameObject:
   - component: {fileID: 5571855427934342208}
   - component: {fileID: 3446391646235180569}
   - component: {fileID: 1303966843301456160}
+  - component: {fileID: 1347256117110001377}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -218,7 +222,7 @@ Transform:
   m_GameObject: {fileID: 8241477201252353190}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.75, z: 0.15}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -283,6 +287,50 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8241477201252353190}
   m_Enabled: 1
+--- !u!114 &1347256117110001377
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8241477201252353190}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1001 &7121006747050428381
 PrefabInstance:
   m_ObjectHideFlags: 0
