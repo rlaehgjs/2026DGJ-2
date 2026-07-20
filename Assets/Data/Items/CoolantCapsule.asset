@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63ac145c4e1a759408ab9ce6b5c502a9, type: 3}
+  m_Name: CoolantCapsule
+  m_EditorClassIdentifier: Assembly-CSharp::ItemData
+  itemId: coolant_capsule
+  displayNameKey: item.coolant_capsule.name
+  descriptionKey: item.coolant_capsule.description
+  icon: {fileID: 0}
+  maxStack: 1
