@@ -172,6 +172,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   itemCatalog:
   - {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
+  - {fileID: 11400000, guid: 21610b4eb03714944975c5093255068d, type: 2}
+  - {fileID: 11400000, guid: a8390f496e5d4b65b438ff0da3b3fab6, type: 2}
+  - {fileID: 11400000, guid: 5fcfc86a6118a144c851b7e111076cf8, type: 2}
+  - {fileID: 11400000, guid: 0c7bcb6896e4dd041bffd36559e7c26c, type: 2}
   items: []
 --- !u!114 &922100000000000001
 MonoBehaviour:
