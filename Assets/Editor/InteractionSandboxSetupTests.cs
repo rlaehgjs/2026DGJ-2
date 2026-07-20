@@ -24,8 +24,8 @@ public class InteractionSandboxSetupTests
             InspectInteractable refrigerator = FindComponent<InspectInteractable>(sandboxScene);
 
             Assert.That(playerInteraction, Is.Not.Null);
-            Assert.That(playerInteraction.gameObject.name, Is.EqualTo("Player(Test)"));
             Assert.That(playerInventory, Is.Not.Null);
+            Assert.That(playerInteraction.GetComponent<PlayerInventory>(), Is.EqualTo(playerInventory));
             Assert.That(progressManager, Is.Not.Null);
             Assert.That(saveManager, Is.Not.Null);
             Assert.That(kitchenTrigger, Is.Not.Null);
@@ -66,7 +66,13 @@ public class InteractionSandboxSetupTests
             Assert.That(progressManager, Is.Not.Null);
             Assert.That(interactionCamera, Is.Not.Null);
 
-            playerInteraction.transform.position = new Vector3(0f, playerInteraction.transform.position.y, 2f);
+            InspectInteractable refrigerator = FindComponent<InspectInteractable>(sandboxScene);
+            Assert.That(refrigerator, Is.Not.Null);
+
+            Vector3 cameraOffset = interactionCamera.transform.position - playerInteraction.transform.position;
+            playerInteraction.transform.position = refrigerator.transform.position
+                - cameraOffset
+                - refrigerator.transform.forward * 2f;
             SetPlayerInteractionReferences(playerInteraction, interactionCamera, playerInventory);
             progressManager.RestoreState(GameProgressState.FindKitchen);
             Assert.That(progressManager.TryCompleteKitchenArrival(), Is.True);
