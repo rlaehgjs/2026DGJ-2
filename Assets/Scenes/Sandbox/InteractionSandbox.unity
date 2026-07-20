@@ -185,7 +185,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d8f24b23cad8b854caf3382a6b4aa6f1, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Project.Core::GameProgressManager
 --- !u!1 &827702712
 GameObject:
@@ -353,7 +353,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8237582429418059809, guid: b4def1132729a1f489691e1abeab5f0e, type: 3}
       propertyPath: saveManager
-      value: 
+      value:
       objectReference: {fileID: 1010640699}
     - target: {fileID: 8237582429418059809, guid: b4def1132729a1f489691e1abeab5f0e, type: 3}
       propertyPath: initialState
@@ -487,7 +487,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3777ad45d91c1024184d98551184b8f5, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::KitchenArrivalTrigger
   gameProgressManager: {fileID: 46201633}
 --- !u!1 &900000020
@@ -613,7 +613,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 994fc7c3d19e9b04fb94fbb929ee300d, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::RefrigeratorInspectInteractable
   gameProgressManager: {fileID: 46201633}
 --- !u!1 &900000090
@@ -870,7 +870,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 317a7903190f5c24f9ef76dc41590242, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PickupInteractable
   itemData: {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
   amount: 1
@@ -1002,7 +1002,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: af7d5e7199884fa4a27a57cdb77a88e1, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::FrontDoorLock
   requiredKey: {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
   requiredAmount: 1
@@ -1130,7 +1130,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8146e5a25fa240d2bf3de1376619743b, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::GeneratorInteractable
   requiredWire: {fileID: 11400000, guid: 21610b4eb03714944975c5093255068d, type: 2}
   requiredWireAmount: 1
@@ -1259,7 +1259,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 317a7903190f5c24f9ef76dc41590242, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PickupInteractable
   itemData: {fileID: 11400000, guid: 21610b4eb03714944975c5093255068d, type: 2}
   amount: 1
@@ -1278,7 +1278,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 45954fbd505945f2a57d524aaae1b2aa, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::GeneratorWirePickupProgress
   pickupInteractable: {fileID: 900000065}
   gameProgressManager: {fileID: 46201633}
@@ -1406,7 +1406,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 317a7903190f5c24f9ef76dc41590242, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PickupInteractable
   itemData: {fileID: 11400000, guid: a8390f496e5d4b65b438ff0da3b3fab6, type: 2}
   amount: 1
@@ -1425,7 +1425,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd14f6e739e447d5b5be4e61fc724650, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::NailsPickupProgress
   pickupInteractable: {fileID: 900000075}
   gameProgressManager: {fileID: 46201633}
@@ -1979,11 +1979,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
       propertyPath: playerInventory
-      value: 
+      value:
       objectReference: {fileID: 1439117177}
     - target: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
       propertyPath: gameProgressManager
-      value: 
+      value:
       objectReference: {fileID: 46201633}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1999,7 +1999,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac079a8c5e09fe34b93d6e10a32c17a0, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Project.Core::SaveManager
 --- !u!1001 &1349350186
 PrefabInstance:
@@ -2059,7 +2059,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6301984928941179013, guid: 14d10861e6240b8438d787d26713ec94, type: 3}
       propertyPath: saveManager
-      value: 
+      value:
       objectReference: {fileID: 1010640699}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2132,7 +2132,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78825121bf2341d4c899c2fc88a90dd2, type: 3}
-  m_Name: 
+  m_Name:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
 --- !u!1 &1686390879
 GameObject:
@@ -2241,7 +2241,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 981191297800760431, guid: d29eed9bd8fcaa5488a3dcb7a9c0a3f6, type: 3}
       propertyPath: saveManager
-      value: 
+      value:
       objectReference: {fileID: 1010640699}
     - target: {fileID: 6185434738709603653, guid: d29eed9bd8fcaa5488a3dcb7a9c0a3f6, type: 3}
       propertyPath: m_LocalPosition.x
