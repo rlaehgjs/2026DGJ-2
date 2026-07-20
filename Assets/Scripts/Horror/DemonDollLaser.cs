@@ -12,7 +12,7 @@ public class DemonDollLaser : MonoBehaviour
     public GameObject bulletPrefab;   
     public float bulletSpeed = 35f;   
 
-    [Header("=== 이펙트 세팅 (NEW) ===")]
+    [Header("=== 이펙트 세팅 ===")]
     [Tooltip("인형이 기를 모을 때 눈에 생성될 이펙트 프리팹")]
     public GameObject chargeEffectPrefab;
 
@@ -33,12 +33,41 @@ public class DemonDollLaser : MonoBehaviour
     private bool isTracking = false;   
     private bool isSearching = true;   
 
+    // 실행 중인 AI 코루틴을 안전하게 끄고 켜기 위해 저장하는 변수
+    private Coroutine aiCoroutine;
+
     void Start()
     {
         Rigidbody rb = GetComponent<Rigidbody>();
         if (rb != null) rb.isKinematic = true; 
+    }
 
-        StartCoroutine(DollAIStateRoutine());
+    // ★ [핵심 수정] 오브젝트가 SetActive(true)로 켜질 때마다 매번 실행됩니다.
+    void OnEnable()
+    {
+        // 상태를 초기 탐지 상태로 깨끗하게 리셋합니다.
+        isSearching = true;
+        isTracking = false;
+
+        // 혹시 이미 돌고 있을지 모르는 코루틴을 방어적으로 한 번 끄고 새로 시작합니다.
+        if (aiCoroutine != null)
+        {
+            StopCoroutine(aiCoroutine);
+        }
+        aiCoroutine = StartCoroutine(DollAIStateRoutine());
+        Debug.Log("🤖 인형 활성화: 레이저 AI 루프 시동 완료!");
+    }
+
+    // ★ [핵심 수정] 오브젝트가 SetActive(false)로 꺼질 때 실행됩니다.
+    void OnDisable()
+    {
+        // 백그라운드에 좀비처럼 남아있을 수 있는 코루틴을 완전히 박멸합니다.
+        if (aiCoroutine != null)
+        {
+            StopCoroutine(aiCoroutine);
+            aiCoroutine = null;
+            Debug.Log("🔒 인형 비활성화: 레이저 AI 루프 안전 정지 완료.");
+        }
     }
 
     void LateUpdate()
@@ -89,24 +118,22 @@ public class DemonDollLaser : MonoBehaviour
                     isSearching = false; 
                     isTracking = true;   
 
-                    // ★ [차징 이펙트 생성]
-                    // 눈(laserOrigin)의 자식으로 생성하여 인형이 고개를 돌려도 이펙트가 눈에 딱 붙어 쫓아오게 합니다.
+                    // 차징 이펙트 생성
                     GameObject currentChargeFX = null;
                     if (chargeEffectPrefab != null && laserOrigin != null)
                     {
                         currentChargeFX = Instantiate(chargeEffectPrefab, laserOrigin.position, laserOrigin.rotation, laserOrigin);
                     }
 
-                    // 지정된 충전 시간 동안 대기
                     yield return new WaitForSeconds(chargeTime);
 
-                    // ★ [차징 이펙트 삭제] 발사하기 직전에 충전 이펙트를 지워줍니다.
+                    // 차징 이펙트 삭제
                     if (currentChargeFX != null)
                     {
                         Destroy(currentChargeFX);
                     }
 
-                    // 레이저 발사!
+                    // 레이저 발사
                     FireLaserBullet(); 
 
                     yield return new WaitForSeconds(attackCooldown);
@@ -122,7 +149,8 @@ public class DemonDollLaser : MonoBehaviour
     {
         if (bulletPrefab == null || laserOrigin == null || player == null) return;
 
-        Vector3 spawnPosition = laserOrigin.position + (laserOrigin.forward * 3.5f);
+        // 오프셋을 0.5f로 조절하여 인형 바로 앞에서 스폰 (벽 너머 발사 버그 해결)
+        Vector3 spawnPosition = laserOrigin.position + (laserOrigin.forward * 0.5f);
         Vector3 perfectFireDirection = (player.position - spawnPosition).normalized;
 
         GameObject bullet = Instantiate(bulletPrefab, spawnPosition, Quaternion.LookRotation(perfectFireDirection));
