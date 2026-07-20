@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63ac145c4e1a759408ab9ce6b5c502a9, type: 3}
   m_Name: KitchenKey
   m_EditorClassIdentifier: Assembly-CSharp::ItemData
-  itemId: kitchen_key
-  displayNameKey: item.kitchen_key.name
-  descriptionKey: item.kitchen_key.description
+  itemId: FrontDoor_key
+  displayNameKey: item.Frontdoor_key.name
+  descriptionKey: item.Frontdoor.description
   icon: {fileID: 0}
   maxStack: 1

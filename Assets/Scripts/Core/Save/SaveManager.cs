@@ -66,9 +66,21 @@ public class SaveManager : MonoBehaviour
         try
         {
             currentSaveData = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString(GameSaveKey));
-            currentSaveData?.EnsureCollections();
+
+            if (currentSaveData == null)
+            {
+                return false;
+            }
+
+            currentSaveData.EnsureCollections();
+
+            if (MigrateSaveData(currentSaveData))
+            {
+                SaveGame(currentSaveData);
+            }
+
             saveData = currentSaveData;
-            return currentSaveData != null;
+            return true;
         }
         catch (System.ArgumentException)
         {
@@ -182,6 +194,37 @@ public class SaveManager : MonoBehaviour
         {
             SaveCurrentProgress();
         }
+    }
+
+    private static bool MigrateSaveData(GameSaveData saveData)
+    {
+        if (saveData.Version != 1)
+        {
+            return false;
+        }
+
+        saveData.ProgressState = MigrateVersion1ProgressState((int)saveData.ProgressState);
+        saveData.Version = GameSaveData.CurrentVersion;
+        return true;
+    }
+
+    private static GameProgressState MigrateVersion1ProgressState(int legacyProgressValue)
+    {
+        const int version1FindKitchenKey = 0;
+        const int version1InspectRefrigerator = 1;
+        const int version1Completed = 11;
+
+        if (legacyProgressValue < version1FindKitchenKey || legacyProgressValue > version1Completed)
+        {
+            return GameProgressState.FindKitchen;
+        }
+
+        if (legacyProgressValue <= version1InspectRefrigerator)
+        {
+            return (GameProgressState)legacyProgressValue;
+        }
+
+        return (GameProgressState)(legacyProgressValue + 1);
     }
 
     private void HandleInventoryChanged()
