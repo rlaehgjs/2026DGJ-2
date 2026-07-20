@@ -1,7 +1,8 @@
 public enum GameProgressState
 {
-    FindKitchenKey,
+    FindKitchen,
     InspectRefrigerator,
+    FindFrontDoorKey,
     FindGenerator,
     FindGeneratorWire,
     RepairGenerator,
