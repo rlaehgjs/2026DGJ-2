@@ -387,7 +387,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2967,7 +2967,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3687410209840065360, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
   m_PrefabInstance: {fileID: 1225151942}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 812727919}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4967d0352abe6324ea0a82bde3c5382a, type: 3}
@@ -2978,7 +2978,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4087547725252875087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
   m_PrefabInstance: {fileID: 1225151942}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 812727919}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5e74f09298953a0448986d6d0078a891, type: 3}
@@ -5403,7 +5403,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8104409302486474839, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
   m_PrefabInstance: {fileID: 1225151942}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 812727919}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d1d42f925fd8fe34191f257192b84599, type: 3}

@@ -173,7 +173,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
       propertyPath: playerInventory
-      value:
+      value: 
       objectReference: {fileID: 2056727584}
     - target: {fileID: 5054958756024339834, guid: 9c609012740432846a67e55058fd6d43, type: 3}
       propertyPath: gameProgressManager
@@ -262,7 +262,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 981191297800760431, guid: d29eed9bd8fcaa5488a3dcb7a9c0a3f6, type: 3}
       propertyPath: saveManager
-      value:
+      value: 
       objectReference: {fileID: 31172110}
     - target: {fileID: 6185434738709603653, guid: d29eed9bd8fcaa5488a3dcb7a9c0a3f6, type: 3}
       propertyPath: m_LocalPosition.x
@@ -435,7 +435,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -536,7 +536,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6301984928941179013, guid: 14d10861e6240b8438d787d26713ec94, type: 3}
       propertyPath: saveManager
-      value:
+      value: 
       objectReference: {fileID: 31172110}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -839,7 +839,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78825121bf2341d4c899c2fc88a90dd2, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
