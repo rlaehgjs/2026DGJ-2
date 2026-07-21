@@ -508,11 +508,11 @@ public class KitchenRefrigeratorMissionTests
 
     private static void SetPickupReferences(PickupInteractable pickupInteractable, SaveManager saveManager)
     {
-        ItemData kitchenKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/KitchenKey.asset");
-        Assert.That(kitchenKey, Is.Not.Null);
+        ItemData frontDoorKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/FrontDoorKey.asset");
+        Assert.That(frontDoorKey, Is.Not.Null);
 
         SerializedObject serializedKey = new SerializedObject(pickupInteractable);
-        serializedKey.FindProperty("itemData").objectReferenceValue = kitchenKey;
+        serializedKey.FindProperty("itemData").objectReferenceValue = frontDoorKey;
         serializedKey.FindProperty("amount").intValue = 1;
         serializedKey.FindProperty("saveId").stringValue = "FrontDoorKey_01";
         serializedKey.FindProperty("saveManager").objectReferenceValue = saveManager;
@@ -521,11 +521,11 @@ public class KitchenRefrigeratorMissionTests
 
     private static void SetFrontDoorLockReferences(FrontDoorLock frontDoorLock, GameProgressManager progressManager)
     {
-        ItemData kitchenKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/KitchenKey.asset");
-        Assert.That(kitchenKey, Is.Not.Null);
+        ItemData frontDoorKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/FrontDoorKey.asset");
+        Assert.That(frontDoorKey, Is.Not.Null);
 
         SerializedObject serializedDoor = new SerializedObject(frontDoorLock);
-        serializedDoor.FindProperty("requiredKey").objectReferenceValue = kitchenKey;
+        serializedDoor.FindProperty("requiredKey").objectReferenceValue = frontDoorKey;
         serializedDoor.FindProperty("requiredAmount").intValue = 1;
         serializedDoor.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
         serializedDoor.ApplyModifiedPropertiesWithoutUndo();
