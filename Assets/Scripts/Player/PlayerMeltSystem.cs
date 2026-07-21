@@ -48,7 +48,7 @@ public class PlayerMeltSystem : MonoBehaviour
         float hpMelted = scaledMeltValue * Time.deltaTime;
         currentHp = Mathf.Clamp(currentHp - hpMelted, minLimitHpMelted, maxHp);
         OnHpChanged?.Invoke(currentHp, maxHp);
-        Debug.Log("녹음! 현재 hp/최대 hp: " + currentHp + "/" + maxHp);
+        // Debug.Log("녹음! 현재 hp/최대 hp: " + currentHp + "/" + maxHp);
 
         CheckFreezeState();
     }
@@ -99,7 +99,7 @@ public class PlayerMeltSystem : MonoBehaviour
                     OnFreezeStateChanged?.Invoke(current_state);
                     previous_state = current_state;
                 }
-                // Debug.Log("현재 상태: " + current_state);
+                Debug.Log("현재 상태: " + current_state);
                 break;
             }
         }
