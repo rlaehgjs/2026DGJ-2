@@ -207,7 +207,6 @@ Transform:
   - {fileID: 8516977404766878066}
   - {fileID: 2764331267845223251}
   - {fileID: 8257324185562646548}
-  - {fileID: 1332460868448737305}
   m_Father: {fileID: 6637736854090429131}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6936465777275594874
@@ -239,6 +238,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1332460868448737305}
   - {fileID: 5375616625181494567}
   - {fileID: 9145139392942408856}
   m_Father: {fileID: 6637736854090429131}
@@ -4483,7 +4483,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 1957020277479576647}
+    m_TransformParent: {fileID: 8415700256177789149}
     m_Modifications:
     - target: {fileID: 5365626312988326828, guid: 30553bc0887e026448946afaa552d655, type: 3}
       propertyPath: m_Name
@@ -4499,15 +4499,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5365626312988813196, guid: 30553bc0887e026448946afaa552d655, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -7.32
       objectReference: {fileID: 0}
     - target: {fileID: 5365626312988813196, guid: 30553bc0887e026448946afaa552d655, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -2.093549
       objectReference: {fileID: 0}
     - target: {fileID: 5365626312988813196, guid: 30553bc0887e026448946afaa552d655, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.60000014
       objectReference: {fileID: 0}
     - target: {fileID: 5365626312988813196, guid: 30553bc0887e026448946afaa552d655, type: 3}
       propertyPath: m_LocalRotation.w
@@ -4515,7 +4515,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5365626312988813196, guid: 30553bc0887e026448946afaa552d655, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 5365626312988813196, guid: 30553bc0887e026448946afaa552d655, type: 3}
       propertyPath: m_LocalRotation.y
