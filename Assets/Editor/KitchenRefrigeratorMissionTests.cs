@@ -121,8 +121,7 @@ public class KitchenRefrigeratorMissionTests
         triggerCollider.isTrigger = true;
         FreezerEntranceTrigger freezerEntranceTrigger = triggerObject.AddComponent<FreezerEntranceTrigger>();
         SetFreezerEntranceTriggerReferences(freezerEntranceTrigger, triggerCollider, progressManager);
-        freezerEntranceTrigger.enabled = false;
-        freezerEntranceTrigger.enabled = true;
+        ReinitializeLifecycle(freezerEntranceTrigger);
 
         Assert.That(triggerCollider.enabled, Is.False);
         InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
@@ -240,8 +239,7 @@ public class KitchenRefrigeratorMissionTests
         SetGeneratorWirePickupReferences(wirePickup, saveManager);
         GeneratorWirePickupProgress wireProgress = wireObject.AddComponent<GeneratorWirePickupProgress>();
         SetGeneratorWirePickupProgressReferences(wireProgress, wirePickup, progressManager);
-        wireProgress.enabled = false;
-        wireProgress.enabled = true;
+        ReinitializeLifecycle(wireProgress);
 
         Assert.That(wirePickup.enabled, Is.False);
 
@@ -272,8 +270,7 @@ public class KitchenRefrigeratorMissionTests
         SetNailsPickupReferences(nailsPickup, saveManager);
         NailsPickupProgress nailsProgress = nailsObject.AddComponent<NailsPickupProgress>();
         SetNailsPickupProgressReferences(nailsProgress, nailsPickup, progressManager);
-        nailsProgress.enabled = false;
-        nailsProgress.enabled = true;
+        ReinitializeLifecycle(nailsProgress);
 
         Assert.That(nailsPickup.enabled, Is.False);
 
@@ -304,8 +301,7 @@ public class KitchenRefrigeratorMissionTests
         SetHammerPickupReferences(hammerPickup, saveManager);
         HammerPickupProgress hammerProgress = hammerObject.AddComponent<HammerPickupProgress>();
         SetHammerPickupProgressReferences(hammerProgress, hammerPickup, progressManager);
-        hammerProgress.enabled = false;
-        hammerProgress.enabled = true;
+        ReinitializeLifecycle(hammerProgress);
 
         Assert.That(hammerPickup.enabled, Is.False);
 
@@ -336,8 +332,7 @@ public class KitchenRefrigeratorMissionTests
         SetCoolantCapsulePickupReferences(coolantCapsulePickup, saveManager);
         CoolantCapsulePickupProgress coolantCapsuleProgress = coolantCapsuleObject.AddComponent<CoolantCapsulePickupProgress>();
         SetCoolantCapsulePickupProgressReferences(coolantCapsuleProgress, coolantCapsulePickup, progressManager);
-        coolantCapsuleProgress.enabled = false;
-        coolantCapsuleProgress.enabled = true;
+        ReinitializeLifecycle(coolantCapsuleProgress);
 
         Assert.That(coolantCapsulePickup.enabled, Is.False);
 
@@ -362,8 +357,7 @@ public class KitchenRefrigeratorMissionTests
         BoxCollider freezerCollider = freezerObject.AddComponent<BoxCollider>();
         FreezerRepairInteractable freezerRepair = freezerObject.AddComponent<FreezerRepairInteractable>();
         SetFreezerRepairReferences(freezerRepair, freezerCollider, progressManager);
-        freezerRepair.enabled = false;
-        freezerRepair.enabled = true;
+        ReinitializeLifecycle(freezerRepair);
 
         Assert.That(freezerCollider.enabled, Is.False);
         Assert.That(freezerRepair.CanInteract(inventory), Is.False);
@@ -395,8 +389,7 @@ public class KitchenRefrigeratorMissionTests
         BoxCollider wallCollider = wallObject.AddComponent<BoxCollider>();
         RefrigeratorWallRepairInteractable wallRepair = wallObject.AddComponent<RefrigeratorWallRepairInteractable>();
         SetRefrigeratorWallRepairReferences(wallRepair, wallCollider, progressManager);
-        wallRepair.enabled = false;
-        wallRepair.enabled = true;
+        ReinitializeLifecycle(wallRepair);
 
         Assert.That(wallCollider.enabled, Is.False);
         Assert.That(wallRepair.CanInteract(inventory), Is.False);
@@ -515,11 +508,11 @@ public class KitchenRefrigeratorMissionTests
 
     private static void SetPickupReferences(PickupInteractable pickupInteractable, SaveManager saveManager)
     {
-        ItemData kitchenKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/KitchenKey.asset");
-        Assert.That(kitchenKey, Is.Not.Null);
+        ItemData frontDoorKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/FrontDoorKey.asset");
+        Assert.That(frontDoorKey, Is.Not.Null);
 
         SerializedObject serializedKey = new SerializedObject(pickupInteractable);
-        serializedKey.FindProperty("itemData").objectReferenceValue = kitchenKey;
+        serializedKey.FindProperty("itemData").objectReferenceValue = frontDoorKey;
         serializedKey.FindProperty("amount").intValue = 1;
         serializedKey.FindProperty("saveId").stringValue = "FrontDoorKey_01";
         serializedKey.FindProperty("saveManager").objectReferenceValue = saveManager;
@@ -528,11 +521,11 @@ public class KitchenRefrigeratorMissionTests
 
     private static void SetFrontDoorLockReferences(FrontDoorLock frontDoorLock, GameProgressManager progressManager)
     {
-        ItemData kitchenKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/KitchenKey.asset");
-        Assert.That(kitchenKey, Is.Not.Null);
+        ItemData frontDoorKey = AssetDatabase.LoadAssetAtPath<ItemData>("Assets/Data/Items/FrontDoorKey.asset");
+        Assert.That(frontDoorKey, Is.Not.Null);
 
         SerializedObject serializedDoor = new SerializedObject(frontDoorLock);
-        serializedDoor.FindProperty("requiredKey").objectReferenceValue = kitchenKey;
+        serializedDoor.FindProperty("requiredKey").objectReferenceValue = frontDoorKey;
         serializedDoor.FindProperty("requiredAmount").intValue = 1;
         serializedDoor.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
         serializedDoor.ApplyModifiedPropertiesWithoutUndo();
@@ -692,6 +685,22 @@ public class KitchenRefrigeratorMissionTests
         serializedGenerator.FindProperty("requiredWireAmount").intValue = 1;
         serializedGenerator.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
         serializedGenerator.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void ReinitializeLifecycle(Component component)
+    {
+        InvokeLifecycleMethod(component, "OnDisable");
+        InvokeLifecycleMethod(component, "OnEnable");
+    }
+
+    private static void InvokeLifecycleMethod(Component component, string methodName)
+    {
+        MethodInfo lifecycleMethod = component.GetType().GetMethod(
+            methodName,
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.That(lifecycleMethod, Is.Not.Null);
+        lifecycleMethod.Invoke(component, null);
     }
 
     private static void InvokeTriggerEnter(Component component, Collider playerCollider)
