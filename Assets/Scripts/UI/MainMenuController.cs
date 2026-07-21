@@ -7,6 +7,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private Button continueButton;
     [SerializeField] private GameManager gameManager;
     [SerializeField] private SaveManager saveManager;
+    [SerializeField] private SoundManager soundManager;
 
     private void Awake()
     {
@@ -16,11 +17,39 @@ public class MainMenuController : MonoBehaviour
         if (saveManager == null)
             saveManager = FindAnyObjectByType<SaveManager>();
 
+        if (soundManager == null)
+            soundManager = FindAnyObjectByType<SoundManager>();
+
+        soundManager?.Configure(saveManager);
+
         if (settings_panel != null)
             settings_panel.SetActive(false);
 
         if (continueButton != null)
             continueButton.interactable = saveManager != null && saveManager.HasGameSave();
+
+        foreach (MasterVolumeSlider slider in GetComponentsInChildren<MasterVolumeSlider>(true))
+            slider.Configure(soundManager, saveManager);
+
+        foreach (BgmVolumeSlider slider in GetComponentsInChildren<BgmVolumeSlider>(true))
+            slider.Configure(soundManager, saveManager);
+
+        foreach (SfxVolumeSlider slider in GetComponentsInChildren<SfxVolumeSlider>(true))
+            slider.Configure(soundManager, saveManager);
+
+        foreach (BrightnessSlider slider in GetComponentsInChildren<BrightnessSlider>(true))
+            slider.Configure(saveManager);
+
+        foreach (MouseSensitivitySlider slider in GetComponentsInChildren<MouseSensitivitySlider>(true))
+            slider.Configure(null, saveManager);
+
+        FindAnyObjectByType<LocalizationManager>()?.Configure(saveManager);
+
+    }
+
+    private void Start()
+    {
+        PlayTitleBgm();
     }
 
     public void StartNewGame()
@@ -48,5 +77,27 @@ public class MainMenuController : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+
+    private void OnDisable()
+    {
+        soundManager?.StopTitleBgm();
+    }
+
+    private void PlayTitleBgm()
+    {
+        if (soundManager == null)
+            return;
+
+        foreach (AudioSource source in GetComponentsInChildren<AudioSource>(true))
+        {
+            if (source.gameObject.name != "TitleBGM" || source.clip == null)
+                continue;
+
+            source.Stop();
+            source.enabled = false;
+            soundManager.PlayTitleBgm(source.clip, source.loop);
+            return;
+        }
     }
 }

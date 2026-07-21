@@ -9,36 +9,48 @@ public class MouseSensitivitySlider : MonoBehaviour
     [SerializeField] private float maximumSensitivity = 1000f;
 
     private Slider slider;
+    private SaveManager saveManager;
 
-    public void Configure(PlayerLook look)
+    public void Configure(PlayerLook look, SaveManager settingsSaveManager)
     {
         playerLook = look;
+        saveManager = settingsSaveManager;
     }
 
-    private void Awake()
+    private void Start()
     {
         slider = GetComponent<Slider>();
+        float sensitivity = saveManager != null ? saveManager.LoadSettings().MouseSensitivity : slider.value;
 
-        if (playerLook == null)
-        {
-            Debug.LogWarning("MouseSensitivitySlider: Player Look을 연결해야 합니다.", this);
-            enabled = false;
-            return;
-        }
-
-        ApplySensitivity(slider.value);
-        slider.onValueChanged.AddListener(ApplySensitivity);
+        slider.SetValueWithoutNotify(sensitivity);
+        ApplySensitivity(sensitivity);
+        GetComponent<PercentageSliderUI>()?.Refresh();
+        slider.onValueChanged.AddListener(SetSensitivity);
     }
 
     private void OnDestroy()
     {
         if (slider != null)
-            slider.onValueChanged.RemoveListener(ApplySensitivity);
+            slider.onValueChanged.RemoveListener(SetSensitivity);
+    }
+
+    private void SetSensitivity(float value)
+    {
+        ApplySensitivity(value);
+
+        if (saveManager == null)
+            return;
+
+        GameSettingsData settings = saveManager.LoadSettings();
+        settings.MouseSensitivity = value;
+        saveManager.SaveSettings(settings);
     }
 
     private void ApplySensitivity(float value)
     {
-        playerLook.SetMouseSensitivity(
-            Mathf.Lerp(minimumSensitivity, maximumSensitivity, value));
+        if (playerLook == null)
+            return;
+
+        playerLook.SetMouseSensitivity(Mathf.Lerp(minimumSensitivity, maximumSensitivity, value));
     }
 }

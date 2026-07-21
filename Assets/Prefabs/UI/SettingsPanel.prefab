@@ -85,8 +85,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7496525239995136263}
   - component: {fileID: 410248445625774120}
-  - component: {fileID: 542899055557370599}
-  - component: {fileID: 826961698325341167}
+  - component: {fileID: 1907202586595431649}
   m_Layer: 5
   m_Name: 'SFXVolume_Setting '
   m_TagString: Untagged
@@ -168,8 +167,20 @@ MonoBehaviour:
   m_Value: 0.5
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &542899055557370599
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1907202586595431649
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,23 +189,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 583455787308045092}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7dac8c4d5f9da724c99a49b55ccc0c60, type: 3}
+  m_Script: {fileID: 11500000, guid: 30de158f8ffd6a34daca38d2412f8a59, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::BgmVolumeSlider
-  titleBgm: {fileID: 0}
-  percentText: {fileID: 361596169791543568}
---- !u!114 &826961698325341167
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 583455787308045092}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
+  m_EditorClassIdentifier: Assembly-CSharp::SfxVolumeSlider
   percentText: {fileID: 361596169791543568}
 --- !u!1 &810807383265980099
 GameObject:
@@ -953,7 +950,6 @@ GameObject:
   - component: {fileID: 6115174206042439516}
   - component: {fileID: 1334215429982809408}
   - component: {fileID: 7651097157306391253}
-  - component: {fileID: 351527098038562024}
   m_Layer: 5
   m_Name: 'BGMVolume_Setting '
   m_TagString: Untagged
@@ -1048,20 +1044,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dac8c4d5f9da724c99a49b55ccc0c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BgmVolumeSlider
-  titleBgm: {fileID: 0}
-  percentText: {fileID: 4960889930718418501}
---- !u!114 &351527098038562024
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1332601574684569884}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
+  isTitleVolume: 0
   percentText: {fileID: 4960889930718418501}
 --- !u!1 &1581371895606956591
 GameObject:
@@ -2242,7 +2225,6 @@ GameObject:
   - component: {fileID: 3022072514612856864}
   - component: {fileID: 1505963269659546108}
   - component: {fileID: 5295481749537451039}
-  - component: {fileID: 3996223223877519607}
   m_Layer: 5
   m_Name: TitleVolume_Setting
   m_TagString: Untagged
@@ -2337,20 +2319,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dac8c4d5f9da724c99a49b55ccc0c60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BgmVolumeSlider
-  titleBgm: {fileID: 0}
-  percentText: {fileID: 1277230310425821868}
---- !u!114 &3996223223877519607
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3413916018997507006}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14176091efb1da44f83bde8626cd10c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PercentageSliderUI
+  isTitleVolume: 1
   percentText: {fileID: 1277230310425821868}
 --- !u!1 &3455292871184680595
 GameObject:

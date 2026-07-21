@@ -35,4 +35,10 @@ public class PercentageSliderUI : MonoBehaviour
         float normalizedValue = Mathf.InverseLerp(slider.minValue, slider.maxValue, value);
         percentText.text = $"{Mathf.RoundToInt(normalizedValue * 100f)}%";
     }
+
+    public void Refresh()
+    {
+        if (slider != null && percentText != null)
+            UpdatePercentText(slider.value);
+    }
 }

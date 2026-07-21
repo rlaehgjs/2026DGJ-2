@@ -2,7 +2,8 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MasterVolumeSlider : MonoBehaviour
+[RequireComponent(typeof(Slider))]
+public class SfxVolumeSlider : MonoBehaviour
 {
     [SerializeField] private TMP_Text percentText;
 
@@ -19,8 +20,14 @@ public class MasterVolumeSlider : MonoBehaviour
     private void Start()
     {
         slider = GetComponent<Slider>();
-        float savedVolume = saveManager != null ? saveManager.LoadSettings().MasterVolume : 1f;
+        if (percentText == null)
+        {
+            Debug.LogWarning("SfxVolumeSlider: Percent Text를 연결해야 합니다.", this);
+            enabled = false;
+            return;
+        }
 
+        float savedVolume = saveManager != null ? saveManager.LoadSettings().SfxVolume : 1f;
         slider.SetValueWithoutNotify(savedVolume);
         ApplyVolume(savedVolume);
         slider.onValueChanged.AddListener(SetVolume);
@@ -34,19 +41,13 @@ public class MasterVolumeSlider : MonoBehaviour
             return;
 
         GameSettingsData settings = saveManager.LoadSettings();
-        settings.MasterVolume = volume;
+        settings.SfxVolume = volume;
         saveManager.SaveSettings(settings);
     }
 
     private void ApplyVolume(float volume)
     {
-        SoundManager manager = soundManager ?? SoundManager.Instance;
-        if (manager != null)
-            manager.SetMasterVolume(volume);
-        else
-            AudioListener.volume = volume;
-
-        if (percentText != null)
-            percentText.text = $"{Mathf.RoundToInt(volume * 100)}%";
+        (soundManager ?? SoundManager.Instance)?.SetSfxVolume(volume);
+        percentText.text = $"{Mathf.RoundToInt(volume * 100)}%";
     }
 }

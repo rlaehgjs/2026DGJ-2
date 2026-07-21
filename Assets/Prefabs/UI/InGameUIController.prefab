@@ -4170,8 +4170,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 856171591521917000}
   - {fileID: 8084077234799247364}
+  - {fileID: 856171591521917000}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3844590415867587371
@@ -4192,6 +4192,7 @@ MonoBehaviour:
   playerMeltSystem: {fileID: 0}
   playerInventory: {fileID: 0}
   playerLook: {fileID: 0}
+  soundManager: {fileID: 0}
   hudPanel: {fileID: 6577415688737948740}
   pausePanel: {fileID: 3553574498061667450}
   settingsPanel: {fileID: 8504619432753710403}
@@ -6291,9 +6292,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 5295481749537451039, guid: 5526c5d7cb90efd48b115c355c99f62e, type: 3}
     - {fileID: 542899055557370599, guid: 5526c5d7cb90efd48b115c355c99f62e, type: 3}
-    - {fileID: 7651097157306391253, guid: 5526c5d7cb90efd48b115c355c99f62e, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

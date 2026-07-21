@@ -5,13 +5,17 @@ public class SoundManager : MonoBehaviour
     public static SoundManager Instance { get; private set; }
 
     [SerializeField, Range(0f, 1f)] private float masterVolume = 1f;
+    [SerializeField, Range(0f, 1f)] private float titleVolume = 1f;
     [SerializeField, Range(0f, 1f)] private float bgmVolume = 1f;
     [SerializeField, Range(0f, 1f)] private float sfxVolume = 1f;
 
+    private AudioSource titleBgmSource;
     private AudioSource bgmSource;
     private AudioSource sfxSource;
+    private SaveManager saveManager;
 
     public float MasterVolume => masterVolume;
+    public float TitleVolume => titleVolume;
     public float BgmVolume => bgmVolume;
     public float SfxVolume => sfxVolume;
 
@@ -26,13 +30,21 @@ public class SoundManager : MonoBehaviour
         Instance = this;
         DontDestroyOnLoad(gameObject);
 
-        masterVolume = PlayerPrefs.GetFloat("MasterVolume", masterVolume);
-        bgmVolume = PlayerPrefs.GetFloat("BgmVolume", bgmVolume);
-        sfxVolume = PlayerPrefs.GetFloat("SfxVolume", sfxVolume);
-
+        titleBgmSource = CreateSource("Title BGM", true);
         bgmSource = CreateSource("BGM", true);
         sfxSource = CreateSource("SFX", false);
         ApplyVolumes();
+    }
+
+    private void Start()
+    {
+        ApplySavedSettings();
+    }
+
+    public void Configure(SaveManager settingsSaveManager)
+    {
+        saveManager = settingsSaveManager;
+        ApplySavedSettings();
     }
 
     public void PlayBgm(AudioClip clip, bool loop = true)
@@ -52,9 +64,33 @@ public class SoundManager : MonoBehaviour
         bgmSource.Play();
     }
 
+    public void PlayTitleBgm(AudioClip clip, bool loop = true)
+    {
+        if (clip == null || titleBgmSource == null)
+        {
+            return;
+        }
+
+        if (titleBgmSource.clip == clip && titleBgmSource.isPlaying)
+        {
+            return;
+        }
+
+        titleBgmSource.clip = clip;
+        titleBgmSource.loop = loop;
+        titleBgmSource.Play();
+    }
+
     public void StopBgm()
     {
-        bgmSource?.Stop();
+        if (bgmSource != null)
+            bgmSource.Stop();
+    }
+
+    public void StopTitleBgm()
+    {
+        if (titleBgmSource != null)
+            titleBgmSource.Stop();
     }
 
     public void PlaySfx(AudioClip clip)
@@ -76,6 +112,12 @@ public class SoundManager : MonoBehaviour
     public void SetMasterVolume(float value)
     {
         masterVolume = Mathf.Clamp01(value);
+        ApplyVolumes();
+    }
+
+    public void SetTitleVolume(float value)
+    {
+        titleVolume = Mathf.Clamp01(value);
         ApplyVolumes();
     }
 
@@ -112,9 +154,27 @@ public class SoundManager : MonoBehaviour
             bgmSource.volume = bgmVolume;
         }
 
+        if (titleBgmSource != null)
+        {
+            titleBgmSource.volume = titleVolume;
+        }
+
         if (sfxSource != null)
         {
             sfxSource.volume = sfxVolume;
         }
+    }
+
+    private void ApplySavedSettings()
+    {
+        if (saveManager == null)
+            return;
+
+        GameSettingsData settings = saveManager.LoadSettings();
+        masterVolume = settings.MasterVolume;
+        titleVolume = settings.TitleVolume;
+        bgmVolume = settings.BgmVolume;
+        sfxVolume = settings.SfxVolume;
+        ApplyVolumes();
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class LocalizationManager : MonoBehaviour
 {
-    private const string LanguageKey = "Language";
-
     [SerializeField] private TextAsset localizationCsv;
 
     public static LocalizationManager Instance { get; private set; }
@@ -14,6 +12,7 @@ public class LocalizationManager : MonoBehaviour
 
     private readonly Dictionary<string, string[]> texts = new();
     private int language;
+    private SaveManager saveManager;
 
     private void Awake()
     {
@@ -25,8 +24,23 @@ public class LocalizationManager : MonoBehaviour
 
         Instance = this;
         DontDestroyOnLoad(gameObject);
-        language = PlayerPrefs.GetInt(LanguageKey, 0);
         LoadCsv();
+    }
+
+    private void Start()
+    {
+        if (saveManager != null)
+            language = saveManager.LoadSettings().Language;
+
+        LanguageChanged?.Invoke();
+    }
+
+    public void Configure(SaveManager settingsSaveManager)
+    {
+        saveManager = settingsSaveManager;
+
+        if (saveManager != null)
+            language = saveManager.LoadSettings().Language;
     }
 
     public string Get(string key)
@@ -36,20 +50,26 @@ public class LocalizationManager : MonoBehaviour
 
     public void SetLanguage(int value)
     {
-        language = Mathf.Clamp(value, 0, 1);
-        PlayerPrefs.SetInt(LanguageKey, language);
-        PlayerPrefs.Save();
+        language = Mathf.Clamp(value, GameSettingsData.KoreanLanguage, GameSettingsData.EnglishLanguage);
+
+        if (saveManager != null)
+        {
+            GameSettingsData settings = saveManager.LoadSettings();
+            settings.Language = language;
+            saveManager.SaveSettings(settings);
+        }
+
         LanguageChanged?.Invoke();
     }
 
     public void SetKorean()
     {
-        SetLanguage(0);
+        SetLanguage(GameSettingsData.KoreanLanguage);
     }
 
     public void SetEnglish()
     {
-        SetLanguage(1);
+        SetLanguage(GameSettingsData.EnglishLanguage);
     }
 
     private void LoadCsv()

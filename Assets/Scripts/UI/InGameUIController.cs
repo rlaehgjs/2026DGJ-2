@@ -6,10 +6,12 @@ public class InGameUIController : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private GameInputReader inputReader;
     [Header("Player and Managers")]
+    [SerializeField] private SaveManager saveManager;
     [SerializeField] private GameProgressManager gameProgressManager;
     [SerializeField] private PlayerMeltSystem playerMeltSystem;
     [SerializeField] private PlayerInventory playerInventory;
     [SerializeField] private PlayerLook playerLook;
+    [SerializeField] private SoundManager soundManager;
 
     [SerializeField] private GameObject hudPanel;
     [SerializeField] private GameObject pausePanel;
@@ -28,6 +30,9 @@ public class InGameUIController : MonoBehaviour
         if (gameProgressManager == null)
             gameProgressManager = FindAnyObjectByType<GameProgressManager>();
 
+        if (saveManager == null)
+            saveManager = FindAnyObjectByType<SaveManager>();
+
         if (playerMeltSystem == null)
             playerMeltSystem = FindAnyObjectByType<PlayerMeltSystem>();
 
@@ -37,6 +42,10 @@ public class InGameUIController : MonoBehaviour
         if (playerLook == null)
             playerLook = FindAnyObjectByType<PlayerLook>();
 
+        if (soundManager == null)
+            soundManager = FindAnyObjectByType<SoundManager>();
+
+        soundManager?.Configure(saveManager);
         ConfigureChildUI();
     }
 
@@ -46,7 +55,18 @@ public class InGameUIController : MonoBehaviour
         GetComponentInChildren<MeltGaugeUI>(true)?.Configure(playerMeltSystem, gameManager);
         GetComponentInChildren<InventoryUI>(true)?.Configure(playerInventory);
         GetComponentInChildren<ItemPickupToastListener>(true)?.Configure(playerInventory);
-        GetComponentInChildren<MouseSensitivitySlider>(true)?.Configure(playerLook);
+        GetComponentInChildren<MouseSensitivitySlider>(true)?.Configure(playerLook, saveManager);
+        GetComponentInChildren<BrightnessSlider>(true)?.Configure(saveManager);
+        foreach (MasterVolumeSlider slider in GetComponentsInChildren<MasterVolumeSlider>(true))
+            slider.Configure(soundManager, saveManager);
+
+        foreach (BgmVolumeSlider slider in GetComponentsInChildren<BgmVolumeSlider>(true))
+            slider.Configure(soundManager, saveManager);
+
+        foreach (SfxVolumeSlider slider in GetComponentsInChildren<SfxVolumeSlider>(true))
+            slider.Configure(soundManager, saveManager);
+
+        FindAnyObjectByType<LocalizationManager>()?.Configure(saveManager);
     }
 
     private void OnEnable()
@@ -60,6 +80,9 @@ public class InGameUIController : MonoBehaviour
 
     private void Start()
     {
+        // 비활성화된 중첩 SettingsPanel까지 준비된 뒤 저장값을 한 번 더 적용한다.
+        ConfigureChildUI();
+
         if (gameManager != null)
             ApplyGameState(gameManager.CurrentState);
     }
