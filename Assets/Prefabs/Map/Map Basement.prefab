@@ -11362,7 +11362,7 @@ PrefabInstance:
     - target: {fileID: 2958684775198695694, guid: b6ea4ad2ef1459f4ca9876f36e6641fc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 50dc5a8aedbff204dadc273d4b62e1c1, type: 2}
+      objectReference: {fileID: 2100000, guid: 21c50b58932cbac4c97e959d66683c98, type: 2}
     - target: {fileID: 2958684775200702414, guid: b6ea4ad2ef1459f4ca9876f36e6641fc, type: 3}
       propertyPath: m_Name
       value: Water Tank (2)
@@ -17118,7 +17118,7 @@ PrefabInstance:
     - target: {fileID: 2958684775198695694, guid: b6ea4ad2ef1459f4ca9876f36e6641fc, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 1f5b1bbc6a457fa4aa2d3abfc7db22da, type: 2}
+      objectReference: {fileID: 2100000, guid: b8473048053ab5b41aceaa5882d3f717, type: 2}
     - target: {fileID: 2958684775200702414, guid: b6ea4ad2ef1459f4ca9876f36e6641fc, type: 3}
       propertyPath: m_Name
       value: Water Tank (3)
