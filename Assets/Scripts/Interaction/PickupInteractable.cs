@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PickupInteractable : MonoBehaviour
@@ -6,14 +7,21 @@ public class PickupInteractable : MonoBehaviour
     [Min(1)][SerializeField] private int amount = 1;
     [SerializeField] private string saveId;
     [SerializeField] private SaveManager saveManager;
+    [SerializeField] private bool requiresProgressState;
+    [SerializeField] private GameProgressState requiredProgressState;
+    [SerializeField] private GameProgressManager gameProgressManager;
 
-    private bool isCollected;
+    private bool isCollected; //획독흔 아이템인가?
 
     public string SaveId => saveId;
+    public bool IsCollectionAvailable => !requiresProgressState
+        || (gameProgressManager != null && gameProgressManager.CurrentState == requiredProgressState);
+    public event Action<ItemData, int> ItemCollected; //획든한 아이템들을 확인
 
-    private void Start()
+    private void Awake()
     {
         if (saveManager != null
+            && saveManager.isActiveAndEnabled
             && !string.IsNullOrWhiteSpace(saveId)
             && saveManager.IsItemCollected(saveId))
         {
@@ -34,7 +42,7 @@ public class PickupInteractable : MonoBehaviour
             || itemData == null
             || amount <= 0
             || string.IsNullOrWhiteSpace(saveId)
-            || saveManager == null)
+            || !IsCollectionAvailable)
         {
             return;
         }
@@ -42,7 +50,13 @@ public class PickupInteractable : MonoBehaviour
         if (inventory.TryAddItem(itemData, amount))
         {
             isCollected = true;
-            saveManager.RegisterCollectedItem(saveId);
+
+            if (saveManager != null && saveManager.isActiveAndEnabled)
+            {
+                saveManager.RegisterCollectedItem(saveId);
+            }
+
+            ItemCollected?.Invoke(itemData, amount);
             gameObject.SetActive(false);
         }
     }

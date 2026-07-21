@@ -68,7 +68,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: dd0005172be04a568a822bd64f33375d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -129,3 +129,6 @@ MonoBehaviour:
   amount: 1
   saveId: KitchenKey_Bathroom_01
   saveManager: {fileID: 0}
+  requiresProgressState: 0
+  requiredProgressState: 0
+  gameProgressManager: {fileID: 0}
