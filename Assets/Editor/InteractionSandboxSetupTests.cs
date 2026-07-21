@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class InteractionSandboxSetupTests
 {
-    private const string ScenePath = "Assets/Scenes/Sandbox/InteractionSandbox.unity";
+    private const string ScenePath = "Assets/Scenes/Sandbox/ItemModelSandbox.unity";
 
     [Test]
     public void InteractionSandbox_HasWiredKitchenMissionObjects()
@@ -33,7 +33,7 @@ public class InteractionSandboxSetupTests
             GeneratorWirePickupProgress generatorWireProgress = generatorWireObject == null
                 ? null
                 : generatorWireObject.GetComponent<GeneratorWirePickupProgress>();
-            GameObject nailsObject = FindGameObject(sandboxScene, "Nails");
+            GameObject nailsObject = FindGameObject(sandboxScene, "Nail");
             PickupInteractable nailsPickup = nailsObject == null
                 ? null
                 : nailsObject.GetComponent<PickupInteractable>();
@@ -372,7 +372,7 @@ public class InteractionSandboxSetupTests
         {
             PlayerInventory playerInventory = FindComponent<PlayerInventory>(sandboxScene);
             GameProgressManager progressManager = FindComponent<GameProgressManager>(sandboxScene);
-            GameObject nailsObject = FindGameObject(sandboxScene, "Nails");
+            GameObject nailsObject = FindGameObject(sandboxScene, "Nail");
             PickupInteractable nailsPickup = nailsObject == null
                 ? null
                 : nailsObject.GetComponent<PickupInteractable>();
