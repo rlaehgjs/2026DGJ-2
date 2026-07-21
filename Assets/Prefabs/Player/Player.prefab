@@ -12,12 +12,8 @@ GameObject:
   - component: {fileID: 3420511188703107524}
   - component: {fileID: 4087547725252875087}
   - component: {fileID: 4657935908992714778}
-  - component: {fileID: 4657935908992714778}
   - component: {fileID: 8104409302486474839}
   - component: {fileID: 3687410209840065360}
-  - component: {fileID: 7415071797926930389}
-  - component: {fileID: 124571269094297604}
-  - component: {fileID: 922100000000000001}
   - component: {fileID: 7415071797926930389}
   - component: {fileID: 124571269094297604}
   - component: {fileID: 922100000000000001}
@@ -37,8 +33,6 @@ Transform:
   m_GameObject: {fileID: 2819104716325639856}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -73,7 +67,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 80
-  m_CollisionDetection: 1
+  m_CollisionDetection: 0
 --- !u!114 &4087547725252875087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +108,6 @@ MonoBehaviour:
   - 0
   baseMoveSpeed: 5
   baseJumpForce: 10
-  mouseSensitivity: 500
 --- !u!114 &8104409302486474839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,34 +128,6 @@ MonoBehaviour:
   currentHp: 0
   baseMeltValue: 1
   current_state: 2
-  baseMeltValue: 1
-  current_state: 2
---- !u!114 &4657935908992714778
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2819104716325639856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 287ec3d2baf42244e88b76f0942d064e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  moveSpeedMultipliers:
-  - 0.8
-  - 1
-  - 1.1
-  extraGravityMultipliers:
-  - 0
-  - 2
-  - 3
-  frictionsPerStage:
-  - 20
-  - 10
-  - 0
-  baseMoveSpeed: 5
-  baseJumpForce: 6
 --- !u!114 &3687410209840065360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,49 +176,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a8390f496e5d4b65b438ff0da3b3fab6, type: 2}
   - {fileID: 11400000, guid: 5fcfc86a6118a144c851b7e111076cf8, type: 2}
   - {fileID: 11400000, guid: 0c7bcb6896e4dd041bffd36559e7c26c, type: 2}
-  items: []
---- !u!114 &922100000000000001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2819104716325639856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d4a99dd3c19f7a469bf07f612a606b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerEffectAdapter
-  playerMovement: {fileID: 4657935908992714778}
-  playerMeltSystem: {fileID: 8104409302486474839}
---- !u!114 &7415071797926930389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2819104716325639856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8158c3b42dd3204f9a1ccbd8c2a27e6, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
-  interactionCamera: {fileID: 3446391646235180569}
-  interactionDistance: 3
---- !u!114 &124571269094297604
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2819104716325639856}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 78825121bf2341d4c899c2fc88a90dd2, type: 3}
-  m_Name:
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
-  itemCatalog:
-  - {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
   items: []
 --- !u!114 &922100000000000001
 MonoBehaviour:

@@ -58,12 +58,10 @@ public class ObjectiveUI : MonoBehaviour
     {
         return state switch
         {
-            GameProgressState.FindKitchenKey => "objective_find_kitchen_key",
             GameProgressState.InspectRefrigerator => "objective_inspect_refrigerator",
             GameProgressState.FindGenerator => "objective_find_generator",
             GameProgressState.FindGeneratorWire => "objective_find_generator_wire",
             GameProgressState.RepairGenerator => "objective_repair_generator",
-            GameProgressState.FindPlywood => "objective_find_plywood",
             GameProgressState.FindHammer => "objective_find_hammer",
             GameProgressState.RepairRefrigeratorWall => "objective_repair_refrigerator_wall",
             GameProgressState.FindCoolantCapsule => "objective_find_coolant_capsule",
