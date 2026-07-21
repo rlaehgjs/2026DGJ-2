@@ -8,6 +8,10 @@ public class PlayerLook : MonoBehaviour
     private GameInputReader gameInputReader;
     [SerializeField]
     private float mouseSensitivity = 500f; // 마우스 감도
+    [SerializeField]
+    private float verticalMaxDegree = -90.0f;
+    [SerializeField]
+    private float verticalMinDegree = 30.0f;
     private float xRotation = 0f; // 위아래 회전값을 저장할 변수
 
     private void Awake()
@@ -40,7 +44,7 @@ public class PlayerLook : MonoBehaviour
         // 마우스 Y축 움직임으로 위아래(X축 기준) 회전값 누적 (음수를 더해야 마우스를 올릴 때 위를 봄)
         xRotation -= degreeY;
         // 위아래로 지나치게 꺾이지 않도록 90도 제한 (목 꺾임 방지)
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation = Mathf.Clamp(xRotation, verticalMaxDegree, verticalMinDegree);
 
         // 카메라의 위아래(X축) 회전 적용
         cameraTransform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
