@@ -19,7 +19,7 @@ public class ShortcutTeleportTriggerTests
     }
 
     [Test]
-    public void TriggerEnter_PlayerChildCollider_MovesPlayerRootToDestination()
+    public void TriggerEnter_PlayerChildCollider_MovesPlayerRigidBodyToDestination()
     {
         shortcutObject = new GameObject("ShortcutIn");
         ShortcutTeleport shortcutTeleport = shortcutObject.AddComponent<ShortcutTeleport>();
@@ -30,7 +30,7 @@ public class ShortcutTeleportTriggerTests
 
         playerRoot = new GameObject("Player");
         playerRoot.tag = "Player";
-        playerRoot.AddComponent<Rigidbody>();
+        Rigidbody playerBody = playerRoot.AddComponent<Rigidbody>();
 
         playerVisual = new GameObject("Icecream");
         playerVisual.transform.SetParent(playerRoot.transform);
@@ -38,7 +38,7 @@ public class ShortcutTeleportTriggerTests
 
         InvokeTriggerEnter(shortcutTeleport, visualCollider);
 
-        Assert.That(playerRoot.transform.position, Is.EqualTo(destinationObject.transform.position));
+        Assert.That(playerBody.position, Is.EqualTo(destinationObject.transform.position));
     }
 
     private static void InvokeTriggerEnter(ShortcutTeleport shortcutTeleport, Collider other)
