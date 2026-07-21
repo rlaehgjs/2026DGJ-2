@@ -17,9 +17,13 @@ GameObject:
   - component: {fileID: 124571269094297604}
   - component: {fileID: 922100000000000001}
   - component: {fileID: 8945818560652547447}
+  - component: {fileID: 3687410209840065360}
+  - component: {fileID: 7415071797926930389}
+  - component: {fileID: 124571269094297604}
+  - component: {fileID: 922100000000000001}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,6 +40,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 21, y: 21, z: 21}
   m_ConstrainProportionsScale: 1
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4931046930910180524}
   - {fileID: 5571855427934342208}
@@ -57,6 +64,26 @@ MonoBehaviour:
   isMoveEnabled: 1
   isLookEnabled: 1
   isInteractionEnabled: 1
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!114 &4087547725252875087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,6 +111,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287ec3d2baf42244e88b76f0942d064e, type: 3}
   m_Name: 
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeedMultipliers:
   - 0.6
@@ -101,6 +129,9 @@ MonoBehaviour:
   baseJumpForce: 50
   groundNormalThreshold: 0.65
   wallNormalMaxY: 0.2
+  - 0
+  baseMoveSpeed: 5
+  baseJumpForce: 10
 --- !u!114 &8104409302486474839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -122,6 +153,24 @@ MonoBehaviour:
   minLimitPercentHpMelted: 0.1
   minLimitHpMelted: 0
   current_state: 2
+  baseMeltValue: 1
+  current_state: 2
+--- !u!114 &3687410209840065360
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819104716325639856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4967d0352abe6324ea0a82bde3c5382a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GameInputReader
+  isJumpEnabled: 1
+  isMoveEnabled: 1
+  isLookEnabled: 1
+  isInteractionEnabled: 1
 --- !u!114 &7415071797926930389
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -132,6 +181,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8158c3b42dd3204f9a1ccbd8c2a27e6, type: 3}
+  m_Name: 
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   interactionCamera: {fileID: 3446391646235180569}
@@ -146,6 +196,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78825121bf2341d4c899c2fc88a90dd2, type: 3}
+  m_Name: 
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   itemCatalog:
@@ -196,6 +247,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2819104716325639856}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d4a99dd3c19f7a469bf07f612a606b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerEffectAdapter
+  playerMovement: {fileID: 4657935908992714778}
+  playerMeltSystem: {fileID: 8104409302486474839}
 --- !u!1 &8241477201252353190
 GameObject:
   m_ObjectHideFlags: 0
