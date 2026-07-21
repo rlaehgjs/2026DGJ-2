@@ -200,7 +200,11 @@ public class InteractionSandboxSetupTests
             Assert.That(interactionCamera, Is.Not.Null);
 
             RefrigeratorInspectInteractable refrigerator = FindComponent<RefrigeratorInspectInteractable>(sandboxScene);
+            RefrigeratorWallRepairInteractable refrigeratorWall = FindComponent<RefrigeratorWallRepairInteractable>(sandboxScene);
             Assert.That(refrigerator, Is.Not.Null);
+            Assert.That(refrigeratorWall, Is.Not.Null);
+
+            ReinitializeLifecycle(refrigeratorWall);
 
             Vector3 cameraOffset = interactionCamera.transform.position - playerInteraction.transform.position;
             playerInteraction.transform.position = refrigerator.transform.position
@@ -245,8 +249,7 @@ public class InteractionSandboxSetupTests
             Assert.That(playerCollider, Is.Not.Null);
             Assert.That(entranceCollider, Is.Not.Null);
 
-            freezerEntranceTrigger.enabled = false;
-            freezerEntranceTrigger.enabled = true;
+            ReinitializeLifecycle(freezerEntranceTrigger);
             Assert.That(entranceCollider.enabled, Is.False);
 
             InvokeTriggerEnter(freezerEntranceTrigger, playerCollider);
@@ -342,8 +345,7 @@ public class InteractionSandboxSetupTests
             Assert.That(generatorWireProgress, Is.Not.Null);
             Assert.That(playerCollider, Is.Not.Null);
 
-            generatorWireProgress.enabled = false;
-            generatorWireProgress.enabled = true;
+            ReinitializeLifecycle(generatorWireProgress);
             Assert.That(generatorWire.enabled, Is.False);
 
             progressManager.RestoreState(GameProgressState.FindGeneratorWire);
@@ -385,8 +387,7 @@ public class InteractionSandboxSetupTests
             Assert.That(nailsProgress, Is.Not.Null);
             Assert.That(playerCollider, Is.Not.Null);
 
-            nailsProgress.enabled = false;
-            nailsProgress.enabled = true;
+            ReinitializeLifecycle(nailsProgress);
             Assert.That(nailsPickup.enabled, Is.False);
 
             progressManager.RestoreState(GameProgressState.FindNails);
@@ -428,8 +429,7 @@ public class InteractionSandboxSetupTests
             Assert.That(hammerProgress, Is.Not.Null);
             Assert.That(playerCollider, Is.Not.Null);
 
-            hammerProgress.enabled = false;
-            hammerProgress.enabled = true;
+            ReinitializeLifecycle(hammerProgress);
             Assert.That(hammerPickup.enabled, Is.False);
 
             progressManager.RestoreState(GameProgressState.FindHammer);
@@ -471,8 +471,7 @@ public class InteractionSandboxSetupTests
             Assert.That(coolantCapsuleProgress, Is.Not.Null);
             Assert.That(playerCollider, Is.Not.Null);
 
-            coolantCapsuleProgress.enabled = false;
-            coolantCapsuleProgress.enabled = true;
+            ReinitializeLifecycle(coolantCapsuleProgress);
             Assert.That(coolantCapsulePickup.enabled, Is.False);
 
             progressManager.RestoreState(GameProgressState.FindCoolantCapsule);
@@ -510,6 +509,8 @@ public class InteractionSandboxSetupTests
             Assert.That(freezer, Is.Not.Null);
             Assert.That(interactionCamera, Is.Not.Null);
             Assert.That(coolantCapsule, Is.Not.Null);
+
+            ReinitializeLifecycle(freezer);
             Assert.That(playerInventory.TryAddItem(coolantCapsule, 1), Is.True);
 
             Vector3 cameraOffset = interactionCamera.transform.position - playerInteraction.transform.position;
@@ -559,6 +560,8 @@ public class InteractionSandboxSetupTests
             Assert.That(interactionCamera, Is.Not.Null);
             Assert.That(nails, Is.Not.Null);
             Assert.That(hammer, Is.Not.Null);
+
+            ReinitializeLifecycle(refrigeratorWall);
             Assert.That(playerInventory.TryAddItem(nails, 1), Is.True);
             Assert.That(playerInventory.TryAddItem(hammer, 1), Is.True);
 
@@ -776,6 +779,22 @@ public class InteractionSandboxSetupTests
 
         Assert.That(inventoryField, Is.Not.Null);
         inventoryField.SetValue(playerInteraction, playerInventory);
+    }
+
+    private static void ReinitializeLifecycle(Component component)
+    {
+        InvokeLifecycleMethod(component, "OnDisable");
+        InvokeLifecycleMethod(component, "OnEnable");
+    }
+
+    private static void InvokeLifecycleMethod(Component component, string methodName)
+    {
+        MethodInfo lifecycleMethod = component.GetType().GetMethod(
+            methodName,
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.That(lifecycleMethod, Is.Not.Null);
+        lifecycleMethod.Invoke(component, null);
     }
 
     private static void InvokeTriggerEnter(Component component, Collider playerCollider)
