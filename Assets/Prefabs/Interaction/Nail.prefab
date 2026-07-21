@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1881628570054400173}
   - component: {fileID: 9073748216018742267}
   - component: {fileID: 61355167329848949}
+  - component: {fileID: 1348612609951001575}
   m_Layer: 0
   m_Name: Nail
   m_TagString: Untagged
@@ -28,9 +29,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3493852086398184404}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.00000003774895, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.2589064, y: 3.0848231, z: 7.3655305}
-  m_LocalScale: {x: 1.2716058, y: 1.2716058, z: 1.2716058}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -126,9 +127,23 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.02191401, y: 0.021914005, z: 0.081743255}
+  m_Size: {x: 0.05, y: 0.05, z: 0.081743255}
   m_Center: {x: 0, y: 0.0000000013969839, z: 0.0000000018626451}
+--- !u!114 &1348612609951001575
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3493852086398184404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd14f6e739e447d5b5be4e61fc724650, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NailsPickupProgress
+  pickupInteractable: {fileID: 9073748216018742267}
+  gameProgressManager: {fileID: 0}

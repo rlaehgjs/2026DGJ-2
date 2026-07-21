@@ -8,6 +8,20 @@ public class ItemModelSandboxSetupTests
 {
     private const string ScenePath = "Assets/Scenes/Sandbox/ItemModelSandbox.unity";
 
+    [TestCase("Assets/Prefabs/Interaction/FrontDoorKey.prefab")]
+    [TestCase("Assets/Prefabs/Interaction/Nail.prefab")]
+    [TestCase("Assets/Prefabs/Interaction/Hammer.prefab")]
+    [TestCase("Assets/Prefabs/Interaction/IceCube.prefab")]
+    public void CorePickupPrefabs_UseTriggerCollider(string prefabPath)
+    {
+        GameObject prefab = AssetDatabase.LoadAssetAtPath<GameObject>(prefabPath);
+        BoxCollider collider = prefab == null ? null : prefab.GetComponent<BoxCollider>();
+
+        Assert.That(prefab, Is.Not.Null, $"Pickup prefab is required: {prefabPath}");
+        Assert.That(collider, Is.Not.Null, $"{prefabPath} requires a BoxCollider on its gameplay root.");
+        Assert.That(collider.isTrigger, Is.True, $"{prefabPath} collider must be a trigger for pickup detection.");
+    }
+
     [Test]
     public void ItemModelSandbox_UsesModeledCorePickupsAsGameplayRoots()
     {
