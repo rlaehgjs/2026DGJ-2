@@ -96,7 +96,7 @@ MonoBehaviour:
   frictionsPerStage:
   - 20
   - 10
-  - 0
+  - 1
   baseMoveSpeed: 30
   baseJumpForce: 50
 --- !u!114 &8104409302486474839

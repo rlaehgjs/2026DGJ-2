@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using Unity.VisualScripting;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigidBody;
     private Vector3 moveDirection;
     private bool isGrounded = false;
+    private int groundContactCount = 0;
 
     [SerializeField]
     private float baseMoveSpeed = 5f;
@@ -131,6 +133,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // Debug.Log("점프 성공!");
             isGrounded = false;
+            groundContactCount = 0;
             rigidBody.AddForce(Vector3.up * scaledJumpForce, ForceMode.Impulse);
         }
     }
@@ -148,11 +151,38 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         // 땅(Ground) 태그를 가진 오브젝트와 부딪혔을 때
-        if (collision.gameObject.CompareTag("Ground"))
+        if (!collision.gameObject.CompareTag("Ground")) return;
+    
+        if (IsGroundContact(collision))
         {
+            groundContactCount++;
             isGrounded = true;
-            // Debug.Log("착지 완료!");
         }
+    }
+
+    // 바닥으로부터 떨어졌을 때
+    private void OnCollisionExit(Collision collision)
+    {
+        if (!collision.gameObject.CompareTag("Ground")) return;
+
+        if (groundContactCount > 0)
+        {
+            groundContactCount--;
+            isGrounded = groundContactCount > 0;
+        }    
+    }
+
+    // 충돌한 곳들 중 적어도 하나가 옆면이 아닌 바닥일 때만 true 반환
+    bool IsGroundContact(Collision collision)
+    {
+        foreach (ContactPoint contact in collision.contacts)
+        {
+            if (Vector3.Dot(contact.normal, Vector3.up) > 0.5f)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
 

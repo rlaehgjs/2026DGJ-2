@@ -389,9 +389,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 4140140640871923228, guid: 20e9b3bb57fb5e64b99b4ea3a238648c, type: 3}
+      propertyPath: m_Center.y
+      value: -1.2
+      objectReference: {fileID: 0}
     - target: {fileID: 4840120979740804806, guid: 20e9b3bb57fb5e64b99b4ea3a238648c, type: 3}
       propertyPath: m_Name
       value: Map Basement
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147445748071551875, guid: 20e9b3bb57fb5e64b99b4ea3a238648c, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.32
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147445748071551875, guid: 20e9b3bb57fb5e64b99b4ea3a238648c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 8.87
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147445748071551875, guid: 20e9b3bb57fb5e64b99b4ea3a238648c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
