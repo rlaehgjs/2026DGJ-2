@@ -3,11 +3,13 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     public const string GameSaveKey = "game-save";
+    public const string GameSettingsKey = "game-settings";
 
     [SerializeField] private GameProgressManager gameProgressManager;
     [SerializeField] private PlayerInventory playerInventory;
 
     private GameSaveData currentSaveData;
+    private GameSettingsData currentSettings;
     private bool isRestoringSaveData;
 
     private void OnEnable()
@@ -66,9 +68,21 @@ public class SaveManager : MonoBehaviour
         try
         {
             currentSaveData = JsonUtility.FromJson<GameSaveData>(PlayerPrefs.GetString(GameSaveKey));
-            currentSaveData?.EnsureCollections();
+
+            if (currentSaveData == null)
+            {
+                return false;
+            }
+
+            currentSaveData.EnsureCollections();
+
+            if (MigrateSaveData(currentSaveData))
+            {
+                SaveGame(currentSaveData);
+            }
+
             saveData = currentSaveData;
-            return currentSaveData != null;
+            return true;
         }
         catch (System.ArgumentException)
         {
@@ -86,6 +100,51 @@ public class SaveManager : MonoBehaviour
         currentSaveData = null;
         PlayerPrefs.DeleteKey(GameSaveKey);
         PlayerPrefs.Save();
+    }
+
+    public void SaveSettings(GameSettingsData settings)
+    {
+        if (settings == null)
+        {
+            throw new System.ArgumentNullException(nameof(settings));
+        }
+
+        settings.ClampValues();
+        currentSettings = settings;
+        PlayerPrefs.SetString(GameSettingsKey, JsonUtility.ToJson(settings));
+        PlayerPrefs.Save();
+    }
+
+    public GameSettingsData LoadSettings()
+    {
+        if (currentSettings != null)
+        {
+            return currentSettings;
+        }
+
+        if (!HasSettings())
+        {
+            currentSettings = new GameSettingsData();
+            return currentSettings;
+        }
+
+        try
+        {
+            currentSettings = JsonUtility.FromJson<GameSettingsData>(PlayerPrefs.GetString(GameSettingsKey));
+
+            if (currentSettings == null)
+            {
+                currentSettings = new GameSettingsData();
+            }
+
+            currentSettings.ClampValues();
+            return currentSettings;
+        }
+        catch (System.ArgumentException)
+        {
+            currentSettings = new GameSettingsData();
+            return currentSettings;
+        }
     }
 
     public bool RegisterCollectedItem(string saveId)
@@ -184,6 +243,37 @@ public class SaveManager : MonoBehaviour
         }
     }
 
+    private static bool MigrateSaveData(GameSaveData saveData)
+    {
+        if (saveData.Version != 1)
+        {
+            return false;
+        }
+
+        saveData.ProgressState = MigrateVersion1ProgressState((int)saveData.ProgressState);
+        saveData.Version = GameSaveData.CurrentVersion;
+        return true;
+    }
+
+    private static GameProgressState MigrateVersion1ProgressState(int legacyProgressValue)
+    {
+        const int version1FindKitchenKey = 0;
+        const int version1InspectRefrigerator = 1;
+        const int version1Completed = 11;
+
+        if (legacyProgressValue < version1FindKitchenKey || legacyProgressValue > version1Completed)
+        {
+            return GameProgressState.FindKitchen;
+        }
+
+        if (legacyProgressValue <= version1InspectRefrigerator)
+        {
+            return (GameProgressState)legacyProgressValue;
+        }
+
+        return (GameProgressState)(legacyProgressValue + 1);
+    }
+
     private void HandleInventoryChanged()
     {
         if (!isRestoringSaveData)
@@ -206,5 +296,10 @@ public class SaveManager : MonoBehaviour
 
         currentSaveData = new GameSaveData();
         return currentSaveData;
+    }
+
+    private static bool HasSettings()
+    {
+        return PlayerPrefs.HasKey(GameSettingsKey) && !string.IsNullOrWhiteSpace(PlayerPrefs.GetString(GameSettingsKey));
     }
 }

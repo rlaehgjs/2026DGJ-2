@@ -23,7 +23,7 @@ GameObject:
   - component: {fileID: 922100000000000001}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 287ec3d2baf42244e88b76f0942d064e, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeedMultipliers:
   - 0.8
@@ -189,7 +189,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f8158c3b42dd3204f9a1ccbd8c2a27e6, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInteraction
   interactionCamera: {fileID: 3446391646235180569}
   interactionDistance: 3
@@ -203,10 +203,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 78825121bf2341d4c899c2fc88a90dd2, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerInventory
   itemCatalog:
   - {fileID: 11400000, guid: 7d333df97e774514aa4652fcce6d0bae, type: 2}
+  - {fileID: 11400000, guid: 21610b4eb03714944975c5093255068d, type: 2}
+  - {fileID: 11400000, guid: a8390f496e5d4b65b438ff0da3b3fab6, type: 2}
+  - {fileID: 11400000, guid: 5fcfc86a6118a144c851b7e111076cf8, type: 2}
+  - {fileID: 11400000, guid: 0c7bcb6896e4dd041bffd36559e7c26c, type: 2}
   items: []
 --- !u!114 &922100000000000001
 MonoBehaviour:
