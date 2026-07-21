@@ -981,12 +981,32 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 4657935908992714778, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
+      propertyPath: wallNormalMaxY
+      value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657935908992714778, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
+      propertyPath: 'moveSpeedMultipliers.Array.data[0]'
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657935908992714778, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
+      propertyPath: 'moveSpeedMultipliers.Array.data[1]'
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657935908992714778, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
+      propertyPath: 'moveSpeedMultipliers.Array.data[2]'
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657935908992714778, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: 'extraGravityMultipliers.Array.data[0]'
       value: 220
       objectReference: {fileID: 0}
     - target: {fileID: 4657935908992714778, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: 'extraGravityMultipliers.Array.data[1]'
       value: 160
+      objectReference: {fileID: 0}
+    - target: {fileID: 4657935908992714778, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
+      propertyPath: 'extraGravityMultipliers.Array.data[2]'
+      value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalScale.x

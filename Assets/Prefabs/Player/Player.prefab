@@ -72,7 +72,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 5571855427934342208}
   mouseSensitivity: 500
   verticalMaxDegree: -90
-  verticalMinDegree: 30
+  verticalMinDegree: 28
 --- !u!114 &4657935908992714778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,9 +86,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   moveSpeedMultipliers:
+  - 0.6
+  - 0.7
   - 0.8
-  - 1
-  - 1.1
   extraGravityMultipliers:
   - 220
   - 160
@@ -99,6 +99,8 @@ MonoBehaviour:
   - 1
   baseMoveSpeed: 30
   baseJumpForce: 50
+  groundNormalThreshold: 0.65
+  wallNormalMaxY: 0.2
 --- !u!114 &8104409302486474839
 MonoBehaviour:
   m_ObjectHideFlags: 0
