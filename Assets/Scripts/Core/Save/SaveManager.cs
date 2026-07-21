@@ -3,11 +3,13 @@ using UnityEngine;
 public class SaveManager : MonoBehaviour
 {
     public const string GameSaveKey = "game-save";
+    public const string GameSettingsKey = "game-settings";
 
     [SerializeField] private GameProgressManager gameProgressManager;
     [SerializeField] private PlayerInventory playerInventory;
 
     private GameSaveData currentSaveData;
+    private GameSettingsData currentSettings;
     private bool isRestoringSaveData;
 
     private void OnEnable()
@@ -98,6 +100,51 @@ public class SaveManager : MonoBehaviour
         currentSaveData = null;
         PlayerPrefs.DeleteKey(GameSaveKey);
         PlayerPrefs.Save();
+    }
+
+    public void SaveSettings(GameSettingsData settings)
+    {
+        if (settings == null)
+        {
+            throw new System.ArgumentNullException(nameof(settings));
+        }
+
+        settings.ClampValues();
+        currentSettings = settings;
+        PlayerPrefs.SetString(GameSettingsKey, JsonUtility.ToJson(settings));
+        PlayerPrefs.Save();
+    }
+
+    public GameSettingsData LoadSettings()
+    {
+        if (currentSettings != null)
+        {
+            return currentSettings;
+        }
+
+        if (!HasSettings())
+        {
+            currentSettings = new GameSettingsData();
+            return currentSettings;
+        }
+
+        try
+        {
+            currentSettings = JsonUtility.FromJson<GameSettingsData>(PlayerPrefs.GetString(GameSettingsKey));
+
+            if (currentSettings == null)
+            {
+                currentSettings = new GameSettingsData();
+            }
+
+            currentSettings.ClampValues();
+            return currentSettings;
+        }
+        catch (System.ArgumentException)
+        {
+            currentSettings = new GameSettingsData();
+            return currentSettings;
+        }
     }
 
     public bool RegisterCollectedItem(string saveId)
@@ -249,5 +296,10 @@ public class SaveManager : MonoBehaviour
 
         currentSaveData = new GameSaveData();
         return currentSaveData;
+    }
+
+    private static bool HasSettings()
+    {
+        return PlayerPrefs.HasKey(GameSettingsKey) && !string.IsNullOrWhiteSpace(PlayerPrefs.GetString(GameSettingsKey));
     }
 }

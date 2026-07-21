@@ -96,11 +96,10 @@ public class PickupInteractableTriggerTests
         Assert.That(saveManager.RegisterCollectedItem(TestSaveId), Is.True);
 
         pickupObject = new GameObject("Pickup");
-        pickupObject.SetActive(false);
         PickupInteractable pickup = pickupObject.AddComponent<PickupInteractable>();
         SetPickupData(pickup, itemData, TestSaveId, saveManager);
 
-        pickupObject.SetActive(true);
+        InvokeAwake(pickup);
 
         Assert.That(pickupObject.activeSelf, Is.False);
 
@@ -209,5 +208,15 @@ public class PickupInteractableTriggerTests
         serializedPickup.FindProperty("requiredProgressState").enumValueIndex = (int)requiredState;
         serializedPickup.FindProperty("gameProgressManager").objectReferenceValue = progressManager;
         serializedPickup.ApplyModifiedPropertiesWithoutUndo();
+    }
+
+    private static void InvokeAwake(PickupInteractable pickup)
+    {
+        MethodInfo awakeMethod = typeof(PickupInteractable).GetMethod(
+            "Awake",
+            BindingFlags.Instance | BindingFlags.NonPublic);
+
+        Assert.That(awakeMethod, Is.Not.Null);
+        awakeMethod.Invoke(pickup, null);
     }
 }
