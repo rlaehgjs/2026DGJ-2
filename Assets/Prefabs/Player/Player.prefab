@@ -34,7 +34,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -689.1, y: 6.199997, z: 112.399994}
-  m_LocalScale: {x: 21, y: 21, z: 21}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4931046930910180524}
@@ -73,7 +73,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 5571855427934342208}
   mouseSensitivity: 500
   verticalMaxDegree: -90
-  verticalMinDegree: 28
+  verticalMinDegree: 20
 --- !u!114 &4657935908992714778
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98,10 +98,9 @@ MonoBehaviour:
   - 20
   - 10
   - 1
+  groundNormalThreshold: 0.65
   baseMoveSpeed: 30
   baseJumpForce: 50
-  groundNormalThreshold: 0.65
-  wallNormalMaxY: 0.6
 --- !u!114 &8104409302486474839
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,8 +355,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -0.039389998, y: 0.3, z: 0.007999986}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 10, y: 10, z: 10}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 5766344783408521087}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
@@ -489,7 +488,7 @@ Transform:
   m_GameObject: {fileID: 8241477201252353190}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.5, z: 0.15}
+  m_LocalPosition: {x: 0, y: 0.9, z: 2.24}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
