@@ -161,17 +161,37 @@ public class DoorInteractable : MonoBehaviour, IInteractable
 
     private BoxCollider CreateBoxColliderFromMesh()
     {
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        MeshFilter meshFilter = GetComponentInChildren<MeshFilter>(true);
 
-        if (meshFilter == null || meshFilter.sharedMesh == null)
+        if (meshFilter != null && meshFilter.sharedMesh != null)
+        {
+            return CreateBoxCollider(meshFilter.gameObject, meshFilter.sharedMesh.bounds);
+        }
+
+        Renderer renderer = GetComponentInChildren<Renderer>(true);
+        if (renderer == null)
         {
             return null;
         }
 
-        Bounds meshBounds = meshFilter.sharedMesh.bounds;
-        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
-        boxCollider.center = meshBounds.center;
-        boxCollider.size = meshBounds.size;
+        return CreateBoxCollider(renderer.gameObject, renderer.localBounds);
+    }
+
+    private static BoxCollider CreateBoxCollider(GameObject target, Bounds bounds)
+    {
+        if (target.TryGetComponent(out BoxCollider existingBoxCollider))
+        {
+            return existingBoxCollider;
+        }
+
+        if (target.TryGetComponent(out Collider _))
+        {
+            return null;
+        }
+
+        BoxCollider boxCollider = target.AddComponent<BoxCollider>();
+        boxCollider.center = bounds.center;
+        boxCollider.size = bounds.size;
         return boxCollider;
     }
 

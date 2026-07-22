@@ -52,17 +52,31 @@ public class DrawerInteractable : MonoBehaviour, IInteractable
             return;
         }
 
-        MeshFilter meshFilter = GetComponent<MeshFilter>();
+        MeshFilter meshFilter = GetComponentInChildren<MeshFilter>(true);
 
-        if (meshFilter == null || meshFilter.sharedMesh == null)
+        if (meshFilter != null && meshFilter.sharedMesh != null)
+        {
+            CreateBoxCollider(meshFilter.gameObject, meshFilter.sharedMesh.bounds);
+            return;
+        }
+
+        Renderer renderer = GetComponentInChildren<Renderer>(true);
+        if (renderer != null)
+        {
+            CreateBoxCollider(renderer.gameObject, renderer.localBounds);
+        }
+    }
+
+    private static void CreateBoxCollider(GameObject target, Bounds bounds)
+    {
+        if (target.GetComponent<Collider>() != null)
         {
             return;
         }
 
-        Bounds meshBounds = meshFilter.sharedMesh.bounds;
-        BoxCollider boxCollider = gameObject.AddComponent<BoxCollider>();
-        boxCollider.center = meshBounds.center;
-        boxCollider.size = meshBounds.size;
+        BoxCollider boxCollider = target.AddComponent<BoxCollider>();
+        boxCollider.center = bounds.center;
+        boxCollider.size = bounds.size;
     }
 
     private void StartMovement(Vector3 targetPosition, bool opening)

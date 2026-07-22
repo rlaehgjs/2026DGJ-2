@@ -6,6 +6,14 @@ public class FrontDoorLock : MonoBehaviour, IInteractable
     [Min(1)][SerializeField] private int requiredAmount = 1;
     [SerializeField] private GameProgressManager gameProgressManager;
 
+    private void Awake()
+    {
+        if (gameProgressManager == null)
+        {
+            gameProgressManager = FindFirstObjectByType<GameProgressManager>();
+        }
+    }
+
     public bool IsUnlocked => gameProgressManager != null
         && gameProgressManager.CurrentState >= GameProgressState.FindGenerator;
 
