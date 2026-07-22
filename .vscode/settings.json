@@ -67,6 +67,6 @@
         "*.sln": "*.csproj",
         "*.slnx": "*.csproj"
     },
-    "dotnet.defaultSolution": "DGJ 2026.slnx",
+    "dotnet.defaultSolution": "2026DGJ-2.slnx",
     "dotnet.enableWorkspaceBasedDevelopment": false
 }
