@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
@@ -17,6 +18,8 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody rigidBody;
     private Vector3 moveDirection;
     private bool isGrounded = false;
+    [SerializeField, Range(0f, 1f)]
+    private float groundNormalThreshold = 0.65f;
 
     [SerializeField]
     private float baseMoveSpeed = 5f;
@@ -49,12 +52,17 @@ public class PlayerMovement : MonoBehaviour
         ApplyFreezeState(FreezeState.Frozen);
     }
 
+    private void FixedUpdate()
+    {
+        // 현재 물리 프레임의 접촉 정보는 OnCollisionStay에서 다시 채운다.
+        isGrounded = false;
+    }
+
 
     // WASD 이동
     void Update()
     {
         Vector2 moveInput = gameInputReader.MoveInput;
-
         SetMoveDirection(new Vector3(
             moveInput.x,
             0f,
@@ -73,9 +81,11 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector3 originalVelocity = rigidBody.linearVelocity;
         Vector3 newVelocity = scaledMoveSpeed * moveDirection;
+
         // y축 속도는 점프 중일 수도 있으니까 그대로 둠
         rigidBody.linearVelocity = new Vector3(newVelocity.x, originalVelocity.y, newVelocity.z);
-        Debug.Log("현재 속도: " + rigidBody.linearVelocity);
+        // Debug.Log("현재 속도: " + rigidBody.linearVelocity);
+        // Debug.Log("isGrounded" + isGrounded);
     }
 
     // 마찰 적용
@@ -99,10 +109,11 @@ public class PlayerMovement : MonoBehaviour
         Vector3 currentPlanarVelocity = new Vector3(rigidBody.linearVelocity.x, 0f, rigidBody.linearVelocity.z);
         Vector3 zeroPlanarVelocity = Vector3.zero;
         Vector3 smoothedVelocity = Vector3.Lerp(currentPlanarVelocity, zeroPlanarVelocity, value);
-        
+       
         // 최종 속도 적용 (중력 Y값은 그대로 유지)
         rigidBody.linearVelocity = new Vector3(smoothedVelocity.x, rigidBody.linearVelocity.y, smoothedVelocity.z);
     }
+
 
     // 수평 이동 방향 설정
     private void SetMoveDirection(Vector3 direction)
@@ -117,7 +128,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 lookDirection = transform.forward;
         lookDirection.y = 0;
         lookDirection.Normalize(); // 크기를 다시 1로 맞춤
-        
+       
         Quaternion horizontalRotation = Quaternion.LookRotation(lookDirection);
         moveDirection = horizontalRotation * direction.normalized;
     }
@@ -128,7 +139,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            Debug.Log("점프 성공!");
+            // Debug.Log("점프 성공!");
             isGrounded = false;
             rigidBody.AddForce(Vector3.up * scaledJumpForce, ForceMode.Impulse);
         }
@@ -143,15 +154,22 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // 착지
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        // 땅(Ground) 태그를 가진 오브젝트와 부딪혔을 때
-        if (collision.gameObject.CompareTag("Ground"))
+        for (int i = 0; i < collision.contactCount; i++)
         {
-            isGrounded = true;
-            Debug.Log("착지 완료!");
+            Vector3 contactNormal = collision.GetContact(i).normal;
+            if (IsGroundNormal(contactNormal, groundNormalThreshold))
+            {
+                isGrounded = true;
+            }
         }
+    }
+
+    // 땅에 붙어 있는지 판단
+    private static bool IsGroundNormal(Vector3 normal, float threshold)
+    {
+        return normal.y >= threshold;
     }
 
 
@@ -170,12 +188,15 @@ public class PlayerMovement : MonoBehaviour
         gameInputReader.JumpPressed -= Jump;
     }
 
+
     private void ApplyFreezeState(FreezeState state)
     {
         currentState = state;
         int state_index = (int)currentState;
+        
         freezeStateMoveSpeedMultiplier = moveSpeedMultipliers[state_index];
         scaledMoveSpeed = baseMoveSpeed * environmentMoveSpeedMultiplier * freezeStateMoveSpeedMultiplier;
+        
         friction = frictionsPerStage[state_index];
         extraGravity = extraGravityMultipliers[state_index];
     }
