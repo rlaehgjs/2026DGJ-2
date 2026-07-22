@@ -1,27 +1,41 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField]
     private List<float> moveSpeedMultipliers = new List<float>()
-    {0.8f, 1.0f, 1.1f};
+    { 0.8f, 1.0f, 1.1f };
+
     [SerializeField]
     private List<float> extraGravityMultipliers = new List<float>()
-    {0f, 2.0f, 3.0f};
+    { 0f, 2.0f, 3.0f };
+
     [SerializeField]
     private List<float> frictionsPerStage = new List<float>()
-    {20.0f, 10.0f, 0f};
-
-    private Rigidbody rigidBody;
-    private Vector3 moveDirection;
-    private bool isGrounded = false;
+    { 20.0f, 10.0f, 0f };
 
     [SerializeField]
     private float baseMoveSpeed = 5f;
+
     [SerializeField]
     private float baseJumpForce = 10f;
+
+    [SerializeField, Range(0f, 1f)]
+    private float groundNormalThreshold = 0.65f;
+
+    [SerializeField, Range(0f, 1f)]
+    private float wallNormalMaxY = 0.2f;
+
+    private Rigidbody rigidBody;
+    private Vector3 moveDirection;
+    private bool isGrounded;
+    private bool isTouchingWall;
+    private Vector3 wallEscapeNormal;
+    private bool escapedFromWallInAir;
+    private bool wallEscapeInputPendingRelease;
+    private bool wasGroundedLastPhysicsStep;
 
     private float freezeStateMoveSpeedMultiplier = 1.0f;
     private float environmentMoveSpeedMultiplier = 1.0f;
@@ -34,7 +48,6 @@ public class PlayerMovement : MonoBehaviour
     private PlayerMeltSystem playerMeltSystem;
     private GameInputReader gameInputReader;
 
-    // 추가된 부분: OnEnable보다 먼저 실행됨
     void Awake()
     {
         playerMeltSystem = GetComponent<PlayerMeltSystem>();
@@ -49,18 +62,24 @@ public class PlayerMovement : MonoBehaviour
         ApplyFreezeState(FreezeState.Frozen);
     }
 
+    private void FixedUpdate()
+    {
+        // 현재 물리 프레임의 접촉 정보는 OnCollisionStay에서 다시 채운다.
+        wasGroundedLastPhysicsStep = isGrounded;
+        isGrounded = false;
+        isTouchingWall = false;
+        wallEscapeNormal = Vector3.zero;
+    }
 
-    // WASD 이동
     void Update()
     {
         Vector2 moveInput = gameInputReader.MoveInput;
 
-        SetMoveDirection(new Vector3(
-            moveInput.x,
-            0f,
-            moveInput.y));
+        // 입력 잠금 로직(ShouldBlockWallEscapeInput) 완전 제거
+        SetMoveDirection(new Vector3(moveInput.x, 0f, moveInput.y));
 
-        if (moveDirection != Vector3.zero)
+        // 벽에 닿아 입력이 없어도 기존 수평 속도를 제거해야 한다.
+        if (moveDirection != Vector3.zero || IsAirborneAgainstWall())
         {
             Move();
         }
@@ -72,13 +91,34 @@ public class PlayerMovement : MonoBehaviour
     public void Move()
     {
         Vector3 originalVelocity = rigidBody.linearVelocity;
-        Vector3 newVelocity = scaledMoveSpeed * moveDirection;
-        // y축 속도는 점프 중일 수도 있으니까 그대로 둠
-        rigidBody.linearVelocity = new Vector3(newVelocity.x, originalVelocity.y, newVelocity.z);
+        Vector3 allowedMoveDirection = moveDirection;
+
+        // 기본적으로 기존의 Y축 속도(중력, 점프력)를 유지
+        float targetVelocityY = originalVelocity.y;
+
+        if (IsAirborneAgainstWall())
+        {
+            allowedMoveDirection = GetWallEscapeDirection(moveDirection, wallEscapeNormal);
+            if (allowedMoveDirection.sqrMagnitude > 0f)
+            {
+                escapedFromWallInAir = true;
+            }
+
+            // [해결책] 벽타기(Capsule Climbing) 완벽 방지
+            // 벽을 비비고 있을 때는 물리 엔진이 중력을 무시하고 속도를 유지시켜 버리므로,
+            // 매 프레임마다 강제로 '기본 중력 + 추가 중력'만큼 Y축 속도를 깎아내립니다.
+            float gravitySimulation = extraGravity * extraGravity * Time.deltaTime;
+            
+            // 점프 직후 올라가는 중이든(양수), 떨어지는 중이든(음수) 무조건 깎아서 자연스러운 포물선을 그리게 합니다.
+            targetVelocityY = -gravitySimulation;
+        }
+
+        Vector3 newVelocity = scaledMoveSpeed * allowedMoveDirection;
+        // X, Z는 미끄러지는 방향을 넣고, Y는 아래로 향하게 만든 targetVelocityY를 넣습니다.
+        rigidBody.linearVelocity = new Vector3(newVelocity.x, targetVelocityY, newVelocity.z);
         Debug.Log("현재 속도: " + rigidBody.linearVelocity);
     }
 
-    // 마찰 적용
     private void AdjustMove()
     {
         int numState = Enum.GetNames(typeof(FreezeState)).Length;
@@ -95,35 +135,33 @@ public class PlayerMovement : MonoBehaviour
 
     private void ApplyFriction(float value)
     {
-        // Lerp에서 y값이 영향을 주지 않도록 x, z만 가져옴
-        Vector3 currentPlanarVelocity = new Vector3(rigidBody.linearVelocity.x, 0f, rigidBody.linearVelocity.z);
-        Vector3 zeroPlanarVelocity = Vector3.zero;
-        Vector3 smoothedVelocity = Vector3.Lerp(currentPlanarVelocity, zeroPlanarVelocity, value);
-        
-        // 최종 속도 적용 (중력 Y값은 그대로 유지)
-        rigidBody.linearVelocity = new Vector3(smoothedVelocity.x, rigidBody.linearVelocity.y, smoothedVelocity.z);
+        Vector3 currentPlanarVelocity = new Vector3(
+            rigidBody.linearVelocity.x,
+            0f,
+            rigidBody.linearVelocity.z);
+        Vector3 smoothedVelocity = Vector3.Lerp(currentPlanarVelocity, Vector3.zero, value);
+
+        rigidBody.linearVelocity = new Vector3(
+            smoothedVelocity.x,
+            rigidBody.linearVelocity.y,
+            smoothedVelocity.z);
     }
 
-    // 수평 이동 방향 설정
     private void SetMoveDirection(Vector3 direction)
     {
         ApplyLookDirection(direction);
     }
 
-    // 보는 방향을 기준으로 이동 방향 조정
     private void ApplyLookDirection(Vector3 direction)
     {
-        // 위아래로 보고 있을 때 이동 방향이 잘못되지 않도록 수평 회전량만 남김
         Vector3 lookDirection = transform.forward;
-        lookDirection.y = 0;
-        lookDirection.Normalize(); // 크기를 다시 1로 맞춤
-        
+        lookDirection.y = 0f;
+        lookDirection.Normalize();
+
         Quaternion horizontalRotation = Quaternion.LookRotation(lookDirection);
         moveDirection = horizontalRotation * direction.normalized;
     }
 
-
-    // 점프
     private void Jump()
     {
         if (isGrounded)
@@ -134,7 +172,6 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // 저중력 적용
     private void AdjustJump()
     {
         if (!isGrounded)
@@ -143,29 +180,96 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    // 착지
-    private void OnCollisionEnter(Collision collision)
+    private void OnCollisionStay(Collision collision)
     {
-        // 땅(Ground) 태그를 가진 오브젝트와 부딪혔을 때
-        if (collision.gameObject.CompareTag("Ground"))
+        for (int i = 0; i < collision.contactCount; i++)
         {
-            isGrounded = true;
-            Debug.Log("착지 완료!");
+            Vector3 contactNormal = collision.GetContact(i).normal;
+
+            if (IsGroundNormal(contactNormal, groundNormalThreshold))
+            {
+                isGrounded = true;
+                // 강제 정지 로직(StopPlanarVelocity)과 입력 잠금을 유발하던 if문 제거
+                escapedFromWallInAir = false;
+                continue;
+            }
+
+            if (!IsWallNormal(contactNormal, wallNormalMaxY))
+            {
+                continue;
+            }
+
+            Vector3 horizontalNormal = Vector3.ProjectOnPlane(contactNormal, Vector3.up);
+            if (horizontalNormal.sqrMagnitude <= 0f)
+            {
+                continue;
+            }
+
+            isTouchingWall = true;
+            wallEscapeNormal += horizontalNormal.normalized;
         }
     }
 
+    private bool IsAirborneAgainstWall()
+    {
+        return !isGrounded && isTouchingWall;
+    }
 
-    // 이벤트 처리
+    // 땅에 붙어 있는지 판단
+    private static bool IsGroundNormal(Vector3 normal, float threshold)
+    {
+        return normal.y >= threshold;
+    }
+
+    // 벽에 붙어 있는지 판단
+    private static bool IsWallNormal(Vector3 normal, float maxNormalY)
+    {
+        return Mathf.Abs(normal.y) <= maxNormalY;
+    }
+
+    private static Vector3 GetWallEscapeDirection(Vector3 inputDirection, Vector3 escapeNormal)
+    {
+        if (inputDirection.sqrMagnitude <= 0f || escapeNormal.sqrMagnitude <= 0f)
+        {
+            return inputDirection; // 입력이 없으면 그대로 유지
+        }
+
+        Vector3 normalizedEscapeNormal = escapeNormal.normalized;
+        float escapeAmount = Vector3.Dot(inputDirection, normalizedEscapeNormal);
+
+        if (escapeAmount < 0f)
+        {
+            // 3. 벽을 파고드는 방향으로 이동 중이라면, 벽을 따라 미끄러지도록 벡터 투영
+            return Vector3.ProjectOnPlane(inputDirection, normalizedEscapeNormal);
+        }
+
+        // 벽에서 멀어지는 방향이면 원래 입력 방향 유지
+        return inputDirection;
+    }
+
+    private static bool ShouldStartWallEscapeInputLock(bool escapedFromWallInAir, bool justLanded)
+    {
+        return escapedFromWallInAir && justLanded;
+    }
+
+    private static bool ShouldBlockWallEscapeInput(bool inputPendingRelease, bool hasMoveInput)
+    {
+        return inputPendingRelease && hasMoveInput;
+    }
+
+    private static Vector3 StopPlanarVelocity(Vector3 velocity)
+    {
+        return new Vector3(0f, velocity.y, 0f);
+    }
+
     void OnEnable()
     {
-        // 이벤트 구독 (+= 연산자 사용)
         playerMeltSystem.OnFreezeStateChanged += ApplyFreezeState;
         gameInputReader.JumpPressed += Jump;
     }
 
     void OnDisable()
     {
-        // 이벤트 구독 해제 (-= 연산자 필수)
         playerMeltSystem.OnFreezeStateChanged -= ApplyFreezeState;
         gameInputReader.JumpPressed -= Jump;
     }
@@ -173,15 +277,13 @@ public class PlayerMovement : MonoBehaviour
     private void ApplyFreezeState(FreezeState state)
     {
         currentState = state;
-        int state_index = (int)currentState;
-        freezeStateMoveSpeedMultiplier = moveSpeedMultipliers[state_index];
+        int stateIndex = (int)currentState;
+        freezeStateMoveSpeedMultiplier = moveSpeedMultipliers[stateIndex];
         scaledMoveSpeed = baseMoveSpeed * environmentMoveSpeedMultiplier * freezeStateMoveSpeedMultiplier;
-        friction = frictionsPerStage[state_index];
-        extraGravity = extraGravityMultipliers[state_index];
+        friction = frictionsPerStage[stateIndex];
+        extraGravity = extraGravityMultipliers[stateIndex];
     }
 
-
-    // Setter
     public void SetEnvironmentSpeedMultiplier(float multiplier)
     {
         environmentMoveSpeedMultiplier = multiplier;
