@@ -436,6 +436,10 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 441089852}
+    - target: {fileID: 4310240039362814552, guid: 2d76e16016241364b834e6457207cd1c, type: 3}
+      propertyPath: m_TagString
+      value: Ground
+      objectReference: {fileID: 0}
     - target: {fileID: 4414133779228023089, guid: 2d76e16016241364b834e6457207cd1c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -32.08137
