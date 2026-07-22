@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Globalization;
 using UnityEngine;
 
 public class WaterTankExplosionController : MonoBehaviour
@@ -48,7 +49,8 @@ public class WaterTankExplosionController : MonoBehaviour
         {
             if (escapeTrigger != null && escapeTrigger.bounds.Contains(playerMeltSystem.transform.position))
             {
-                break;
+                Debug.Log("골인");
+                break; //골인 시 멈춤
             }
 
             Vector3 pos = waterVolume.position;
@@ -65,7 +67,7 @@ public class WaterTankExplosionController : MonoBehaviour
 
             if (pos.y >= maxHeight)
             {
-                break;
+                break; //물 최대치여서 죽음 처리
             }
 
             yield return null;
