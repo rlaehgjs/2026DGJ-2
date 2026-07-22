@@ -180,6 +180,85 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4def1132729a1f489691e1abeab5f0e, type: 3}
+--- !u!114 &1443899309 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8237582429418059809, guid: b4def1132729a1f489691e1abeab5f0e, type: 3}
+  m_PrefabInstance: {fileID: 1443899308}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a03fafd9c9911c488b850f2402d4e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Project.Core::GameManager
+--- !u!1 &1596269070
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1596269073}
+  - component: {fileID: 1596269072}
+  - component: {fileID: 1596269071}
+  m_Layer: 0
+  m_Name: EventSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1596269071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596269070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.StandaloneInputModule
+  m_SendPointerHoverToParent: 1
+  m_HorizontalAxis: Horizontal
+  m_VerticalAxis: Vertical
+  m_SubmitButton: Submit
+  m_CancelButton: Cancel
+  m_InputActionsPerSecond: 10
+  m_RepeatDelay: 0.5
+  m_ForceModuleActive: 0
+--- !u!114 &1596269072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596269070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.EventSystems.EventSystem
+  m_FirstSelected: {fileID: 0}
+  m_sendNavigationEvents: 1
+  m_DragThreshold: 10
+--- !u!4 &1596269073
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1596269070}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1597910853
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -248,9 +327,207 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac079a8c5e09fe34b93d6e10a32c17a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Project.Core::SaveManager
+--- !u!1001 &2006550160
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1043771613473299031, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_Name
+      value: LocalizationManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2113448606770199374, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4dbbff3c42ce27f49be412b12dd3e546, type: 3}
+--- !u!1001 &2015134713
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 426343097011771005, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_Name
+      value: MainMenuUIController
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5497286951351667194, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7775647970407851487, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1443899309}
+    - target: {fileID: 7775647970407851487, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: saveManager
+      value: 
+      objectReference: {fileID: 1597910854}
+    - target: {fileID: 7775647970407851487, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: soundManager
+      value: 
+      objectReference: {fileID: 2144108783}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+--- !u!1001 &2144108782
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1725634973797855301, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.44468
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.40629
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9107445695375332265, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+--- !u!114 &2144108783 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5624733923706905647, guid: bfa1981a3d970cb418d4dce10a968192, type: 3}
+  m_PrefabInstance: {fileID: 2144108782}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80467bf7564eb9b49bfe04c4999a892c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SoundManager
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1443899308}
   - {fileID: 1597910853}
+  - {fileID: 2144108782}
+  - {fileID: 2006550160}
+  - {fileID: 2015134713}
+  - {fileID: 1596269073}
