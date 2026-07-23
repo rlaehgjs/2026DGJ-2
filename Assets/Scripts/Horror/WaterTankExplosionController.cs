@@ -5,6 +5,7 @@ using UnityEngine.Rendering;
 public class WaterTankExplosionController : MonoBehaviour
 {
     [SerializeField] private Transform waterVolume;
+    private float waterVolumeOriginalY;
     [SerializeField] private ParticleSystem[] outletParticles;
     [SerializeField] private AudioSource floodAudioSource;
     [SerializeField] private AudioClip[] impactClips;
@@ -38,6 +39,8 @@ public class WaterTankExplosionController : MonoBehaviour
         {
             waterCollider = waterVolume.GetComponent<Collider>();
         }
+
+        waterVolumeOriginalY = waterVolume.position.y;
 
         // 시작할 때 효과 수치 0으로 초기화
         if (underwaterVolume != null) underwaterVolume.weight = 0f;
@@ -111,6 +114,7 @@ public class WaterTankExplosionController : MonoBehaviour
 
         while (isRunning && !isFinished)
         {
+            // 플레이어가 탈출 트리거 안에 들어가면 루프 종료
             if (escapeTrigger != null && escapeTrigger.bounds.Contains(playerMeltSystem.transform.position))
             {
                 break;
@@ -136,11 +140,13 @@ public class WaterTankExplosionController : MonoBehaviour
             yield return null;
         }
 
+        // 파티클 멈추기
         foreach (var ps in outletParticles)
         {
             if (ps != null) ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         }
 
+        // 소리 멈추기
         if (floodAudioSource != null)
         {
             floodAudioSource.Stop();
@@ -148,5 +154,33 @@ public class WaterTankExplosionController : MonoBehaviour
 
         isFinished = true;
         isRunning = false;
+
+        // 포스트 프로세싱 볼륨과 셰이더 글로벌 변수 초기화
+        if (underwaterVolume != null) underwaterVolume.weight = 0f;
+        Shader.SetGlobalFloat(UnderwaterWeightId, 0f);
+        RenderSettings.fogDensity = 0f;
+
+        // 물 높이 초기화
+        waterVolume.position = new Vector3(waterVolume.position.x, waterVolumeOriginalY, waterVolume.position.z);
     }
+
+    // 이벤트 처리
+    void OnEnable()
+    {
+        // 이벤트 구독 (+= 연산자 사용)
+        playerMeltSystem.OnHpDepleted += HandlePlayerHpDepleted;
+    }
+
+    void OnDisable()
+    {
+        // 이벤트 구독 해제 (-= 연산자 필수)
+        playerMeltSystem.OnHpDepleted -= HandlePlayerHpDepleted;
+    }
+
+    private void HandlePlayerHpDepleted()
+    {
+        // 플레이어 HP가 0이 되면 홍수 루프를 종료
+        isRunning = false;
+    }
+
 }

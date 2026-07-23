@@ -4,6 +4,7 @@ public class GeneratorWirePickupProgress : MonoBehaviour
 {
     [SerializeField] private PickupInteractable pickupInteractable;
     [SerializeField] private GameProgressManager gameProgressManager;
+    [SerializeField] private WaterTankExplosionController waterTankExplosion;
 
     private void OnEnable()
     {
@@ -41,6 +42,8 @@ public class GeneratorWirePickupProgress : MonoBehaviour
         {
             gameProgressManager.TryCompleteGeneratorWire();
         }
+
+        waterTankExplosion?.BeginFlood();
     }
 
     private void HandleProgressChanged(GameProgressState _)

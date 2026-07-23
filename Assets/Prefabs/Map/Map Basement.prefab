@@ -273,7 +273,7 @@ MonoBehaviour:
   playerMeltSystem: {fileID: 0}
   riseSpeed: 1
   maxHeight: 8
-  damagePerSecond: 10
+  damagePerSecond: 5
   underwaterVolume: {fileID: 5583614961567424333}
   effectTransitionSpeed: 5
 --- !u!1 &2707038134087061943
@@ -14412,6 +14412,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2619303527596638713}
     m_Modifications:
+    - target: {fileID: 2370860221774883564, guid: e971ed3a039354740b03f39d1d81e2cf, type: 3}
+      propertyPath: waterTankExplosion
+      value: 
+      objectReference: {fileID: 8485436897286772562}
     - target: {fileID: 5137737122181960265, guid: e971ed3a039354740b03f39d1d81e2cf, type: 3}
       propertyPath: m_Name
       value: Cable
