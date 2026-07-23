@@ -99,7 +99,7 @@ public class PlayerMeltSystem : MonoBehaviour
                     OnFreezeStateChanged?.Invoke(current_state);
                     previous_state = current_state;
                 }
-                Debug.Log("현재 상태: " + current_state);
+                // Debug.Log("현재 상태: " + current_state);
                 break;
             }
         }
