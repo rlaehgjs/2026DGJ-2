@@ -3144,6 +3144,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6066436774662275923}
     m_Modifications:
+    - target: {fileID: 4083014914154006356, guid: f520653d774b37c4a8af3a8bcfeeefd4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6081367293534145767, guid: f520653d774b37c4a8af3a8bcfeeefd4, type: 3}
       propertyPath: m_Name
       value: DollLaser
@@ -4237,7 +4241,7 @@ MonoBehaviour:
   openDuration: 0.8
   rotationAxis: 0
   openTowardPlayer: 0
-  frontDoorLock: {fileID: 0}
+  frontDoorLock: {fileID: 97528143483030993}
   doorCollider: {fileID: 3044198918259642014}
 --- !u!1 &8648865265175124469 stripped
 GameObject:
@@ -4281,7 +4285,7 @@ MonoBehaviour:
   openDuration: 0.8
   rotationAxis: 0
   openTowardPlayer: 0
-  frontDoorLock: {fileID: 0}
+  frontDoorLock: {fileID: 97528143483030993}
   doorCollider: {fileID: 2309571534085119987}
 --- !u!1 &9116009550844427024 stripped
 GameObject:
@@ -8118,17 +8122,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 761360894077732990}
     m_Modifications:
+    - target: {fileID: 1615457389466539998, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615457389466539998, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1615457389466539998, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994447812109197648, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994447812109197648, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1994447812109197648, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1994447812109197648, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -98.54057
+      value: -100.04057
       objectReference: {fileID: 0}
     - target: {fileID: 1994447812109197648, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 11.916519
+      value: 13.166519
       objectReference: {fileID: 0}
     - target: {fileID: 1994447812109197648, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -141.19733
+      value: -141.4473
       objectReference: {fileID: 0}
     - target: {fileID: 1994447812109197648, guid: c4ffe2400c551834dba21d91ac3c603d, type: 3}
       propertyPath: m_LocalRotation.w
@@ -14411,15 +14439,15 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: -642451929503139416, guid: 1d709fa2c0bfeb1409d6ba2b4f5361f3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2520398097711378179}
+      addedObject: {fileID: 3694783089238595290}
   m_SourcePrefab: {fileID: 100100000, guid: 1d709fa2c0bfeb1409d6ba2b4f5361f3, type: 3}
 --- !u!1 &3185638917673045049 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -642451929503139416, guid: 1d709fa2c0bfeb1409d6ba2b4f5361f3, type: 3}
   m_PrefabInstance: {fileID: 6566288835997382033}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &2520398097711378179
-BoxCollider:
+--- !u!64 &3694783089238595290
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -14436,9 +14464,10 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.4025238, y: 2.8210986, z: 0.30070072}
-  m_Center: {x: -1.2012615, y: 1.4105492, z: 0.14223865}
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -4304378537825741212, guid: 1d709fa2c0bfeb1409d6ba2b4f5361f3, type: 3}
 --- !u!4 &6677322662492099194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1d709fa2c0bfeb1409d6ba2b4f5361f3, type: 3}
