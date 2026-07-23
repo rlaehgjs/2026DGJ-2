@@ -8,6 +8,8 @@ public class RefrigeratorWallRepairInteractable : MonoBehaviour, IInteractable
     [Min(1)][SerializeField] private int requiredHammerAmount = 1;
     [SerializeField] private Collider interactionCollider;
     [SerializeField] private GameProgressManager gameProgressManager;
+    [SerializeField] private Transform repairedDoor;
+    [SerializeField] private Vector3 repairedLocalPosition = new Vector3(-0.59819299f, 1.71812499f, 0.365508914f);
 
     private void OnEnable()
     {
@@ -50,6 +52,7 @@ public class RefrigeratorWallRepairInteractable : MonoBehaviour, IInteractable
         if (inventory.TryConsumeItem(requiredNails.ItemId, requiredNailsAmount)
             && inventory.TryConsumeItem(requiredHammer.ItemId, requiredHammerAmount))
         {
+            RestoreDoorPosition();
             gameProgressManager.TryRepairRefrigeratorWall();
         }
     }
@@ -70,6 +73,14 @@ public class RefrigeratorWallRepairInteractable : MonoBehaviour, IInteractable
         {
             interactionCollider.enabled = gameProgressManager != null
                 && gameProgressManager.CurrentState == GameProgressState.RepairRefrigeratorWall;
+        }
+    }
+
+    private void RestoreDoorPosition()
+    {
+        if (repairedDoor != null)
+        {
+            repairedDoor.localPosition = repairedLocalPosition;
         }
     }
 }
