@@ -200,17 +200,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 4317628932120504413, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
   m_PrefabInstance: {fileID: 1062966785}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &135751437 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 97528143483030993, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-  m_PrefabInstance: {fileID: 1062966785}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: af7d5e7199884fa4a27a57cdb77a88e1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::FrontDoorLock
 --- !u!1001 &214381187
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -931,66 +920,6 @@ PrefabInstance:
       propertyPath: gameProgressManager
       value: 
       objectReference: {fileID: 1214988298}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3929344159760990872, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4269737806658761750, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4269737806658761750, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4269737806658761750, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4269737806658761750, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -100.04057
-      objectReference: {fileID: 0}
-    - target: {fileID: 4269737806658761750, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 13.166519
-      objectReference: {fileID: 0}
-    - target: {fileID: 4269737806658761750, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -141.4473
-      objectReference: {fileID: 0}
     - target: {fileID: 4909334254951387320, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
       propertyPath: gameProgressManager
       value: 
@@ -1015,14 +944,6 @@ PrefabInstance:
       propertyPath: gameProgressManager
       value: 
       objectReference: {fileID: 1214988298}
-    - target: {fileID: 6817590674661518047, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: frontDoorLock
-      value: 
-      objectReference: {fileID: 135751437}
-    - target: {fileID: 7011680580570304882, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
-      propertyPath: frontDoorLock
-      value: 
-      objectReference: {fileID: 135751437}
     - target: {fileID: 8379157171640334300, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
       propertyPath: gameProgressManager
       value: 

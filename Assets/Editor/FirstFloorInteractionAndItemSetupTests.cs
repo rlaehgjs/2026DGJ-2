@@ -45,6 +45,30 @@ public class FirstFloorInteractionAndItemSetupTests
     }
 
     [Test]
+    public void FirstFloorMap_CarRoomWall_UsesAnEnabledMeshCollider()
+    {
+        GameObject mapRoot = PrefabUtility.LoadPrefabContents(FirstFloorMapPath);
+
+        try
+        {
+            MeshCollider[] meshColliders = mapRoot.GetComponentsInChildren<MeshCollider>(true);
+            MeshCollider carRoomWallCollider = System.Array.Find(meshColliders,
+                collider => collider.gameObject.name == "wall.001");
+
+            Assert.That(carRoomWallCollider, Is.Not.Null,
+                "The CarRoom wall.001 object requires a MeshCollider so the door opening follows the visible mesh.");
+            Assert.That(carRoomWallCollider.enabled, Is.True,
+                "The CarRoom wall.001 MeshCollider must be enabled so the wall remains solid outside the door opening.");
+            Assert.That(carRoomWallCollider.convex, Is.False,
+                "The static CarRoom wall uses its original non-convex mesh shape for the doorway opening.");
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(mapRoot);
+        }
+    }
+
+    [Test]
     public void MainGameScene_ConnectsFrontDoorLockToGameProgress()
     {
         Scene scene = EditorSceneManager.OpenScene(MainGameScenePath, OpenSceneMode.Additive);
