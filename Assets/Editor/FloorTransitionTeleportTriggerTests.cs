@@ -86,8 +86,7 @@ public class FloorTransitionTeleportTriggerTests
             AssertTriggerConfiguration(firstFloorToSecondFloor, secondFloor, triggerType);
             AssertTriggerConfiguration(secondFloor, firstFloorToSecondFloor, triggerType);
             AssertTriggerConfiguration(firstFloorToBasement, basementExit, triggerType);
-            Assert.That(basementExit.GetComponent(triggerType), Is.Null,
-                "ExitCollider must remain unmodified so its trigger is configured manually in Unity.");
+            AssertTriggerConfiguration(basementExit, firstFloorToBasement, triggerType);
         }
         finally
         {

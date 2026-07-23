@@ -15,5 +15,5 @@ MonoBehaviour:
   itemId: generator_wire
   displayNameKey: item.generator_wire.name
   descriptionKey: item.generator_wire.description
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: e883e3b491eec0545b09848d74865357, type: 3}
   maxStack: 1

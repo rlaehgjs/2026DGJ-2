@@ -15,5 +15,5 @@ MonoBehaviour:
   itemId: hammer
   displayNameKey: item.hammer.name
   descriptionKey: item.hammer.description
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 103a09c3a8979e4458a749a39415f6df, type: 3}
   maxStack: 1

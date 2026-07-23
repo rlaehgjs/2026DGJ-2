@@ -15,5 +15,5 @@ MonoBehaviour:
   itemId: FrontDoor_key
   displayNameKey: item.Frontdoor_key.name
   descriptionKey: item.Frontdoor.description
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 05f42206226758f43b34dac5bdce9adf, type: 3}
   maxStack: 1
