@@ -15,5 +15,5 @@ MonoBehaviour:
   itemId: nails
   displayNameKey: item.nails.name
   descriptionKey: item.nails.description
-  icon: {fileID: 0}
+  icon: {fileID: 21300000, guid: 82cf57f0428cfab40aa86e374d31e68e, type: 3}
   maxStack: 1
