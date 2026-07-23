@@ -710,7 +710,7 @@ PrefabInstance:
       objectReference: {fileID: 198823838}
     - target: {fileID: 8237582429418059809, guid: b4def1132729a1f489691e1abeab5f0e, type: 3}
       propertyPath: initialState
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1024,7 +1024,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2819104716325639856, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1514,7 +1514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 426343097011771005, guid: f0f327e1b374463438e53547754bdefb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2030492376543211896, guid: f0f327e1b374463438e53547754bdefb, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1628,6 +1628,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7184523140785073523, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7184523140785073523, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7775647970407851487, guid: f0f327e1b374463438e53547754bdefb, type: 3}
       propertyPath: gameManager
       value: 
@@ -1640,6 +1648,18 @@ PrefabInstance:
       propertyPath: soundManager
       value: 
       objectReference: {fileID: 2006115581}
+    - target: {fileID: 8524915569341788264, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_Volume
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8524915569341788264, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 2482397f45e1fad4bbf96560c506402d, type: 3}
+    - target: {fileID: 8524915569341788264, guid: f0f327e1b374463438e53547754bdefb, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8609994364875235104, guid: f0f327e1b374463438e53547754bdefb, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1709,9 +1729,17 @@ PrefabInstance:
       propertyPath: gameProgressManager
       value: 
       objectReference: {fileID: 2101492577}
+    - target: {fileID: 3844590415867587371, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
+      propertyPath: soundEffects.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6464234113564496961, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
       propertyPath: m_Name
       value: InGameUIController
+      objectReference: {fileID: 0}
+    - target: {fileID: 6464234113564496961, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8173771557232933067, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
       propertyPath: m_LocalPosition.x
