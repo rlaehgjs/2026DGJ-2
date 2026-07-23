@@ -613,10 +613,18 @@ PrefabInstance:
       propertyPath: gameProgressManager
       value: 
       objectReference: {fileID: 1214988298}
+    - target: {fileID: 6003665594827971129, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1850684516}
     - target: {fileID: 6464234113564496961, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
       propertyPath: m_Name
       value: InGameUIController
       objectReference: {fileID: 0}
+    - target: {fileID: 6497239299475099059, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
+      propertyPath: playerInventory
+      value: 
+      objectReference: {fileID: 2056727584}
     - target: {fileID: 8173771557232933067, guid: df6fa3b70e4d2744dbcc8ac8358c609d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1472,7 +1480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -90.04999
+      value: -172.29999
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1480,7 +1488,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 234.5
+      value: 74.25
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalRotation.w
