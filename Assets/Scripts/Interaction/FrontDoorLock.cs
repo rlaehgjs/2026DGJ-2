@@ -60,6 +60,7 @@ public class FrontDoorLock : MonoBehaviour, IInteractable
 
         if (gameProgressManager.TryCompleteFrontDoorKeyCollection())
         {
+            inventory.TryConsumeItem(requiredKey.ItemId, requiredAmount);
             DisableBlockingCollider();
         }
     }

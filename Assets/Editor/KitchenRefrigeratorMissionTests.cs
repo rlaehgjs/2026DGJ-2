@@ -477,6 +477,8 @@ public class KitchenRefrigeratorMissionTests
 
         Assert.That(progressManager.CurrentState, Is.EqualTo(GameProgressState.FindGenerator));
         Assert.That(frontDoorLock.IsUnlocked, Is.True);
+        Assert.That(inventory.GetItemAmount("FrontDoor_key"), Is.EqualTo(0),
+            "The front door key must be consumed after the door is unlocked.");
     }
 
     private PlayerInventory CreatePlayerInventory(out BoxCollider playerCollider)
