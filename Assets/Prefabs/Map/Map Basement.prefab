@@ -5607,6 +5607,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6131480746246922181}
   - component: {fileID: 3818573195614793374}
+  - component: {fileID: 6843175350455487743}
   m_Layer: 0
   m_Name: ExitCollider
   m_TagString: Untagged
@@ -5650,6 +5651,20 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 33.5, y: 50, z: 10.5}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6843175350455487743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4906414912119052243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
+  targetPoint: {fileID: 0}
+  reentryBlockSeconds: 0.25
 --- !u!1 &5257867698157154395
 GameObject:
   m_ObjectHideFlags: 0

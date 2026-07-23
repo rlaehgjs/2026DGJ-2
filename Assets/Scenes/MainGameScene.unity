@@ -524,6 +524,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Map Basement
       objectReference: {fileID: 0}
+    - target: {fileID: 6843175350455487743, guid: 3a62a15b3d4e2b34390910fd0d9f91bd, type: 3}
+      propertyPath: targetPoint
+      value: 
+      objectReference: {fileID: 970327506}
     - target: {fileID: 7982534872879463028, guid: 3a62a15b3d4e2b34390910fd0d9f91bd, type: 3}
       propertyPath: saveManager
       value: 
@@ -1085,6 +1089,14 @@ PrefabInstance:
       propertyPath: gameProgressManager
       value: 
       objectReference: {fileID: 1214988298}
+    - target: {fileID: 4444498919426790503, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 51.81301
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444498919426790503, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -118.410904
+      objectReference: {fileID: 0}
     - target: {fileID: 4909334254951387320, guid: 89ebcccda09f8654a80fe623dcf4fc30, type: 3}
       propertyPath: gameProgressManager
       value: 
@@ -1270,7 +1282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
-  targetPoint: {fileID: 443877621}
+  targetPoint: {fileID: 970327506}
   reentryBlockSeconds: 0.25
 --- !u!1001 &1273406587
 PrefabInstance:
@@ -1460,7 +1472,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -251.54999
+      value: -90.04999
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1468,7 +1480,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 95
+      value: 234.5
       objectReference: {fileID: 0}
     - target: {fileID: 5766344783408521087, guid: 4ce6049d7b496944a934bfac5c0934d9, type: 3}
       propertyPath: m_LocalRotation.w
