@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class PlayerInteraction : MonoBehaviour
@@ -42,17 +43,68 @@ public class PlayerInteraction : MonoBehaviour
 
         if (!Physics.Raycast(interactionRay, out RaycastHit hit, interactionDistance))
         {
+            LogInteractionTarget(null, null, false);
             return;
         }
 
         IInteractable interactable = FindInteractable(hit.collider); //Ray에 맞은게 상호작용 가능한 물체인지 확인
 
-        if (interactable == null || !interactable.CanInteract(playerInventory))
+        if (interactable is FrontDoorLock frontDoorLock
+            && TryFindDoorInteractableBehindFrontDoorLock(
+                interactionRay,
+                interactionDistance,
+                frontDoorLock,
+                out RaycastHit doorHit,
+                out DoorInteractable doorInteractable))
+        {
+            hit = doorHit;
+            interactable = doorInteractable;
+        }
+
+        bool canInteract = interactable != null && interactable.CanInteract(playerInventory);
+        LogInteractionTarget(hit.collider, interactable, canInteract);
+
+        if (!canInteract)
         {
             return;
         }
 
         interactable.Interact(playerInventory);
+    }
+
+    private static int CompareHitDistance(RaycastHit firstHit, RaycastHit secondHit)
+    {
+        return firstHit.distance.CompareTo(secondHit.distance);
+    }
+
+    private static bool TryFindDoorInteractableBehindFrontDoorLock(
+        Ray interactionRay,
+        float interactionDistance,
+        FrontDoorLock frontDoorLock,
+        out RaycastHit doorHit,
+        out DoorInteractable doorInteractable)
+    {
+        RaycastHit[] hits = Physics.RaycastAll(interactionRay, interactionDistance);
+        Array.Sort(hits, CompareHitDistance);
+
+        foreach (RaycastHit candidateHit in hits)
+        {
+            IInteractable candidateInteractable = FindInteractable(candidateHit.collider);
+
+            if (!(candidateInteractable is DoorInteractable candidateDoor)
+                || candidateDoor.GetComponentInParent<FrontDoorLock>() != frontDoorLock)
+            {
+                continue;
+            }
+
+            doorHit = candidateHit;
+            doorInteractable = candidateDoor;
+            return true;
+        }
+
+        doorHit = default;
+        doorInteractable = null;
+        return false;
     }
 
     private static IInteractable FindInteractable(Collider hitCollider)
@@ -68,6 +120,19 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         return null;
+    }
+
+    private static void LogInteractionTarget(
+        Collider hitCollider,
+        IInteractable interactable,
+        bool canInteract)
+    {
+        string targetName = hitCollider == null ? "None" : hitCollider.gameObject.name;
+        string interactableName = interactable == null ? "None" : interactable.GetType().Name;
+
+        Debug.Log(
+            $"[Interaction] Target={targetName}; "
+            + $"Interactable={interactableName}; CanInteract={canInteract}");
     }
 
     private void OnDrawGizmos()
