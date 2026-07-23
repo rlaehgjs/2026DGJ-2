@@ -43,7 +43,6 @@ public class PlayerInteraction : MonoBehaviour
 
         if (!Physics.Raycast(interactionRay, out RaycastHit hit, interactionDistance))
         {
-            LogInteractionTarget(null, null, false);
             return;
         }
 
@@ -62,7 +61,6 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         bool canInteract = interactable != null && interactable.CanInteract(playerInventory);
-        LogInteractionTarget(hit.collider, interactable, canInteract);
 
         if (!canInteract)
         {
@@ -120,19 +118,6 @@ public class PlayerInteraction : MonoBehaviour
         }
 
         return null;
-    }
-
-    private static void LogInteractionTarget(
-        Collider hitCollider,
-        IInteractable interactable,
-        bool canInteract)
-    {
-        string targetName = hitCollider == null ? "None" : hitCollider.gameObject.name;
-        string interactableName = interactable == null ? "None" : interactable.GetType().Name;
-
-        Debug.Log(
-            $"[Interaction] Target={targetName}; "
-            + $"Interactable={interactableName}; CanInteract={canInteract}");
     }
 
     private void OnDrawGizmos()
