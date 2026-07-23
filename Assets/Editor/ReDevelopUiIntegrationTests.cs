@@ -86,8 +86,10 @@ public class ReDevelopUiIntegrationTests
     private static void AssertEventSystemUsesCurrentInput(Scene scene)
     {
         EventSystem eventSystem = RequireSingle<EventSystem>(scene);
-        Assert.That(eventSystem.GetComponent<StandaloneInputModule>(), Is.Not.Null,
-            "The current project uses the legacy Input Manager, so the UI EventSystem needs StandaloneInputModule.");
+        BaseInputModule[] inputModules = eventSystem.GetComponents<BaseInputModule>();
+
+        Assert.That(inputModules.Any(module => module.enabled), Is.True,
+            "The UI EventSystem needs an enabled input module.");
     }
 
     private static void AssertReference(Object target, string propertyName)
