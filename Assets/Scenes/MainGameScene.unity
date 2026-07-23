@@ -331,6 +331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 443877621}
   - component: {fileID: 443877620}
+  - component: {fileID: 443877622}
   m_Layer: 0
   m_Name: SpawnPoint_2F
   m_TagString: Untagged
@@ -353,12 +354,26 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &443877622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443877619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
+  targetPoint: {fileID: 1242071088}
+  reentryBlockSeconds: 0.25
 --- !u!4 &443877621
 Transform:
   m_ObjectHideFlags: 0
@@ -526,6 +541,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3a62a15b3d4e2b34390910fd0d9f91bd, type: 3}
+--- !u!4 &970327509 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6131480746246922181, guid: 3a62a15b3d4e2b34390910fd0d9f91bd, type: 3}
+  m_PrefabInstance: {fileID: 595130403}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &634354955
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -800,6 +820,7 @@ GameObject:
   m_Component:
   - component: {fileID: 970327506}
   - component: {fileID: 970327507}
+  - component: {fileID: 970327508}
   m_Layer: 0
   m_Name: SpawnPoing_1F_to_Base
   m_TagString: Untagged
@@ -837,12 +858,26 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 30, y: 30, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &970327508
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 970327505}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
+  targetPoint: {fileID: 970327509}
+  reentryBlockSeconds: 0.25
 --- !u!1 &1007942211
 GameObject:
   m_ObjectHideFlags: 0
@@ -1163,6 +1198,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1242071088}
   - component: {fileID: 1242071089}
+  - component: {fileID: 1242071090}
   m_Layer: 0
   m_Name: SpawnPoing_1F_to_2F
   m_TagString: Untagged
@@ -1200,12 +1236,26 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 30, y: 30, z: 30}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1242071090
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1242071087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
+  targetPoint: {fileID: 443877621}
+  reentryBlockSeconds: 0.25
 --- !u!1001 &1273406587
 PrefabInstance:
   m_ObjectHideFlags: 0
