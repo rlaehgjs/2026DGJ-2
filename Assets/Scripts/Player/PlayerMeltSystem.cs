@@ -17,6 +17,7 @@ public class PlayerMeltSystem : MonoBehaviour
     private float minLimitPercentHpMelted = 0.1f;
     [SerializeField]
     private float minLimitHpMelted;
+    [SerializeField]
     private float baseMeltValue = 1.0f;
     private float scaledMeltValue; // 배율이 적용된 해동 속도
 

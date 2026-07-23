@@ -120,6 +120,7 @@ MonoBehaviour:
   currentHp: 0
   minLimitPercentHpMelted: 0.1
   minLimitHpMelted: 0
+  baseMeltValue: 0.05
   current_state: 2
 --- !u!114 &7415071797926930389
 MonoBehaviour:
