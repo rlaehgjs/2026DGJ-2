@@ -396,7 +396,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
   targetPoint: {fileID: 1242071088}
   reentryBlockSeconds: 0.25
@@ -896,7 +896,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
   targetPoint: {fileID: 970327509}
   reentryBlockSeconds: 0.25
@@ -1347,7 +1347,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ff570d59bcb89d743b4994f7f3a366f0, type: 3}
-  m_Name:
+  m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FloorTransitionTeleportTrigger
   targetPoint: {fileID: 443877621}
   reentryBlockSeconds: 0.25
