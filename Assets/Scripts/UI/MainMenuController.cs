@@ -8,6 +8,7 @@ public class MainMenuController : MonoBehaviour
     [SerializeField] private GameManager gameManager;
     [SerializeField] private SaveManager saveManager;
     [SerializeField] private SoundManager soundManager;
+    [SerializeField] private AudioSource titleBgm;
 
     private void Awake()
     {
@@ -86,18 +87,11 @@ public class MainMenuController : MonoBehaviour
 
     private void PlayTitleBgm()
     {
-        if (soundManager == null)
+        if (soundManager == null || titleBgm == null || titleBgm.clip == null)
             return;
 
-        foreach (AudioSource source in GetComponentsInChildren<AudioSource>(true))
-        {
-            if (source.gameObject.name != "TitleBGM" || source.clip == null)
-                continue;
-
-            source.Stop();
-            source.enabled = false;
-            soundManager.PlayTitleBgm(source.clip, source.loop);
-            return;
-        }
+        titleBgm.Stop();
+        titleBgm.enabled = false;
+        soundManager.PlayTitleBgm(titleBgm.clip, titleBgm.loop);
     }
 }

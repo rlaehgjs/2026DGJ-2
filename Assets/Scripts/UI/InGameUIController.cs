@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [DefaultExecutionOrder(-100)]
@@ -12,6 +13,8 @@ public class InGameUIController : MonoBehaviour
     [SerializeField] private PlayerInventory playerInventory;
     [SerializeField] private PlayerLook playerLook;
     [SerializeField] private SoundManager soundManager;
+    [SerializeField] private AudioSource inGameBgm;
+    [SerializeField] private List<AudioClip> soundEffects = new List<AudioClip>();
 
     [SerializeField] private GameObject hudPanel;
     [SerializeField] private GameObject pausePanel;
@@ -82,6 +85,7 @@ public class InGameUIController : MonoBehaviour
     {
         // 비활성화된 중첩 SettingsPanel까지 준비된 뒤 저장값을 한 번 더 적용한다.
         ConfigureChildUI();
+        PlayInGameBgm();
 
         if (gameManager != null)
             ApplyGameState(gameManager.CurrentState);
@@ -94,6 +98,18 @@ public class InGameUIController : MonoBehaviour
 
         if (inputReader != null)
             inputReader.PausePressed -= TogglePause;
+
+        soundManager?.StopBgm();
+    }
+
+    private void PlayInGameBgm()
+    {
+        if (soundManager == null || inGameBgm == null || inGameBgm.clip == null)
+            return;
+
+        inGameBgm.Stop();
+        inGameBgm.enabled = false;
+        soundManager.PlayBgm(inGameBgm.clip, inGameBgm.loop);
     }
 
     private void TogglePause()
@@ -125,6 +141,14 @@ public class InGameUIController : MonoBehaviour
     public void QuitGame()
     {
         gameManager?.QuitGame();
+    }
+
+    public void PlaySfx(int index)
+    {
+        if ((uint)index >= (uint)soundEffects.Count)
+            return;
+
+        soundManager?.PlaySfx(soundEffects[index]);
     }
 
     private void ApplyGameState(GameState state)

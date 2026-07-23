@@ -8,6 +8,8 @@ public class ObjectiveUI : MonoBehaviour
     [SerializeField] private GameObject objectiveRoot;
 
     private LocalizationManager localizationManager;
+    private GameProgressState displayedState;
+    private bool hasDisplayedState;
 
     public void Configure(GameProgressManager manager)
     {
@@ -45,8 +47,20 @@ public class ObjectiveUI : MonoBehaviour
             localizationManager.LanguageChanged -= RefreshCurrentObjective;
     }
 
+    private void LateUpdate()
+    {
+        if (gameProgressManager != null
+            && (!hasDisplayedState || displayedState != gameProgressManager.CurrentState))
+        {
+            // ponytail: per-frame comparison is a UI-only fallback for missed progress events.
+            Refresh(gameProgressManager.CurrentState);
+        }
+    }
+
     private void Refresh(GameProgressState state)
     {
+        displayedState = state;
+        hasDisplayedState = true;
         string key = GetObjectiveKey(state);
         objectiveRoot.SetActive(!string.IsNullOrEmpty(key));
 
@@ -65,6 +79,7 @@ public class ObjectiveUI : MonoBehaviour
         {
             GameProgressState.FindKitchen => "objective_find_kitchen_key",
             GameProgressState.InspectRefrigerator => "objective_inspect_refrigerator",
+            GameProgressState.FindFrontDoorKey => "objective_find_front_door_key",
             GameProgressState.FindGenerator => "objective_find_generator",
             GameProgressState.FindGeneratorWire => "objective_find_generator_wire",
             GameProgressState.RepairGenerator => "objective_repair_generator",

@@ -3,6 +3,7 @@ current_objective,<현재 목표>,<Current Objective>
 melt,해동도,Melt
 objective_find_kitchen_key,냉장고를 찾자. 먼저 화장실에서 주방 열쇠를 찾자.,Find the refrigerator. First find the kitchen key in the bathroom.
 objective_inspect_refrigerator,주방으로 가서 냉장고를 조사하자.,Go to the kitchen and inspect the refrigerator.
+objective_find_front_door_key,현관문 열쇠를 찾자.,Find the front door key.
 objective_find_generator,발전기를 찾자.,Find the generator.
 objective_find_generator_wire,지하 창고에서 전선을 찾자.,Find the generator wire in the basement storage room.
 objective_repair_generator,전선을 발전기에 연결하자.,Connect the wire to the generator.
