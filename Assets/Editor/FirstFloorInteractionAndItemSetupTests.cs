@@ -45,6 +45,71 @@ public class FirstFloorInteractionAndItemSetupTests
     }
 
     [Test]
+    public void FirstFloorMap_BigDoorWall_DoesNotBlockDoorLeafInteraction()
+    {
+        GameObject mapRoot = PrefabUtility.LoadPrefabContents(FirstFloorMapPath);
+
+        try
+        {
+            Transform bigDoorWall = System.Array.Find(
+                mapRoot.GetComponentsInChildren<Transform>(true),
+                transform => transform.name == "wall_with_big_door (1)");
+
+            Assert.That(bigDoorWall, Is.Not.Null,
+                "The first floor requires wall_with_big_door (1).");
+
+            Transform blockingWall = System.Array.Find(
+                bigDoorWall.GetComponentsInChildren<Transform>(true),
+                transform => transform.name == "wall.001");
+            BoxCollider blockingCollider = blockingWall != null
+                ? blockingWall.GetComponent<BoxCollider>()
+                : null;
+
+            Assert.That(blockingCollider, Is.Not.Null,
+                "wall_with_big_door (1)/wall.001 requires its existing collision component.");
+            Assert.That(blockingCollider.enabled, Is.False,
+                "wall.001 covers both door leaves, so it must not block the interaction ray before it reaches a door.");
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(mapRoot);
+        }
+    }
+
+    [Test]
+    public void FirstFloorMap_RoomOneDoorFrame_UsesDoorwayShapedCollider()
+    {
+        GameObject mapRoot = PrefabUtility.LoadPrefabContents(FirstFloorMapPath);
+
+        try
+        {
+            Transform doorFrame = mapRoot.transform.Find(
+                "Room_1/(Prb)Door (1)/door/door_frame");
+
+            Assert.That(doorFrame, Is.Not.Null,
+                "Room_1 door_frame is required around DoorHinge.");
+
+            BoxCollider boxCollider = doorFrame.GetComponent<BoxCollider>();
+            MeshCollider meshCollider = doorFrame.GetComponent<MeshCollider>();
+
+            Assert.That(boxCollider, Is.Not.Null,
+                "door_frame keeps its existing BoxCollider as a disabled fallback.");
+            Assert.That(boxCollider.enabled, Is.False,
+                "door_frame's BoxCollider covers the door leaf and blocks interaction before DoorHinge.");
+            Assert.That(meshCollider, Is.Not.Null,
+                "door_frame needs a MeshCollider so its collision follows the visible doorway shape.");
+            Assert.That(meshCollider.enabled, Is.True);
+            Assert.That(meshCollider.convex, Is.False,
+                "The static door frame can use the original non-convex mesh shape.");
+            Assert.That(meshCollider.sharedMesh, Is.Not.Null);
+        }
+        finally
+        {
+            PrefabUtility.UnloadPrefabContents(mapRoot);
+        }
+    }
+
+    [Test]
     public void FirstFloorMap_CarRoomWall_UsesAnEnabledMeshCollider()
     {
         GameObject mapRoot = PrefabUtility.LoadPrefabContents(FirstFloorMapPath);
